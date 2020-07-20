@@ -1,3 +1,7 @@
 {
-    "prettier.printWidth": 130
+    "prettier.printWidth": 130,
+    "cSpell.enableFiletypes": [
+        "html"
+    ],
+    "cSpell.language": "es,en",
 }
