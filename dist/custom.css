@@ -1,0 +1,4 @@
+div.slide-background.present[data-background-hash*="https://ctrlzpodcast.pvplayers.es/youtube.html"] > .slide-background-content {
+  pointer-events: none;
+  filter: blur(20px);
+  opacity: 0.4; }
