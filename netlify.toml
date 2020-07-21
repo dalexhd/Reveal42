@@ -1,0 +1,45 @@
+[[plugins]]
+  package = "netlify-plugin-inline-source"
+
+  # All inputs are optional, so you can omit this section.
+  # Defaults are shown below.
+  # You can also refer to the `inline-source` documentation: https://github.com/popeindustries/inline-source#usage.
+  [plugins.inputs]
+    # Attribute used to parse sources. All tags will be parsed if set to `false`.
+    attribute = "inline"
+
+    # Enable/disable compression of inlined content.
+    compress = true
+
+    # Maintain leading whitespace when `compress` is `false`.
+    pretty = false
+
+    # Disable inlining based on tag, type, and/or format.
+    ignore = []
+
+    # Convert `<img inline src="*.svg" />` to `<img>` and not `<svg>`.
+    svgAsImage = true
+
+[[plugins]]
+  package = "netlify-plugin-minify-html"
+
+  # Specify which deploy contexts we'll minify HTML in.
+  # Supports any Deploy Contexts available in Netlify.
+  # https://docs.netlify.com/site-deploys/overview/#deploy-contexts
+  [plugins.inputs]
+    contexts = [
+      'production',
+      'branch-deploy',
+      'deploy-preview'
+    ]
+
+  # Optionally, override the default options for the minification
+  # https://github.com/kangax/html-minifier#options-quick-reference
+  [plugins.inputs.minifierOptions]
+    removeComments = true
+    collapseInlineTagWhitespace = false
+    minifyCSS = true
+    minifyJS = true
+    sortAttributes = true
+    sortClassName = true
+    removeAttributeQuotes = false
