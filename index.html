@@ -54,7 +54,6 @@
         <section
           data-auto-animate
           data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)"
-          data-preload
           data-background-iframe="https://spotify-widget.herokuapp.com/youtube.html?access_token=BQAnZrDglI1vGx7s6yk9dU3V_exGLZpsJ3uziwH8cZJ0tzAUp8mZmEe9m08mjKVjzjHid0R7SJMEtHk49t3UAt1Z2lJ_kkiHEUp9BNEGztuHAOu-pzD-JyV4ZRZU4sw1JvmBWEP0h-Mx7ynAlN87n995xvnNiPgOg6cv9BSpHMI&refresh_token=AQD7tQ8w-eWfZgMg5Vvz_TE7qPLc611NIrawMyk9_1YcBaxR3Z8C9u9dEZV_AoBuSU4f_Gzvv0u6J0fvh7Fkaox0dzGxWMQ0phIft3f40_2bR3VaAET_9Ky4zT8WdxdJAL0"
           data-background-opacity="0.2"
         >
@@ -102,6 +101,9 @@
               src="https://media1.tenor.com/images/b44d1f1a10c7c24c30329e066a72d918/tenor.gif"
               alt="Payasos de la tele"
             />
+            <aside class="notes">
+              Shhh, these are your private notes 📝
+            </aside>
           </section>
           <section data-auto-animate>
             <h1>¿Quién soy?</h1>
@@ -269,8 +271,11 @@
         hash: true,
 
         // Learn about plugins: https://revealjs.com/plugins/
-        plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight],
+        plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight]
       });
     </script>
+    <script src="node_modules/socket.io-client/dist/socket.io.js"></script>
+    <script src="node_modules/reveal-notes-server/client.js"></script>
+    
   </body>
 </html>

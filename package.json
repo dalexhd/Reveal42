@@ -9,9 +9,9 @@
   "license": "MIT",
   "scripts": {
     "test": "gulp test",
-    "start": "gulp serve",
-    "build": "gulp",
-    "package" : "gulp package"
+    "start": "node node_modules/reveal-notes-server",
+    "build": "node node_modules/reveal-notes-server",
+    "package": "gulp package"
   },
   "author": {
     "name": "Hakim El Hattab",
@@ -95,5 +95,8 @@
       "no-eq-null": 2,
       "no-unused-expressions": 0
     }
+  },
+  "dependencies": {
+    "reveal-notes-server": "^0.1.0"
   }
 }
