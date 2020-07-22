@@ -135,17 +135,26 @@
           <img src="https://media1.giphy.com/media/Lm62AlSEQqhimpM59W/giphy.gif" alt="Comencemos..." />
         </section>
         <section data-transition="zoom-in fade-out">
-          <section>
+          <section id="fragments" data-auto-animate>
             <img src="/dist/img/Raspberry_Pi_Logo.svg" alt="Raspberry Pi Logo" height="300" />
+            <p>
+              <span class="fragment">Buen rendimiento, </span>
+              <span class="fragment">Bajo Consumo, </span>
+              <span class="fragment">Usos infinitos</span>
+            </p>
           </section>
-          <section>
-            <h3>Texto 1</h3>
-          </section>
-          <section>
-            <h3>Texto 2</h3>
-          </section>
-          <section>
-            <h3>Texto 3</h3>
+          <section data-auto-animate>
+            <img src="/dist/img/Raspberry_Pi_Logo.svg" alt="Raspberry Pi Logo" height="100" />
+            <p>
+              <span>Buen rendimiento, </span>
+              <span>Bajo Consumo, </span>
+              <span>Usos infinitos</span>
+            </p>
+            <div class="r-stack" data-auto-animate-delay="0.35">
+              <img src="/dist/img/iot.png" height="300" class="fragment fade-out" data-fragment-index="0">
+              <img src="/dist/img/server.png" height="300" class="fragment current-visible" data-fragment-index="0">
+              <img src="/dist/img/press+start+retro+gaming.gif" height="300" class="fragment">
+            </div>
           </section>
         </section>
         <section data-transition="zoom-in fade-out">
@@ -156,7 +165,10 @@
             <h3>Uno de los motores más potentes de búsqueda disponibles.</h3>
           </section>
           <section>
-            <h3>Indexa tu html para ofrecerte una experiencía de búsqueda mucho mas completa, interactiva y lo más importante: precisa!</h3>
+            <h3>
+              Indexa tu html para ofrecerte una experiencía de búsqueda mucho mas completa, interactiva y lo más importante:
+              precisa!
+            </h3>
           </section>
         </section>
         <section data-transition="zoom-in fade-out">
@@ -179,7 +191,7 @@
           </section>
           <section>
             <h3>Ahora puedes pescar tus ramas de GIT perdidas de forma interactiva y rápida 🎣</h3>
-            <img src="https://media1.tenor.com/images/3ced3a86d9c73131011b18d3c6d1542d/tenor.gif" alt="Homer pescando">
+            <img src="https://media1.tenor.com/images/3ced3a86d9c73131011b18d3c6d1542d/tenor.gif" alt="Homer pescando" />
           </section>
         </section>
         <!-- <section data-transition="zoom-in fade-out">
@@ -271,11 +283,10 @@
         hash: true,
 
         // Learn about plugins: https://revealjs.com/plugins/
-        plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight]
+        plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight],
       });
     </script>
     <script src="node_modules/socket.io-client/dist/socket.io.js"></script>
     <script src="node_modules/reveal-notes-server/client.js"></script>
-    
   </body>
 </html>
