@@ -1,0 +1,43 @@
+version: '3'
+services:
+    presentation:
+        build:
+            context:  ./
+            dockerfile: Dockerfile
+        ports:
+            - 8080:8080
+        volumes:
+            - .:/usr/src/presentation
+        container_name: presentation
+        networks:
+            - vpcbr
+    
+    spotify:
+        image: dalexhd/spotify-widget:latest
+        env_file: 
+            - spotify.env
+        ports:
+            - 8888:8888
+        container_name: spotify
+        networks:
+            - vpcbr
+
+    nginx:
+        build:
+            context:  ./
+            dockerfile: ./docker/nginx/Dockerfile
+        container_name: nginx
+        ports:
+            - 80:80
+        depends_on:
+            - presentation
+        networks:
+            - vpcbr
+
+networks:
+    vpcbr:
+        driver: bridge
+
+volumes:
+    data:
+        driver: local

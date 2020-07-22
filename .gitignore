@@ -2,6 +2,7 @@
 *.iml
 *.iws
 *.eml
+*.env
 out/
 .DS_Store
 .svn
