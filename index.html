@@ -54,7 +54,7 @@
         <section
           data-auto-animate
           data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)"
-          data-background-iframe="https://spotify-widget.herokuapp.com/background.html"
+          data-background-iframe="https://spotify-widget.herokuapp.com/background"
           data-preload
           data-background-opacity="0.2"
         >
@@ -73,11 +73,7 @@
             Herramientas para ser un estudiante más productivo sin que nuestra cartera sufra 🧑‍🎓
           </h3>
           <div data-id="box-music-widget-1">
-            <iframe
-              data-src="https://spotify-widget.herokuapp.com/widget"
-              data-preload
-              style="width: 100%;"
-            ></iframe>
+            <iframe data-src="https://spotify-widget.herokuapp.com/widget" data-preload style="width: 100%;"></iframe>
           </div>
           <p style="margin: 0;">
             <small
@@ -89,7 +85,7 @@
           </p>
           <p style="margin: 0;">
             <a href="https://www.heroku.com/" target="_blank" rel="noopener noreferrer">
-              <img src="dist/img/built-on-heroku-light.svg" height="80" alt="Hecho en heroku" style="margin: 0">
+              <img src="dist/img/built-on-heroku-light.svg" height="80" alt="Hecho en heroku" style="margin: 0;" />
             </a>
           </p>
         </section>
@@ -280,52 +276,51 @@
     <script src="/plugin/search/search.js"></script>
     <script src="/plugin/markdown/markdown.js"></script>
     <script src="/plugin/highlight/highlight.js"></script>
-    {{#token}}
-      <script>
-        // Also available as an ES module, see:
-        // https://revealjs.com/initialization/
-        Reveal.initialize({
-          controls: true,
-          progress: true,
-          center: true,
-          hash: true,
-          multiplex: {
-            // Example values. To generate your own, see the socket.io server instructions.
-            secret: '{{token}}', // Obtained from the socket.io server. Gives this (the master) control of the presentation
-            id: "3e0c8d8b21d228f0", // Obtained from socket.io server
-            url: "https://reveal-js-multiplex-ccjbegmaii.now.sh", // Location of socket.io server
-          },
+    {{#admin}}
+    <script>
+      // Also available as an ES module, see:
+      // https://revealjs.com/initialization/
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        center: true,
+        hash: true,
+        multiplex: {
+          // Example values. To generate your own, see the socket.io server instructions.
+          secret: "{{token}}", // Obtained from the socket.io server. Gives this (the master) control of the presentation
+          id: "{{id}}", // Obtained from socket.io server
+          url: "https://reveal-js-multiplex-ccjbegmaii.now.sh", // Location of socket.io server
+        },
 
-          // Learn about plugins: https://revealjs.com/plugins/
-          plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight],
-        });
-      </script>
-      <script src="/node_modules/socket.io-client/dist/socket.io.js"></script>
-      <script src="/node_modules/reveal-multiplex/master.js"></script>
-      <script src="/plugin/server/client.js"></script>
-    {{/token}}
-    {{^token}}
-      <script>
-        // Also available as an ES module, see:
-        // https://revealjs.com/initialization/
-        Reveal.initialize({
-          controls: true,
-          progress: true,
-          center: true,
-          hash: true,
-          multiplex: {
-            // Example values. To generate your own, see the socket.io server instructions.
-            secret: null, // Obtained from the socket.io server. Gives this (the master) control of the presentation
-            id: "{{id}}", // Obtained from socket.io server
-            url: "https://reveal-js-multiplex-ccjbegmaii.now.sh", // Location of socket.io server
-          },
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight],
+      });
+    </script>
+    <script src="/node_modules/socket.io-client/dist/socket.io.js"></script>
+    <script src="/node_modules/reveal-multiplex/master.js"></script>
+    <script src="/plugin/server/client.js" crossorigin="anonymous"></script>
+    {{/admin}} {{^admin}}
+    <script>
+      // Also available as an ES module, see:
+      // https://revealjs.com/initialization/
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        center: true,
+        hash: false,
+        multiplex: {
+          // Example values. To generate your own, see the socket.io server instructions.
+          secret: null, // Obtained from the socket.io server. Gives this (the master) control of the presentation
+          id: "{{id}}", // Obtained from socket.io server
+          url: "https://reveal-js-multiplex-ccjbegmaii.now.sh", // Location of socket.io server
+        },
 
-          // Learn about plugins: https://revealjs.com/plugins/
-          plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight],
-        });
-      </script>
-      <script src="/node_modules/socket.io-client/dist/socket.io.js"></script>
-      <script src="/node_modules/reveal-multiplex/client.js"></script>
-    {{/token}}
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight],
+      });
+    </script>
+    <script src="/node_modules/socket.io-client/dist/socket.io.js"></script>
+    <script src="/node_modules/reveal-multiplex/client.js"></script>
+    {{/admin}}
   </body>
 </html>

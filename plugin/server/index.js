@@ -39,6 +39,7 @@ app.use(express.static(opts.revealDir, {
 app.get('/', (req, res) => {
     fs.readFile(opts.revealDir + '/index.html', (err, data) => {
         res.send(mustache.render(data.toString(), {
+            viewer: true,
             token: null,
             id: process.env.MULTIPLEX_ID
         }));
@@ -49,6 +50,7 @@ app.get('/', (req, res) => {
 app.get('/admin', (req, res) => {
     fs.readFile(opts.revealDir + '/index.html', (err, data) => {
         res.send(mustache.render(data.toString(), {
+            admin: true,
             token: process.env.MULTIPLEX_TOKEN,
             id: process.env.MULTIPLEX_ID
         }));
@@ -58,6 +60,7 @@ app.get('/admin', (req, res) => {
 app.get('/notes/:socketId', (req, res) => {
     fs.readFile(opts.pluginDir + '/index.html', (err, data) => {
         res.send(mustache.render(data.toString(), {
+            presenter: true,
             socketId: req.params.socketId
         }));
     });
