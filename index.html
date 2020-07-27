@@ -276,7 +276,7 @@
     <script src="/plugin/search/search.js"></script>
     <script src="/plugin/markdown/markdown.js"></script>
     <script src="/plugin/highlight/highlight.js"></script>
-    {{#presenter}}
+    {{#admin}}
     <script>
       // Also available as an ES module, see:
       // https://revealjs.com/initialization/
@@ -299,7 +299,7 @@
     <script src="/node_modules/socket.io-client/dist/socket.io.js"></script>
     <script src="/node_modules/reveal-multiplex/master.js"></script>
     <script src="/plugin/server/client.js" crossorigin="anonymous"></script>
-    {{/presenter}} {{^presenter}}
+    {{/admin}} {{^admin}}
     <script>
       // Also available as an ES module, see:
       // https://revealjs.com/initialization/
@@ -321,6 +321,6 @@
     </script>
     <script src="/node_modules/socket.io-client/dist/socket.io.js"></script>
     <script src="/node_modules/reveal-multiplex/client.js"></script>
-    {{/presenter}}
+    {{/admin}}
   </body>
 </html>
