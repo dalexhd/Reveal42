@@ -11,7 +11,7 @@
     "test": "gulp test",
     "start": "node plugin/server",
     "start:client": "gulp",
-    "build": "node plugin/server",
+    "build": "gulp",
     "package": "gulp package"
   },
   "author": {
