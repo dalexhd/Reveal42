@@ -1,3 +1,3 @@
 FROM nginx:alpine
 
-ADD data/vhost.conf /etc/nginx/conf.d/default.conf
+ADD ./docker/nginx/data/vhost.conf /etc/nginx/conf.d/default.conf

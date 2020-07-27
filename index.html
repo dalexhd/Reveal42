@@ -54,7 +54,7 @@
         <section
           data-auto-animate
           data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)"
-          data-background-iframe="https://spotify-widget.herokuapp.com/youtube.html?access_token=BQAnZrDglI1vGx7s6yk9dU3V_exGLZpsJ3uziwH8cZJ0tzAUp8mZmEe9m08mjKVjzjHid0R7SJMEtHk49t3UAt1Z2lJ_kkiHEUp9BNEGztuHAOu-pzD-JyV4ZRZU4sw1JvmBWEP0h-Mx7ynAlN87n995xvnNiPgOg6cv9BSpHMI&refresh_token=AQD7tQ8w-eWfZgMg5Vvz_TE7qPLc611NIrawMyk9_1YcBaxR3Z8C9u9dEZV_AoBuSU4f_Gzvv0u6J0fvh7Fkaox0dzGxWMQ0phIft3f40_2bR3VaAET_9Ky4zT8WdxdJAL0"
+          data-background-iframe="https://spotify-widget.herokuapp.com/background.html"
           data-background-opacity="0.2"
         >
           <div data-id="box-42-logo-1" style="display: flex;">
@@ -73,17 +73,22 @@
           </h3>
           <div data-id="box-music-widget-1">
             <iframe
-              data-src="https://spotify-widget.herokuapp.com/widget.html?access_token=BQAnZrDglI1vGx7s6yk9dU3V_exGLZpsJ3uziwH8cZJ0tzAUp8mZmEe9m08mjKVjzjHid0R7SJMEtHk49t3UAt1Z2lJ_kkiHEUp9BNEGztuHAOu-pzD-JyV4ZRZU4sw1JvmBWEP0h-Mx7ynAlN87n995xvnNiPgOg6cv9BSpHMI&refresh_token=AQD7tQ8w-eWfZgMg5Vvz_TE7qPLc611NIrawMyk9_1YcBaxR3Z8C9u9dEZV_AoBuSU4f_Gzvv0u6J0fvh7Fkaox0dzGxWMQ0phIft3f40_2bR3VaAET_9Ky4zT8WdxdJAL0"
+              data-src="https://spotify-widget.herokuapp.com/widget"
               style="width: 100%;"
             ></iframe>
           </div>
-          <p>
+          <p style="margin: 0;">
             <small
               >Presentación creada por
               <a href="https://www.linkedin.com/in/alex-borbolla" target="_blank" rel="noopener noreferrer">aborboll</a>
               gracias a la tecnología
               <a href="https://revealjs.com/" target="_blank" rel="noopener noreferrer">reveal.js</a></small
             >
+          </p>
+          <p style="margin: 0;">
+            <a href="https://www.heroku.com/" target="_blank" rel="noopener noreferrer">
+              <img src="dist/img/built-on-heroku-light.svg" height="80" alt="Hecho en heroku" style="margin: 0">
+            </a>
           </p>
         </section>
         <section>
@@ -136,7 +141,7 @@
         </section>
         <section data-transition="zoom-in fade-out">
           <section id="fragments" data-auto-animate>
-            <img src="/dist/img/Raspberry_Pi_Logo.svg" alt="Raspberry Pi Logo" height="300" />
+            <img src="dist/img/Raspberry_Pi_Logo.svg" alt="Raspberry Pi Logo" height="300" />
             <p>
               <span class="fragment">Buen rendimiento, </span>
               <span class="fragment">Bajo Consumo, </span>
@@ -151,9 +156,9 @@
               <span>Usos infinitos</span>
             </p>
             <div class="r-stack" data-auto-animate-delay="0.35">
-              <img src="/dist/img/iot.png" height="300" class="fragment fade-out" data-fragment-index="0">
-              <img src="/dist/img/server.png" height="300" class="fragment current-visible" data-fragment-index="0">
-              <img src="/dist/img/press+start+retro+gaming.gif" height="300" class="fragment">
+              <img src="/dist/img/iot.png" height="300" class="fragment fade-out" data-fragment-index="0" />
+              <img src="/dist/img/server.png" height="300" class="fragment current-visible" data-fragment-index="0" />
+              <img src="/dist/img/press+start+retro+gaming.gif" height="300" class="fragment" />
             </div>
           </section>
         </section>
@@ -273,20 +278,52 @@
     <script src="/plugin/search/search.js"></script>
     <script src="/plugin/markdown/markdown.js"></script>
     <script src="/plugin/highlight/highlight.js"></script>
-    <script>
-      // Also available as an ES module, see:
-      // https://revealjs.com/initialization/
-      Reveal.initialize({
-        controls: true,
-        progress: true,
-        center: true,
-        hash: true,
+    {{#token}}
+      <script>
+        // Also available as an ES module, see:
+        // https://revealjs.com/initialization/
+        Reveal.initialize({
+          controls: true,
+          progress: true,
+          center: true,
+          hash: true,
+          multiplex: {
+            // Example values. To generate your own, see the socket.io server instructions.
+            secret: '{{token}}', // Obtained from the socket.io server. Gives this (the master) control of the presentation
+            id: "3e0c8d8b21d228f0", // Obtained from socket.io server
+            url: "https://reveal-js-multiplex-ccjbegmaii.now.sh", // Location of socket.io server
+          },
 
-        // Learn about plugins: https://revealjs.com/plugins/
-        plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight],
-      });
-    </script>
-    <script src="node_modules/socket.io-client/dist/socket.io.js"></script>
-    <script src="node_modules/reveal-notes-server/client.js"></script>
+          // Learn about plugins: https://revealjs.com/plugins/
+          plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight],
+        });
+      </script>
+      <script src="/node_modules/socket.io-client/dist/socket.io.js"></script>
+      <script src="/node_modules/reveal-multiplex/master.js"></script>
+      <script src="/plugin/server/client.js"></script>
+    {{/token}}
+    {{^token}}
+      <script>
+        // Also available as an ES module, see:
+        // https://revealjs.com/initialization/
+        Reveal.initialize({
+          controls: true,
+          progress: true,
+          center: true,
+          hash: true,
+          multiplex: {
+            // Example values. To generate your own, see the socket.io server instructions.
+            secret: null, // Obtained from the socket.io server. Gives this (the master) control of the presentation
+            id: "{{id}}", // Obtained from socket.io server
+            url: "https://reveal-js-multiplex-ccjbegmaii.now.sh", // Location of socket.io server
+          },
+
+          // Learn about plugins: https://revealjs.com/plugins/
+          plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight],
+        });
+      </script>
+      <script src="/node_modules/socket.io-client/dist/socket.io.js"></script>
+      <script src="/node_modules/reveal-multiplex/client.js"></script>
+    {{/token}}
   </body>
 </html>

@@ -5,7 +5,9 @@ services:
             context:  ./
             dockerfile: Dockerfile
         ports:
-            - 8080:8080
+            - 1947:1947
+        env_file: 
+            - presentation.env
         volumes:
             - .:/usr/src/presentation
         container_name: presentation
@@ -13,7 +15,7 @@ services:
             - vpcbr
     
     spotify:
-        image: dalexhd/spotify-widget:latest
+        image: dalexhd/spotify-widget
         env_file: 
             - spotify.env
         ports:
@@ -31,6 +33,7 @@ services:
             - 80:80
         depends_on:
             - presentation
+            - spotify
         networks:
             - vpcbr
 

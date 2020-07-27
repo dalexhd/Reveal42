@@ -9,8 +9,9 @@
   "license": "MIT",
   "scripts": {
     "test": "gulp test",
-    "start": "node node_modules/reveal-notes-server",
-    "build": "node node_modules/reveal-notes-server",
+    "start": "node plugin/server",
+    "start:client": "gulp",
+    "build": "node plugin/server",
     "package": "gulp package"
   },
   "author": {
@@ -97,6 +98,6 @@
     }
   },
   "dependencies": {
-    "reveal-notes-server": "^0.1.0"
+    "reveal-multiplex": "^0.1.0"
   }
 }

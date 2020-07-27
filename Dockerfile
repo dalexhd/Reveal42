@@ -2,6 +2,9 @@ FROM node:12-alpine
 
 WORKDIR /usr/src/presentation
 
-RUN npm install -g gulp
+COPY . .
 
-CMD ["gulp", "build"]
+RUN npm install
+
+EXPOSE 1947
+CMD ["npm", "start"]
