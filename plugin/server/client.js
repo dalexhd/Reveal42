@@ -14,7 +14,7 @@
 		if (data.indexh === 0 && spotifyWindow !== null) {
 			return spotifyWindow.close();
 		} else if (data.indexh === 1) {
-			spotifyWindow = window.open('http://localhost:3000/player', '_blank', 'width=400,height=200');
+			spotifyWindow = window.open('https://spotify-widget.herokuapp.com/player', '_blank', 'width=400,height=200');
 		} else if (data.indexh === 2) {
 			spotifyWindow.close();
 			spotifyWindow = null;
