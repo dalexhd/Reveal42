@@ -12,12 +12,12 @@
     <div id="upcoming-slide"><span class="overlay-element label">Siguiente</span></div>
     <div id="speaker-controls">
       <div class="speaker-controls-time">
-        <h4 class="label">Tiempo <span class="reset-button">Reinicia  r</span></h4>
+        <h4 class="label">Tiempo <span class="reset-button">Reiniciar</span></h4>
         <div class="clock">
           <span class="clock-value">0:00 AM</span>
         </div>
         <div class="timer">
-          <span class="hours-value">00</span><span class="minutes-value">:00</span><span class="seconds-value">:00</span>
+          <span class="hours">00</span><span class="minutes">:00</span><span class="seconds">:00</span>
         </div>
         <div class="clear"></div>
       </div>
@@ -64,7 +64,6 @@
 
           if (connected === false) {
             connected = true;
-
             setupKeyboard();
             setupNotes();
             setupTimer();
@@ -147,8 +146,8 @@
         function setupIframes() {
           var params = ["receiver", "progress=false", "history=false", "transition=none", "backgroundTransition=none"].join("&");
 
-          var currentURL = "/?" + params + "&postMessageEvents=true";
-          var upcomingURL = "/?" + params + "&controls=false";
+          var currentURL = "/admin?" + params + "&postMessageEvents=true";
+          var upcomingURL = "/admin?" + params + "&controls=false";
 
           currentSlide = document.createElement("iframe");
           currentSlide.setAttribute("width", 1280);
@@ -179,9 +178,9 @@
           var start = new Date(),
             timeEl = document.querySelector(".speaker-controls-time"),
             clockEl = timeEl.querySelector(".clock-value"),
-            hoursEl = timeEl.querySelector(".hours-value"),
-            minutesEl = timeEl.querySelector(".minutes-value"),
-            secondsEl = timeEl.querySelector(".seconds-value");
+            hoursEl = timeEl.querySelector(".hours"),
+            minutesEl = timeEl.querySelector(".minutes"),
+            secondsEl = timeEl.querySelector(".seconds");
 
           function _updateTimer() {
             var diff,
