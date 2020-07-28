@@ -1,13 +1,21 @@
-let http = require('http');
-let express = require('express');
-let fs = require('fs');
-let mustache = require('mustache');
+const http = require('http');
+const express = require('express');
+const fs = require('fs');
+const mustache = require('mustache');
+const basicAuth = require('express-basic-auth');
 
-let app = express();
-let server = http.createServer(app);
-let io = require('socket.io')(server);
+const authOptions = {
+    users: {
+      [process.env.USERNAME || 'admin']: process.env.PASSWORD || '1234'
+    },
+    challenge: true,
+    realm: 'Imb4T3st4pp',
+};
+const app = express();
+const server = http.createServer(app);
+const io = require('socket.io')(server);
 
-let opts = {
+const opts = {
     port: process.env.PORT || 1947,
     revealDir: process.cwd(),
     pluginDir: __dirname
@@ -47,7 +55,7 @@ app.get('/', (req, res) => {
 
 });
 
-app.get('/admin', (req, res) => {
+app.get('/admin', basicAuth(authOptions), (req, res) => {
     fs.readFile(opts.revealDir + '/index.html', (err, data) => {
         res.send(mustache.render(data.toString(), {
             admin: true,
@@ -57,7 +65,7 @@ app.get('/admin', (req, res) => {
     });
 });
 
-app.get('/notes/:socketId', (req, res) => {
+app.get('/notes/:socketId', basicAuth(authOptions), (req, res) => {
     fs.readFile(opts.pluginDir + '/index.html', (err, data) => {
         res.send(mustache.render(data.toString(), {
             presenter: true,

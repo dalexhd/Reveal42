@@ -98,6 +98,7 @@
     }
   },
   "dependencies": {
+    "express-basic-auth": "^1.2.0",
     "reveal-multiplex": "^0.1.0"
   }
 }
