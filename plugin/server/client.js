@@ -63,8 +63,8 @@
 	// Monitor events that trigger a change in state
 	Reveal.on('slidechanged', (data) => {
 		if (data.indexh === 0 || data.indexh === 2) {
-			return closeSpotifyWindow();
-		} else if (data.indexh === 1 && spotifyWindow !== null) {
+			closeSpotifyWindow();
+		} else if (data.indexh === 1 && spotifyWindow === null) {
 			spotifyWindow = window.open('https://spotify-widget.herokuapp.com/player', '_blank', 'width=400,height=200');
 		}
 		post();
