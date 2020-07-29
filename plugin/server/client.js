@@ -9,17 +9,16 @@
 
 	console.log('View slide notes at ' + window.location.origin + '/notes/' + socketId);
 
-	let spotifyWindow = null;
-
-	const closeSpotifyWindow = function () {
-		if (spotifyWindow !== null) {
-			spotifyWindow.close();
-			spotifyWindow = null;
-		}
+	let spotifyIframe = null;
+	const removeSpotifyÌframe = function () {
+		spotifyIframe = document.querySelector("iframe[src*='/player']");
+		if (spotifyIframe !== null)
+			spotifyIframe.remove();
+			spotifyIframe = null;
 	}
 
 	window.onbeforeunload = function () {
-		closeSpotifyWindow();
+		removeSpotifyÌframe();
 	}
 
 	/**
@@ -62,10 +61,14 @@
 
 	// Monitor events that trigger a change in state
 	Reveal.on('slidechanged', (data) => {
-		if (data.indexh === 0 || data.indexh === 2) {
-			closeSpotifyWindow();
-		} else if (data.indexh === 1 && spotifyWindow === null) {
-			spotifyWindow = window.open('https://spotify-widget.herokuapp.com/player', '_blank', 'width=400,height=200');
+		if (data.indexh === 0 || data.indexh ===2) {
+			removeSpotifyÌframe();
+		} else if (data.indexh === 1 && spotifyIframe === null) {
+			var iframe = document.createElement('iframe');
+			iframe.style.display = "none";
+			iframe.setAttribute("allow", "encrypted-media, autoplay");
+			iframe.src = "https://spotify-widget.herokuapp.com/player";
+			document.body.appendChild(iframe);
 		}
 		post();
 	});
