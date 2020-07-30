@@ -8,11 +8,11 @@ import { isMobile } from '../utils/device.js'
  */
 export default class SlideContent {
 
-	constructor( Reveal ) {
+	constructor(Reveal) {
 
 		this.Reveal = Reveal;
 
-		this.startEmbeddedIframe = this.startEmbeddedIframe.bind( this );
+		this.startEmbeddedIframe = this.startEmbeddedIframe.bind(this);
 
 	}
 
@@ -22,15 +22,15 @@ export default class SlideContent {
 	 *
 	 * @param {HTMLElement} element
 	 */
-	shouldPreload( element ) {
+	shouldPreload(element) {
 
 		// Prefer an explicit global preload setting
 		let preload = this.Reveal.getConfig().preloadIframes;
 
 		// If no global setting is available, fall back on the element's
 		// own preload setting
-		if( typeof preload !== 'boolean' ) {
-			preload = element.hasAttribute( 'data-preload' );
+		if (typeof preload !== 'boolean') {
+			preload = element.hasAttribute('data-preload');
 		}
 
 		return preload;
@@ -43,115 +43,140 @@ export default class SlideContent {
 	 *
 	 * @param {HTMLElement} slide Slide to show
 	 */
-	load( slide, options = {} ) {
+	load(slide, options = {}) {
 
 		// Show the slide element
 		slide.style.display = this.Reveal.getConfig().display;
 
 		// Media elements with data-src attributes
-		queryAll( slide, 'img[data-src], video[data-src], audio[data-src], iframe[data-src]' ).forEach( element => {
-			if( element.tagName !== 'IFRAME' || this.shouldPreload( element ) ) {
-				element.setAttribute( 'src', element.getAttribute( 'data-src' ) );
-				element.setAttribute( 'data-lazy-loaded', '' );
-				element.removeAttribute( 'data-src' );
+		queryAll(slide, 'img[data-src], video[data-src], audio[data-src], iframe[data-src]').forEach(element => {
+			if (element.tagName !== 'IFRAME' || this.shouldPreload(element)) {
+				element.setAttribute('src', element.getAttribute('data-src'));
+				element.setAttribute('data-lazy-loaded', '');
+				element.removeAttribute('data-src');
 			}
-		} );
+		});
 
 		// Media elements with <source> children
-		queryAll( slide, 'video, audio' ).forEach( media => {
+		queryAll(slide, 'video, audio').forEach(media => {
 			let sources = 0;
 
-			queryAll( media, 'source[data-src]' ).forEach( source => {
-				source.setAttribute( 'src', source.getAttribute( 'data-src' ) );
-				source.removeAttribute( 'data-src' );
-				source.setAttribute( 'data-lazy-loaded', '' );
+			queryAll(media, 'source[data-src]').forEach(source => {
+				source.setAttribute('src', source.getAttribute('data-src'));
+				source.removeAttribute('data-src');
+				source.setAttribute('data-lazy-loaded', '');
 				sources += 1;
-			} );
+			});
 
 			// If we rewrote sources for this video/audio element, we need
 			// to manually tell it to load from its new origin
-			if( sources > 0 ) {
+			if (sources > 0) {
 				media.load();
 			}
-		} );
+		});
 
 
 		// Show the corresponding background element
 		let background = slide.slideBackgroundElement;
-		if( background ) {
+		if (background) {
 			background.style.display = 'block';
 
 			let backgroundContent = slide.slideBackgroundContentElement;
-			let backgroundIframe = slide.getAttribute( 'data-background-iframe' );
-
+			let backgroundIframe = slide.getAttribute('data-background-iframe');
+			let backgroundIframes = slide.getAttribute('data-background-iframes');
 			// If the background contains media, load it
-			if( background.hasAttribute( 'data-loaded' ) === false ) {
-				background.setAttribute( 'data-loaded', 'true' );
+			if (background.hasAttribute('data-loaded') === false) {
+				background.setAttribute('data-loaded', 'true');
 
-				let backgroundImage = slide.getAttribute( 'data-background-image' ),
-					backgroundVideo = slide.getAttribute( 'data-background-video' ),
-					backgroundVideoLoop = slide.hasAttribute( 'data-background-video-loop' ),
-					backgroundVideoMuted = slide.hasAttribute( 'data-background-video-muted' );
+				let backgroundImage = slide.getAttribute('data-background-image'),
+					backgroundVideo = slide.getAttribute('data-background-video'),
+					backgroundVideoLoop = slide.hasAttribute('data-background-video-loop'),
+					backgroundVideoMuted = slide.hasAttribute('data-background-video-muted');
 
 				// Images
-				if( backgroundImage ) {
-					backgroundContent.style.backgroundImage = 'url('+ encodeURI( backgroundImage ) +')';
+				if (backgroundImage) {
+					backgroundContent.style.backgroundImage = 'url(' + encodeURI(backgroundImage) + ')';
 				}
 				// Videos
-				else if ( backgroundVideo && !this.Reveal.isSpeakerNotes() ) {
-					let video = document.createElement( 'video' );
+				else if (backgroundVideo && !this.Reveal.isSpeakerNotes()) {
+					let video = document.createElement('video');
 
-					if( backgroundVideoLoop ) {
-						video.setAttribute( 'loop', '' );
+					if (backgroundVideoLoop) {
+						video.setAttribute('loop', '');
 					}
 
-					if( backgroundVideoMuted ) {
+					if (backgroundVideoMuted) {
 						video.muted = true;
 					}
 
 					// Inline video playback works (at least in Mobile Safari) as
 					// long as the video is muted and the `playsinline` attribute is
 					// present
-					if( isMobile ) {
+					if (isMobile) {
 						video.muted = true;
 						video.autoplay = true;
-						video.setAttribute( 'playsinline', '' );
+						video.setAttribute('playsinline', '');
 					}
 
 					// Support comma separated lists of video sources
-					backgroundVideo.split( ',' ).forEach( source => {
-						video.innerHTML += '<source src="'+ source +'">';
-					} );
+					backgroundVideo.split(',').forEach(source => {
+						video.innerHTML += '<source src="' + source + '">';
+					});
 
-					backgroundContent.appendChild( video );
+					backgroundContent.appendChild(video);
 				}
-				// Iframes
-				else if( backgroundIframe && options.excludeIframes !== true ) {
-					let iframe = document.createElement( 'iframe' );
-					iframe.setAttribute( 'allowfullscreen', '' );
-					iframe.setAttribute( 'mozallowfullscreen', '' );
-					iframe.setAttribute( 'webkitallowfullscreen', '' );
-					iframe.setAttribute( 'allow', 'autoplay' );
+				// Iframe
+				else if (backgroundIframe && options.excludeIframes !== true) {
+					let iframe = document.createElement('iframe');
+					iframe.setAttribute('allowfullscreen', '');
+					iframe.setAttribute('mozallowfullscreen', '');
+					iframe.setAttribute('webkitallowfullscreen', '');
+					iframe.setAttribute('allow', 'autoplay');
 
-					iframe.setAttribute( 'data-src', backgroundIframe );
+					iframe.setAttribute('data-src', backgroundIframe);
 
-					iframe.style.width  = '100%';
+					iframe.style.width = '100%';
 					iframe.style.height = '100%';
 					iframe.style.maxHeight = '100%';
 					iframe.style.maxWidth = '100%';
 
-					backgroundContent.appendChild( iframe );
+					backgroundContent.appendChild(iframe);
+				}
+				// Iframes
+				else if (backgroundIframes && options.excludeIframes !== true) {
+					backgroundIframes = backgroundIframes.split(/[\s,]+/);
+					console.log(backgroundIframes);
+					backgroundIframes.forEach((backgroundIframe, index) => {
+						let iframe = document.createElement('iframe');
+						iframe.setAttribute('allowfullscreen', '');
+						iframe.setAttribute('mozallowfullscreen', '');
+						iframe.setAttribute('webkitallowfullscreen', '');
+						iframe.setAttribute('allowTransparency', 'true');
+						iframe.setAttribute('allow', 'autoplay');
+	
+						iframe.setAttribute('data-src', backgroundIframe);
+	
+						iframe.style.width = '100%';
+						iframe.style.height = '100%';
+						iframe.style.maxHeight = '100%';
+						iframe.style.maxWidth = '100%';
+						if (index === 0) {
+							iframe.style.position = 'fixed';
+						}
+	
+						backgroundContent.appendChild(iframe);
+					});
 				}
 			}
 
 			// Start loading preloadable iframes
-			let backgroundIframeElement = backgroundContent.querySelector( 'iframe[data-src]' );
-			if( backgroundIframeElement ) {
+			let backgroundIframeElement = backgroundContent.querySelector('iframe[data-src]');
+			if (backgroundIframeElement) {
 
 				// Check if this iframe is eligible to be preloaded
-				if( this.shouldPreload( background ) && !/autoplay=(1|true|yes)/gi.test( backgroundIframe ) ) {
-					if( backgroundIframeElement.getAttribute( 'src' ) !== backgroundIframe ) {
-						backgroundIframeElement.setAttribute( 'src', backgroundIframe );
+				if (this.shouldPreload(background) && !/autoplay=(1|true|yes)/gi.test(backgroundIframe)) {
+					if (backgroundIframeElement.getAttribute('src') !== backgroundIframe) {
+						backgroundIframeElement.setAttribute('src', backgroundIframe);
 					}
 				}
 
@@ -167,33 +192,33 @@ export default class SlideContent {
 	 *
 	 * @param {HTMLElement} slide
 	 */
-	unload( slide ) {
+	unload(slide) {
 
 		// Hide the slide element
 		slide.style.display = 'none';
 
 		// Hide the corresponding background element
-		let background = this.Reveal.getSlideBackground( slide );
-		if( background ) {
+		let background = this.Reveal.getSlideBackground(slide);
+		if (background) {
 			background.style.display = 'none';
 
 			// Unload any background iframes
-			queryAll( background, 'iframe[src]' ).forEach( element => {
-				element.removeAttribute( 'src' );
-			} );
+			queryAll(background, 'iframe[src]').forEach(element => {
+				element.removeAttribute('src');
+			});
 		}
 
 		// Reset lazy-loaded media elements with src attributes
-		queryAll( slide, 'video[data-lazy-loaded][src], audio[data-lazy-loaded][src], iframe[data-lazy-loaded][src]' ).forEach( element => {
-			element.setAttribute( 'data-src', element.getAttribute( 'src' ) );
-			element.removeAttribute( 'src' );
-		} );
+		queryAll(slide, 'video[data-lazy-loaded][src], audio[data-lazy-loaded][src], iframe[data-lazy-loaded][src]').forEach(element => {
+			element.setAttribute('data-src', element.getAttribute('src'));
+			element.removeAttribute('src');
+		});
 
 		// Reset lazy-loaded media elements with <source> children
-		queryAll( slide, 'video[data-lazy-loaded] source[src], audio source[src]' ).forEach( source => {
-			source.setAttribute( 'data-src', source.getAttribute( 'src' ) );
-			source.removeAttribute( 'src' );
-		} );
+		queryAll(slide, 'video[data-lazy-loaded] source[src], audio source[src]').forEach(source => {
+			source.setAttribute('data-src', source.getAttribute('src'));
+			source.removeAttribute('src');
+		});
 
 	}
 
@@ -202,22 +227,22 @@ export default class SlideContent {
 	 */
 	formatEmbeddedContent() {
 
-		let _appendParamToIframeSource = ( sourceAttribute, sourceURL, param ) => {
-			queryAll( this.Reveal.getSlidesElement(), 'iframe['+ sourceAttribute +'*="'+ sourceURL +'"]' ).forEach( el => {
-				let src = el.getAttribute( sourceAttribute );
-				if( src && src.indexOf( param ) === -1 ) {
-					el.setAttribute( sourceAttribute, src + ( !/\?/.test( src ) ? '?' : '&' ) + param );
+		let _appendParamToIframeSource = (sourceAttribute, sourceURL, param) => {
+			queryAll(this.Reveal.getSlidesElement(), 'iframe[' + sourceAttribute + '*="' + sourceURL + '"]').forEach(el => {
+				let src = el.getAttribute(sourceAttribute);
+				if (src && src.indexOf(param) === -1) {
+					el.setAttribute(sourceAttribute, src + (!/\?/.test(src) ? '?' : '&') + param);
 				}
 			});
 		};
 
 		// YouTube frames must include "?enablejsapi=1"
-		_appendParamToIframeSource( 'src', 'youtube.com/embed/', 'enablejsapi=1' );
-		_appendParamToIframeSource( 'data-src', 'youtube.com/embed/', 'enablejsapi=1' );
+		_appendParamToIframeSource('src', 'youtube.com/embed/', 'enablejsapi=1');
+		_appendParamToIframeSource('data-src', 'youtube.com/embed/', 'enablejsapi=1');
 
 		// Vimeo frames must include "?api=1"
-		_appendParamToIframeSource( 'src', 'player.vimeo.com/', 'api=1' );
-		_appendParamToIframeSource( 'data-src', 'player.vimeo.com/', 'api=1' );
+		_appendParamToIframeSource('src', 'player.vimeo.com/', 'api=1');
+		_appendParamToIframeSource('data-src', 'player.vimeo.com/', 'api=1');
 
 	}
 
@@ -227,20 +252,20 @@ export default class SlideContent {
 	 *
 	 * @param {HTMLElement} element
 	 */
-	startEmbeddedContent( element ) {
+	startEmbeddedContent(element) {
 
-		if( element && !this.Reveal.isSpeakerNotes() ) {
+		if (element && !this.Reveal.isSpeakerNotes()) {
 
 			// Restart GIFs
-			queryAll( element, 'img[src$=".gif"]' ).forEach( el => {
+			queryAll(element, 'img[src$=".gif"]').forEach(el => {
 				// Setting the same unchanged source like this was confirmed
 				// to work in Chrome, FF & Safari
-				el.setAttribute( 'src', el.getAttribute( 'src' ) );
-			} );
+				el.setAttribute('src', el.getAttribute('src'));
+			});
 
 			// HTML5 media elements
-			queryAll( element, 'video, audio' ).forEach( el => {
-				if( closest( el, '.fragment' ) && !closest( el, '.fragment.visible' ) ) {
+			queryAll(element, 'video, audio').forEach(el => {
+				if (closest(el, '.fragment') && !closest(el, '.fragment.visible')) {
 					return;
 				}
 
@@ -249,64 +274,64 @@ export default class SlideContent {
 
 				// If no global setting is available, fall back on the element's
 				// own autoplay setting
-				if( typeof autoplay !== 'boolean' ) {
-					autoplay = el.hasAttribute( 'data-autoplay' ) || !!closest( el, '.slide-background' );
+				if (typeof autoplay !== 'boolean') {
+					autoplay = el.hasAttribute('data-autoplay') || !!closest(el, '.slide-background');
 				}
 
-				if( autoplay && typeof el.play === 'function' ) {
+				if (autoplay && typeof el.play === 'function') {
 
 					// If the media is ready, start playback
-					if( el.readyState > 1 ) {
-						this.startEmbeddedMedia( { target: el } );
+					if (el.readyState > 1) {
+						this.startEmbeddedMedia({ target: el });
 					}
 					// Mobile devices never fire a loaded event so instead
 					// of waiting, we initiate playback
-					else if( isMobile ) {
+					else if (isMobile) {
 						let promise = el.play();
 
 						// If autoplay does not work, ensure that the controls are visible so
 						// that the viewer can start the media on their own
-						if( promise && typeof promise.catch === 'function' && el.controls === false ) {
-							promise.catch( () => {
+						if (promise && typeof promise.catch === 'function' && el.controls === false) {
+							promise.catch(() => {
 								el.controls = true;
 
 								// Once the video does start playing, hide the controls again
-								el.addEventListener( 'play', () => {
+								el.addEventListener('play', () => {
 									el.controls = false;
-								} );
-							} );
+								});
+							});
 						}
 					}
 					// If the media isn't loaded, wait before playing
 					else {
-						el.removeEventListener( 'loadeddata', this.startEmbeddedMedia ); // remove first to avoid dupes
-						el.addEventListener( 'loadeddata', this.startEmbeddedMedia );
+						el.removeEventListener('loadeddata', this.startEmbeddedMedia); // remove first to avoid dupes
+						el.addEventListener('loadeddata', this.startEmbeddedMedia);
 					}
 
 				}
-			} );
+			});
 
 			// Normal iframes
-			queryAll( element, 'iframe[src]' ).forEach( el => {
-				if( closest( el, '.fragment' ) && !closest( el, '.fragment.visible' ) ) {
+			queryAll(element, 'iframe[src]').forEach(el => {
+				if (closest(el, '.fragment') && !closest(el, '.fragment.visible')) {
 					return;
 				}
 
-				this.startEmbeddedIframe( { target: el } );
-			} );
+				this.startEmbeddedIframe({ target: el });
+			});
 
 			// Lazy loading iframes
-			queryAll( element, 'iframe[data-src]' ).forEach( el => {
-				if( closest( el, '.fragment' ) && !closest( el, '.fragment.visible' ) ) {
+			queryAll(element, 'iframe[data-src]').forEach(el => {
+				if (closest(el, '.fragment') && !closest(el, '.fragment.visible')) {
 					return;
 				}
 
-				if( el.getAttribute( 'src' ) !== el.getAttribute( 'data-src' ) ) {
-					el.removeEventListener( 'load', this.startEmbeddedIframe ); // remove first to avoid dupes
-					el.addEventListener( 'load', this.startEmbeddedIframe );
-					el.setAttribute( 'src', el.getAttribute( 'data-src' ) );
+				if (el.getAttribute('src') !== el.getAttribute('data-src')) {
+					el.removeEventListener('load', this.startEmbeddedIframe); // remove first to avoid dupes
+					el.addEventListener('load', this.startEmbeddedIframe);
+					el.setAttribute('src', el.getAttribute('data-src'));
 				}
-			} );
+			});
 
 		}
 
@@ -318,17 +343,17 @@ export default class SlideContent {
 	 *
 	 * @param {object} event
 	 */
-	startEmbeddedMedia( event ) {
+	startEmbeddedMedia(event) {
 
-		let isAttachedToDOM = !!closest( event.target, 'html' ),
-			isVisible  		= !!closest( event.target, '.present' );
+		let isAttachedToDOM = !!closest(event.target, 'html'),
+			isVisible = !!closest(event.target, '.present');
 
-		if( isAttachedToDOM && isVisible ) {
+		if (isAttachedToDOM && isVisible) {
 			event.target.currentTime = 0;
 			event.target.play();
 		}
 
-		event.target.removeEventListener( 'loadeddata', this.startEmbeddedMedia );
+		event.target.removeEventListener('loadeddata', this.startEmbeddedMedia);
 
 	}
 
@@ -338,37 +363,37 @@ export default class SlideContent {
 	 *
 	 * @param {object} event
 	 */
-	startEmbeddedIframe( event ) {
+	startEmbeddedIframe(event) {
 
 		let iframe = event.target;
 
-		if( iframe && iframe.contentWindow ) {
+		if (iframe && iframe.contentWindow) {
 
-			let isAttachedToDOM = !!closest( event.target, 'html' ),
-				isVisible  		= !!closest( event.target, '.present' );
+			let isAttachedToDOM = !!closest(event.target, 'html'),
+				isVisible = !!closest(event.target, '.present');
 
-			if( isAttachedToDOM && isVisible ) {
+			if (isAttachedToDOM && isVisible) {
 
 				// Prefer an explicit global autoplay setting
 				let autoplay = this.Reveal.getConfig().autoPlayMedia;
 
 				// If no global setting is available, fall back on the element's
 				// own autoplay setting
-				if( typeof autoplay !== 'boolean' ) {
-					autoplay = iframe.hasAttribute( 'data-autoplay' ) || !!closest( iframe, '.slide-background' );
+				if (typeof autoplay !== 'boolean') {
+					autoplay = iframe.hasAttribute('data-autoplay') || !!closest(iframe, '.slide-background');
 				}
 
 				// YouTube postMessage API
-				if( /youtube\.com\/embed\//.test( iframe.getAttribute( 'src' ) ) && autoplay ) {
-					iframe.contentWindow.postMessage( '{"event":"command","func":"playVideo","args":""}', '*' );
+				if (/youtube\.com\/embed\//.test(iframe.getAttribute('src')) && autoplay) {
+					iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
 				}
 				// Vimeo postMessage API
-				else if( /player\.vimeo\.com\//.test( iframe.getAttribute( 'src' ) ) && autoplay ) {
-					iframe.contentWindow.postMessage( '{"method":"play"}', '*' );
+				else if (/player\.vimeo\.com\//.test(iframe.getAttribute('src')) && autoplay) {
+					iframe.contentWindow.postMessage('{"method":"play"}', '*');
 				}
 				// Generic postMessage API
 				else {
-					iframe.contentWindow.postMessage( 'slide:start', '*' );
+					iframe.contentWindow.postMessage('slide:start', '*');
 				}
 
 			}
@@ -383,50 +408,50 @@ export default class SlideContent {
 	 *
 	 * @param {HTMLElement} element
 	 */
-	stopEmbeddedContent( element, options = {} ) {
+	stopEmbeddedContent(element, options = {}) {
 
-		options = extend( {
+		options = extend({
 			// Defaults
 			unloadIframes: true
-		}, options );
+		}, options);
 
-		if( element && element.parentNode ) {
+		if (element && element.parentNode) {
 			// HTML5 media elements
-			queryAll( element, 'video, audio' ).forEach( el => {
-				if( !el.hasAttribute( 'data-ignore' ) && typeof el.pause === 'function' ) {
+			queryAll(element, 'video, audio').forEach(el => {
+				if (!el.hasAttribute('data-ignore') && typeof el.pause === 'function') {
 					el.setAttribute('data-paused-by-reveal', '');
 					el.pause();
 				}
-			} );
+			});
 
 			// Generic postMessage API for non-lazy loaded iframes
-			queryAll( element, 'iframe' ).forEach( el => {
-				if( el.contentWindow ) el.contentWindow.postMessage( 'slide:stop', '*' );
-				el.removeEventListener( 'load', this.startEmbeddedIframe );
+			queryAll(element, 'iframe').forEach(el => {
+				if (el.contentWindow) el.contentWindow.postMessage('slide:stop', '*');
+				el.removeEventListener('load', this.startEmbeddedIframe);
 			});
 
 			// YouTube postMessage API
-			queryAll( element, 'iframe[src*="youtube.com/embed/"]' ).forEach( el => {
-				if( !el.hasAttribute( 'data-ignore' ) && el.contentWindow && typeof el.contentWindow.postMessage === 'function' ) {
-					el.contentWindow.postMessage( '{"event":"command","func":"pauseVideo","args":""}', '*' );
+			queryAll(element, 'iframe[src*="youtube.com/embed/"]').forEach(el => {
+				if (!el.hasAttribute('data-ignore') && el.contentWindow && typeof el.contentWindow.postMessage === 'function') {
+					el.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
 				}
 			});
 
 			// Vimeo postMessage API
-			queryAll( element, 'iframe[src*="player.vimeo.com/"]' ).forEach( el => {
-				if( !el.hasAttribute( 'data-ignore' ) && el.contentWindow && typeof el.contentWindow.postMessage === 'function' ) {
-					el.contentWindow.postMessage( '{"method":"pause"}', '*' );
+			queryAll(element, 'iframe[src*="player.vimeo.com/"]').forEach(el => {
+				if (!el.hasAttribute('data-ignore') && el.contentWindow && typeof el.contentWindow.postMessage === 'function') {
+					el.contentWindow.postMessage('{"method":"pause"}', '*');
 				}
 			});
 
-			if( options.unloadIframes === true ) {
+			if (options.unloadIframes === true) {
 				// Unload lazy-loaded iframes
-				queryAll( element, 'iframe[data-src]' ).forEach( el => {
+				queryAll(element, 'iframe[data-src]').forEach(el => {
 					// Only removing the src doesn't actually unload the frame
 					// in all browsers (Firefox) so we set it to blank first
-					el.setAttribute( 'src', 'about:blank' );
-					el.removeAttribute( 'src' );
-				} );
+					el.setAttribute('src', 'about:blank');
+					el.removeAttribute('src');
+				});
 			}
 		}
 
