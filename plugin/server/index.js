@@ -49,7 +49,8 @@ app.get('/', (req, res) => {
         res.send(mustache.render(data.toString(), {
             viewer: true,
             token: null,
-            id: process.env.MULTIPLEX_ID
+            id: process.env.MULTIPLEX_ID,
+            spotifyUrl: process.env.SPOTIFY_URL
         }));
     });
 
@@ -60,7 +61,8 @@ app.get('/admin', basicAuth(authOptions), (req, res) => {
         res.send(mustache.render(data.toString(), {
             admin: true,
             token: process.env.MULTIPLEX_TOKEN,
-            id: process.env.MULTIPLEX_ID
+            id: process.env.MULTIPLEX_ID,
+            spotifyUrl: process.env.SPOTIFY_URL
         }));
     });
 });

@@ -1,0 +1,3 @@
+[submodule "spotify-widget"]
+	path = spotify-widget
+	url = https://github.com/dalexhd/spotify-widget.git
