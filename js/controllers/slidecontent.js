@@ -145,7 +145,6 @@ export default class SlideContent {
 				// Iframes
 				else if (backgroundIframes && options.excludeIframes !== true) {
 					backgroundIframes = backgroundIframes.split(/[\s,]+/);
-					console.log(backgroundIframes);
 					backgroundIframes.forEach((backgroundIframe, index) => {
 						let iframe = document.createElement('iframe');
 						iframe.setAttribute('allowfullscreen', '');
@@ -175,7 +174,7 @@ export default class SlideContent {
 
 				// Check if this iframe is eligible to be preloaded
 				if (this.shouldPreload(background) && !/autoplay=(1|true|yes)/gi.test(backgroundIframe)) {
-					if (backgroundIframeElement.getAttribute('src') !== backgroundIframe) {
+					if (backgroundIframe !== null && backgroundIframeElement.getAttribute('src') !== backgroundIframe) {
 						backgroundIframeElement.setAttribute('src', backgroundIframe);
 					}
 				}

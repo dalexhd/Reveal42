@@ -60,17 +60,19 @@
 	});
 
 	// Monitor events that trigger a change in state
-	Reveal.on('slidechanged', (data) => {
-		if (data.indexh === 0 || data.indexh ===2) {
-			removeSpotifyÌframe();
-		} else if (data.indexh === 1 && spotifyIframe === null) {
-			var iframe = document.createElement('iframe');
-			iframe.style.display = "none";
-			iframe.setAttribute("allow", "encrypted-media, autoplay");
-			iframe.src = "https://spotify-widget.herokuapp.com/player";
-			document.body.appendChild(iframe);
-		}
-		post();
+	['slidechanged', 'ready'].forEach(event => {
+		Reveal.on(event, (data) => {
+			if (data.indexh === 0 || data.indexh ===2) {
+				removeSpotifyÌframe();
+			} else if (data.indexh === 1 && spotifyIframe === null) {
+				var iframe = document.createElement('iframe');
+				iframe.style.display = "none";
+				iframe.setAttribute("allow", "encrypted-media, autoplay");
+				iframe.src = `${spotifyUrl}/player`;
+				document.body.appendChild(iframe);
+			}
+			post();
+		});
 	});
 	['fragmentshown', 'fragmenthidden', 'overviewhidden', 'overviewshown', 'paused', 'resumed'].forEach((event) => {
 		Reveal.on(event, post);

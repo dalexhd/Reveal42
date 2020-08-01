@@ -295,9 +295,10 @@
         // Learn about plugins: https://revealjs.com/plugins/
         plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight],
       });
+      const spotifyUrl = '{{{spotifyUrl}}}';
     </script>
     <script src="/node_modules/socket.io-client/dist/socket.io.js"></script>
-    <script src="/node_modules/reveal-multiplex/master.js"></script>
+    <script src="/plugin/multiplex/master.js"></script>
     <script src="/plugin/server/client.js" crossorigin="anonymous"></script>
     {{/admin}} {{^admin}}
     <script>
@@ -320,7 +321,7 @@
       });
     </script>
     <script src="/node_modules/socket.io-client/dist/socket.io.js"></script>
-    <script src="/node_modules/reveal-multiplex/client.js"></script>
+    <script src="/plugin/multiplex/client.js"></script>
     {{/admin}}
   </body>
 </html>
