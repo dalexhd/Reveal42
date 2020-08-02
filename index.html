@@ -31,7 +31,7 @@
           <div data-id="box-42-logo-1">
             <a href="https://www.42madrid.com/" target="_blank" rel="noopener noreferrer">
               <img
-                data-src="https://www.42madrid.com/wp-content/uploads/2019/10/logo_menu.png"
+                data-src="/dist/img/42logo.png"
                 alt="42 Madrid logo"
                 style="margin: 0 auto 4rem auto; background: transparent;"
                 class="demo-logo"
@@ -61,7 +61,7 @@
           <div data-id="box-42-logo-1" style="display: flex;">
             <a href="https://www.42madrid.com/" target="_blank" rel="noopener noreferrer">
               <img
-                data-src="https://www.42madrid.com/wp-content/uploads/2019/10/logo_menu.png"
+                data-src="/dist/img/42logo.png"
                 alt="42 Madrid logo"
                 height="80"
                 style="margin: 0 auto 4rem auto; background: transparent;"
@@ -83,11 +83,9 @@
               <a href="https://revealjs.com/" target="_blank" rel="noopener noreferrer">reveal.js</a></small
             >
           </p>
-          <p style="margin: 0;">
-            <a href="https://www.heroku.com/" target="_blank" rel="noopener noreferrer">
-              <img src="dist/img/built-on-heroku-light.svg" height="80" alt="Hecho en heroku" style="margin: 0;" />
-            </a>
-          </p>
+          <a href="https://www.heroku.com/" target="_blank" rel="noopener noreferrer">
+            <img src="/dist/img/built-on-heroku-light.svg" height="80" alt="Hecho en heroku" style="margin: 0;" />
+          </a>
         </section>
         <section>
           <section>
@@ -98,12 +96,7 @@
           </section>
           <section data-auto-animate>
             <h1>Antes de nada...</h1>
-            <img
-              class="r-frame"
-              height="400"
-              src="https://media1.tenor.com/images/b44d1f1a10c7c24c30329e066a72d918/tenor.gif"
-              alt="Payasos de la tele"
-            />
+            <img class="r-frame" height="400" src="/dist/img/los-payasos-de-la-tele.gif" alt="Payasos de la tele" />
             <aside class="notes">
               Shhh, these are your private notes 📝
             </aside>
@@ -113,7 +106,7 @@
           </section>
           <section data-auto-animate>
             <h1>¿Quién soy?</h1>
-            <img src="https://en.gravatar.com/userimage/183181802/c356598c607f4984e5bfe768c5c97491.jpg?size=150" alt="Yo" />
+            <img src="/dist/img/avatar.jpeg" alt="Yo" height="150" />
             <p class="fragment fade-in-then-semi-out">Me llamo Alex Borbolla</p>
             <p class="fragment fade-in-then-semi-out">Tengo 21 años</p>
             <p class="fragment fade-in-then-semi-out">
@@ -135,37 +128,286 @@
         </section>
         <section data-transition="zoom">
           <h2>Comencemos... 🚀</h2>
-          <img src="https://media1.giphy.com/media/Lm62AlSEQqhimpM59W/giphy.gif" alt="Comencemos..." />
+          <img src="/dist/img/cinturon.gif" alt="Comencemos..." />
         </section>
+        <section
+          data-transition="zoom"
+          data-background-image="/dist/img/Pokemon-Rage.gif"
+          data-background-size="600px"
+          data-background-repeat="repeat"
+        ></section>
         <section data-transition="zoom-in fade-out">
           <section id="fragments" data-auto-animate>
-            <img src="dist/img/Raspberry_Pi_Logo.svg" alt="Raspberry Pi Logo" height="300" />
+            <img src="/dist/img/Raspberry_Pi_Logo.svg" class="silhouette" alt="Raspberry Pi Logo" height="300" />
+          </section>
+          <section data-auto-animate>
+            <img
+              src="/dist/img/Raspberry_Pi_Logo.svg"
+              alt="Raspberry Pi Logo"
+              height="300"
+              class="fade-out"
+              data-fragment-index="0"
+            />
+            <h2>Raspberry PI</h2>
+          </section>
+          <section data-auto-animate>
+            <img
+              src="/dist/img/Raspberry_Pi_Logo.svg"
+              alt="Raspberry Pi Logo"
+              height="300"
+              class="fade-out"
+              data-fragment-index="0"
+            />
+            <img
+              src="/dist/img/Raspberry_Pi.png"
+              alt="Raspberry Pi"
+              height="300"
+              class="current-visible"
+              data-fragment-index="0"
+            />
+            <h2>Raspberry PI</h2>
+          </section>
+          <section id="fragments" data-auto-animate>
+            <img src="/dist/img/Raspberry_Pi.png" alt="Raspberry Pi" height="300" />
+            <h2>Raspberry PI</h2>
             <p>
               <span class="fragment">Buen rendimiento, </span>
               <span class="fragment">Bajo Consumo, </span>
-              <span class="fragment">Usos infinitos</span>
+              <span class="fragment">Muy compacto</span>
             </p>
           </section>
-          <section data-auto-animate>
-            <img src="/dist/img/Raspberry_Pi_Logo.svg" alt="Raspberry Pi Logo" height="100" />
-            <p>
-              <span>Buen rendimiento, </span>
-              <span>Bajo Consumo, </span>
-              <span>Usos infinitos</span>
-            </p>
-            <div class="r-stack" data-auto-animate-delay="0.35">
-              <img src="/dist/img/iot.png" height="300" class="fragment fade-out" data-fragment-index="0" />
-              <img src="/dist/img/server.png" height="300" class="fragment current-visible" data-fragment-index="0" />
-              <img src="/dist/img/press+start+retro+gaming.gif" height="300" class="fragment" />
+          <section data-transition="zoom-in" data-auto-animate>
+            <div class="flex justify-between">
+              <div class="fragment shrink">
+                <h3>IoT</h3>
+                <img src="/dist/img/iot.png" height="300" />
+              </div>
+              <div class="fragment">
+                <div class="fragment shrink">
+                  <h3>Servidores</h3>
+                  <img src="/dist/img/server.png" height="300" />
+                </div>
+              </div>
+              <div class="fragment">
+                <div class="fragment shrink">
+                  <h3>Gaming</h3>
+                  <img src="/dist/img/press+start+retro+gaming.gif" height="300" />
+                </div>
+              </div>
             </div>
           </section>
+          <section data-auto-animate>
+            <h1 data-fragment-index="1">DNS</h1>
+            <div class="flex justify-between">
+              <h2 class="fragment inline" data-fragment-index="2">DOMAIN</h2>
+              <h2 class="fragment inline" data-fragment-index="2">+</h2>
+              <h2 class="fragment inline" data-fragment-index="3">NAME</h2>
+              <h2 class="fragment inline" data-fragment-index="3">+</h2>
+              <h2 class="fragment inline" data-fragment-index="4">SYSTEM</h2>
+            </div>
+          </section>
+          <section data-auto-animate>
+            <h1>DNS</h1>
+            <div class="flex justify-between">
+              <h2 class="inline">DOMAIN</h2>
+              <h2 class="inline">+</h2>
+              <h2 class="inline">NAME</h2>
+              <h2 class="inline">+</h2>
+              <h2 class="inline">SYSTEM</h2>
+            </div>
+            <img
+              src="/dist/img/paginas-amarillas.jpg"
+              alt="Páginas amarillas"
+            />
+          </section>
+          <section data-transition="zoom-in" data-auto-animate>
+            <div class="flex justify-between items-center">
+              <canvas width="400" height="400" class="anything">
+                <!-- {
+                    "initialize": "function(container) { 
+                    var width = container.width,
+                        height = container.height;
+                    var radius = height / 2 - 5,
+                        scale = radius,
+                        velocity = .02;
+                    var projection = d3.geoOrthographic()
+                        .translate([width / 2, height / 2])
+                        .scale(scale)
+                        .clipAngle(90);
+                    var context = container.getContext('2d');
+                    var path = d3.geoPath()
+                        .projection(projection)
+                        .context(context);
+
+                    d3.json('/plugin/anything/d3/world-110m.json', function(error, world) {
+                      if (error) throw error;
+                      var land = topojson.feature(world, world.objects.land);
+                      d3.timer(function(elapsed) {
+                        context.clearRect(0, 0, width, height);
+                        context.beginPath();
+                        context.arc(width / 2, height / 2, radius, 0, 2 * Math.PI, true);
+                        context.lineWidth = 2.5;
+                        context.fillStyle = '#fff';
+                        context.fill();
+                  
+                        projection.rotate([velocity * elapsed, 0]);
+                        context.beginPath();
+                        path(land);
+                        context.fillStyle = '#42affa';
+                        context.fill();
+                        context.beginPath();
+                        context.arc(width / 2, height / 2, radius, 0, 2 * Math.PI, true);
+                        context.lineWidth = 2.5;
+                        context.strokeStyle = '#ccc';
+                        context.stroke();
+                      });
+                    });
+                    d3.select(self.frameElement).style('height', height + 'px');
+                  
+                      }"
+                  } -->
+              </canvas>
+              <span
+                class="text-6xl font-black font-mono bg-blue-500 bg-opacity-100"
+                data-animated-scale-up-to="1.2"
+                data-animated-duration="200"
+                >4,294,967,296</span
+              >
+            </div>
+          </section>
+          <!-- <section data-transition="zoom-in" data-auto-animate>
+            <div data-fragment-index="1">
+              <div class="earth">
+                <div class="earth--shadow"></div>
+              </div>
+              <div class="moon"></div>
+              <div class="stars"></div>
+            </div>
+            <span
+              class="text-6xl font-black font-mono scale-up fixed bg-green-500 bg-opacity-100"
+              style="top: 80%; left: 25%;"
+              data-fragment-index="2"
+              data-animated-scale-up-to="1.5"
+              data-animated-duration="200"
+              >4,294,967,296</span
+            >
+          </section>
+          <section data-transition="zoom-in" data-auto-animate>
+            <span
+              class="text-6xl font-black font-mono scale-up bg-green-500 bg-opacity-100"
+              data-fragment-index="2"
+              data-animated-scale-up-to="1.5"
+              data-animated-duration="200"
+              >4,294,967,296</span
+            >
+          </section> -->
+          <!-- <section data-transition="zoom-in" data-auto-animate>
+            <div class="flex justify-between items-center">
+              <img src="/dist/img/server.png" height="200" />
+              <canvas width="400" height="400" class="anything">
+                
+                  {
+                    "initialize": "function(container) { 
+                    var width = container.width,
+                        height = container.height;
+                    var radius = height / 2 - 5,
+                        scale = radius,
+                        velocity = .02;
+                    var projection = d3.geoOrthographic()
+                        .translate([width / 2, height / 2])
+                        .scale(scale)
+                        .clipAngle(90);
+                    var context = container.getContext('2d');
+                    var path = d3.geoPath()
+                        .projection(projection)
+                        .context(context);
+
+                    d3.json('/plugin/anything/d3/world-110m.json', function(error, world) {
+                      if (error) throw error;
+                      var land = topojson.feature(world, world.objects.land);
+                      d3.timer(function(elapsed) {
+                        context.clearRect(0, 0, width, height);
+                        context.beginPath();
+                        context.arc(width / 2, height / 2, radius, 0, 2 * Math.PI, true);
+                        context.lineWidth = 2.5;
+                        context.fillStyle = '#fff';
+                        context.fill();
+                  
+                        projection.rotate([velocity * elapsed, 0]);
+                        context.beginPath();
+                        path(land);
+                        context.fillStyle = '#42affa';
+                        context.fill();
+                        context.beginPath();
+                        context.arc(width / 2, height / 2, radius, 0, 2 * Math.PI, true);
+                        context.lineWidth = 2.5;
+                        context.strokeStyle = '#ccc';
+                        context.stroke();
+                      });
+                    });
+                    d3.select(self.frameElement).style('height', height + 'px');
+                  
+                      }"
+                  }
+                  
+              </canvas>
+            </div>
+          </section> -->
+          <!-- <section data-transition="zoom-in" data-auto-animate>
+            <div class="inline-block">
+              <h3>IoT</h3>
+              <img src="/dist/img/iot.png" height="300" />
+            </div>
+          </section>
+
+          <section data-transition="zoom-in" data-auto-animate>
+            <div class="flex justify-around">
+              <div>
+                <h3>IoT</h3>
+                <img src="/dist/img/iot.png" height="200" />
+              </div>
+              <div>
+                <h3>Servidores</h3>
+                <img src="/dist/img/server.png" height="300" />
+              </div>
+            </div>
+          </section>
+          <section data-transition="zoom-in" data-auto-animate>
+            <div class="flex justify-around">
+              <div>
+                <h3>IoT</h3>
+                <img src="/dist/img/iot.png" height="200" />
+              </div>
+              <div>
+                <h3>Servidores</h3>
+                <img src="/dist/img/server.png" height="200" />
+              </div>
+              <div>
+                <h3>Gaming</h3>
+                <img src="/dist/img/press+start+retro+gaming.gif" height="200" />
+              </div>
+            </div>
+          </section> -->
         </section>
         <section data-transition="zoom-in fade-out">
-          <section>
-            <img src="/dist/img/algolia.svg" alt="Algolia Logo" height="300" />
+          <section data-auto-animate>
+            <img
+              src="/dist/img/algolia.svg"
+              alt="Algolia Logo"
+              height="300"
+              style="object-fit: cover; width: 305px; object-position: 0% 0;"
+              data-id="algolia"
+            />
+          </section>
+          <section data-transition="zoom-in">
+            <img
+              src="/dist/img/algolia.svg"
+              alt="Algolia Logo"
+              height="300"
+            />
           </section>
           <section>
-            <h3>Uno de los motores más potentes de búsqueda disponibles.</h3>
+            <h3>Uno de los motores más potentes de búsqueda del mercado.</h3>
           </section>
           <section>
             <h3>
@@ -276,6 +518,25 @@
     <script src="/plugin/search/search.js"></script>
     <script src="/plugin/markdown/markdown.js"></script>
     <script src="/plugin/highlight/highlight.js"></script>
+    <!-- Used for plugin: Reveal animated -->
+    <script src="/plugin/revealjs-animated/revealjs-animated.js"></script>
+    <!-- Used for plugin: Anything -->
+    <script src="/plugin/anything/d3/d3.min.js"></script>
+    <script src="/plugin/anything/anything.js" defer></script>
+    <script src="/plugin/anything/d3/topojson.min.js" defer></script>
+
+    <script>
+      const anything = [
+        {
+          className: "anything",
+          initialize: function (container, options) {
+            if (options && options.initialize) {
+              options.initialize(container);
+            }
+          },
+        },
+      ];
+    </script>
     {{#admin}}
     <script>
       // Also available as an ES module, see:
@@ -291,11 +552,11 @@
           id: "{{id}}", // Obtained from socket.io server
           url: "https://reveal-js-multiplex-ccjbegmaii.now.sh", // Location of socket.io server
         },
-
+        anything,
         // Learn about plugins: https://revealjs.com/plugins/
         plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight],
       });
-      const spotifyUrl = '{{{spotifyUrl}}}';
+      const spotifyUrl = "{{{spotifyUrl}}}";
     </script>
     <script src="/node_modules/socket.io-client/dist/socket.io.js"></script>
     <script src="/plugin/multiplex/master.js"></script>
@@ -308,14 +569,14 @@
         controls: true,
         progress: true,
         center: true,
-        hash: false,
+        hash: true,
         multiplex: {
           // Example values. To generate your own, see the socket.io server instructions.
           secret: null, // Obtained from the socket.io server. Gives this (the master) control of the presentation
           id: "{{id}}", // Obtained from socket.io server
           url: "https://reveal-js-multiplex-ccjbegmaii.now.sh", // Location of socket.io server
         },
-
+        anything,
         // Learn about plugins: https://revealjs.com/plugins/
         plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight],
       });

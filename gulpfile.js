@@ -4,6 +4,7 @@ const glob = require('glob')
 const yargs = require('yargs')
 const colors = require('colors')
 const qunit = require('node-qunit-puppeteer')
+const tailwindcss = require('tailwindcss')
 
 const {rollup} = require('rollup')
 const {terser} = require('rollup-plugin-terser')
@@ -15,11 +16,13 @@ const gulp = require('gulp')
 const tap = require('gulp-tap')
 const zip = require('gulp-zip')
 const sass = require('gulp-sass')
+const postcss = require('gulp-postcss')
 const header = require('gulp-header')
 const eslint = require('gulp-eslint')
 const minify = require('gulp-clean-css')
 const connect = require('gulp-connect')
 const autoprefixer = require('gulp-autoprefixer')
+const concat = require('gulp-concat')
 
 const root = yargs.argv.root || '.'
 const port = yargs.argv.port || 8000
@@ -166,10 +169,14 @@ gulp.task('css-core', () => gulp.src(['css/reveal.scss'])
     .pipe(header(banner))
     .pipe(gulp.dest('./dist')))
 
-gulp.task('css-custom', () => gulp.src(['css/custom.scss'])
+gulp.task('css-custom', () => gulp.src(['css/custom.scss', 'css/helper.scss'])
     .pipe(sass())
+    .pipe(postcss([
+        tailwindcss()
+    ]))
     .pipe(autoprefixer())
     .pipe(minify({compatibility: 'ie9'}))
+    .pipe(concat('custom.css'))
     .pipe(gulp.dest('./dist')))
 
 gulp.task('css-server', () => gulp.src(['css/server.scss'])
