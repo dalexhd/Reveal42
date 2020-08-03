@@ -131,7 +131,6 @@ export default class SlideContent {
 					iframe.setAttribute('allowfullscreen', '');
 					iframe.setAttribute('mozallowfullscreen', '');
 					iframe.setAttribute('webkitallowfullscreen', '');
-					iframe.setAttribute('allow', 'autoplay');
 
 					iframe.setAttribute('data-src', backgroundIframe);
 
@@ -151,8 +150,6 @@ export default class SlideContent {
 						iframe.setAttribute('mozallowfullscreen', '');
 						iframe.setAttribute('webkitallowfullscreen', '');
 						iframe.setAttribute('allowTransparency', 'true');
-						iframe.setAttribute('allow', 'autoplay');
-	
 						iframe.setAttribute('data-src', backgroundIframe);
 	
 						iframe.style.width = '100%';
@@ -174,7 +171,8 @@ export default class SlideContent {
 
 				// Check if this iframe is eligible to be preloaded
 				if (this.shouldPreload(background) && !/autoplay=(1|true|yes)/gi.test(backgroundIframe)) {
-					if (backgroundIframe !== null && backgroundIframeElement.getAttribute('src') !== backgroundIframe) {
+					//FIXME: Src not adding on notes server.
+					if (backgroundIframeElement.getAttribute('src') !== backgroundIframe) {
 						backgroundIframeElement.setAttribute('src', backgroundIframe);
 					}
 				}
@@ -253,7 +251,7 @@ export default class SlideContent {
 	 */
 	startEmbeddedContent(element) {
 
-		if (element && !this.Reveal.isSpeakerNotes()) {
+		if (element) {
 
 			// Restart GIFs
 			queryAll(element, 'img[src$=".gif"]').forEach(el => {

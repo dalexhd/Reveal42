@@ -25,6 +25,7 @@
 
   <body>
     <div class="reveal">
+      <div id="screen-sharing"></div>
       <!-- Any section element inside of this container is displayed as a slide -->
       <div class="slides">
         <section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
@@ -126,10 +127,6 @@
             </p>
           </section>
         </section>
-        <section data-transition="zoom">
-          <h2>Comencemos... 🚀</h2>
-          <img src="/dist/img/cinturon.gif" alt="Comencemos..." />
-        </section>
         <section
           data-transition="zoom"
           data-background-image="/dist/img/Pokemon-Rage.gif"
@@ -215,16 +212,13 @@
               <h2 class="inline">+</h2>
               <h2 class="inline">SYSTEM</h2>
             </div>
-            <img
-              src="/dist/img/paginas-amarillas.jpg"
-              alt="Páginas amarillas"
-            />
+            <img src="/dist/img/paginas-amarillas.jpg" alt="Páginas amarillas" />
           </section>
           <section data-transition="zoom-in" data-auto-animate>
             <div class="flex justify-between items-center">
-              <canvas width="400" height="400" class="anything">
+              <canvas width="400" height="401" class="anything">
                 <!-- {
-                    "initialize": "function(container) { 
+                    "initialize": "function(container) {
                     var width = container.width,
                         height = container.height;
                     var radius = height / 2 - 5,
@@ -262,8 +256,6 @@
                         context.stroke();
                       });
                     });
-                    d3.select(self.frameElement).style('height', height + 'px');
-                  
                       }"
                   } -->
               </canvas>
@@ -389,6 +381,7 @@
             </div>
           </section> -->
         </section>
+        <section></section>
         <section data-transition="zoom-in fade-out">
           <section data-auto-animate>
             <img
@@ -400,11 +393,7 @@
             />
           </section>
           <section data-transition="zoom-in">
-            <img
-              src="/dist/img/algolia.svg"
-              alt="Algolia Logo"
-              height="300"
-            />
+            <img src="/dist/img/algolia.svg" alt="Algolia Logo" height="300" />
           </section>
           <section>
             <h3>Uno de los motores más potentes de búsqueda del mercado.</h3>
@@ -514,16 +503,22 @@
 
     <script src="/dist/reveal.js"></script>
     <script src="/plugin/zoom/zoom.js"></script>
-    <script src="/plugin/notes/notes.js"></script>
     <script src="/plugin/search/search.js"></script>
     <script src="/plugin/markdown/markdown.js"></script>
     <script src="/plugin/highlight/highlight.js"></script>
+    <!-- Scripts used by multiple plugins -->
+    <script src="/node_modules/socket.io-client/dist/socket.io.js"></script>
     <!-- Used for plugin: Reveal animated -->
     <script src="/plugin/revealjs-animated/revealjs-animated.js"></script>
     <!-- Used for plugin: Anything -->
     <script src="/plugin/anything/d3/d3.min.js"></script>
     <script src="/plugin/anything/anything.js" defer></script>
     <script src="/plugin/anything/d3/topojson.min.js" defer></script>
+    <!-- Used for plugin: Broadcast -->
+    <script src="/plugin/broadcast/RTCMultiConnection/RTCMultiConnection.js"></script>
+    <script src="/plugin/broadcast/RTCMultiConnection/adapter.js"></script>
+    <script src="/plugin/broadcast/bCrypt.js"></script>
+    <script src="/plugin/broadcast/broadcast.js" defer></script>
 
     <script>
       const anything = [
@@ -536,6 +531,20 @@
           },
         },
       ];
+      const broadcast = {
+        // Set master password to "123456"
+        secret: "$2a$05$4I879F2tQkzBxQiEFmJ5BuhsB3srd3wrov.IA3fmSlKynni7OHUNm",
+        // Configure RTCMultiConnection
+        connection: {
+          socketURL: "https://revealjs-broadcast.herokuapp.com:443/",
+          session: {
+            audio: false,
+            video: false,
+            screen: true,
+            oneway: true,
+          },
+        },
+      };
     </script>
     {{#admin}}
     <script>
@@ -553,15 +562,17 @@
           url: "https://reveal-js-multiplex-ccjbegmaii.now.sh", // Location of socket.io server
         },
         anything,
+        broadcast,
         // Learn about plugins: https://revealjs.com/plugins/
-        plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight],
+        plugins: [RevealZoom, RevealSearch, RevealMarkdown, RevealHighlight],
       });
       const spotifyUrl = "{{{spotifyUrl}}}";
     </script>
-    <script src="/node_modules/socket.io-client/dist/socket.io.js"></script>
     <script src="/plugin/multiplex/master.js"></script>
     <script src="/plugin/server/client.js" crossorigin="anonymous"></script>
-    {{/admin}} {{^admin}}
+    <script src="/plugin/broadcast/master.js" crossorigin="anonymous"></script>
+    {{/admin}}
+    {{^admin}}
     <script>
       // Also available as an ES module, see:
       // https://revealjs.com/initialization/
@@ -577,12 +588,13 @@
           url: "https://reveal-js-multiplex-ccjbegmaii.now.sh", // Location of socket.io server
         },
         anything,
+        broadcast,
         // Learn about plugins: https://revealjs.com/plugins/
-        plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight],
+        plugins: [RevealZoom, RevealSearch, RevealMarkdown, RevealHighlight],
       });
     </script>
-    <script src="/node_modules/socket.io-client/dist/socket.io.js"></script>
     <script src="/plugin/multiplex/client.js"></script>
+    <script src="/plugin/broadcast/client.js" defer></script>
     {{/admin}}
   </body>
 </html>
