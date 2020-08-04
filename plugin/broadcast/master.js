@@ -20,7 +20,7 @@ function loadCam(stream) {
     Reveal.on(event, (data) => {
         const matched = screenSlides.some(({ h, v }) => h === data.indexh && v === data.indexv);
         if (matched) {
-            RevealBroadcast.start({ id: "test", password: "1234" });
+            RevealBroadcast.start({ id: "test1234", password: "1234" });
         } else {
             RevealBroadcast.close();
         }

@@ -21,6 +21,6 @@ Reveal.on('slidechanged', (data) => {
 Reveal.on('ready', (data) => {
     const matched = screenSlides.some(({ h, v }) => h === data.indexh && v === data.indexv);
     if (matched) {
-        RevealBroadcast.connect({ id: "test" });
+        RevealBroadcast.connect({ id: "test1234" });
     }
 });

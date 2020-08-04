@@ -118,9 +118,11 @@ var RevealBroadcast = window.RevealBroadcast || (function () {
 	}
 
 	function close() {
-		var localStream = connection.attachStreams[0];
-		connection.removeStream(localStream.id);
+		connection.streamEvents.selectAll().forEach(function(streamEvent) {
+			streamEvent.stream.getTracks()[0].stop();
+		});
 		connection.closeSocket()
+		connection.close()
 	}
 
 	function start(params) {
