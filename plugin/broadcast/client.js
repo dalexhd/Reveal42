@@ -9,7 +9,7 @@ Reveal.on('slidechanged', (data) => {
     if (matched) {
         setTimeout(() => {
             location.reload();
-        }, 250);
+        }, 1000);
     } else {
         const player = document.getElementById('broadcast-mediaplayer');
         if (player !== null) {
