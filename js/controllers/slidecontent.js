@@ -171,8 +171,7 @@ export default class SlideContent {
 
 				// Check if this iframe is eligible to be preloaded
 				if (this.shouldPreload(background) && !/autoplay=(1|true|yes)/gi.test(backgroundIframe)) {
-					//FIXME: Src not adding on notes server.
-					if (backgroundIframeElement.getAttribute('src') !== backgroundIframe) {
+					if (backgroundIframe !== null && backgroundIframeElement.getAttribute('src') !== backgroundIframe) {
 						backgroundIframeElement.setAttribute('src', backgroundIframe);
 					}
 				}

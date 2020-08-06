@@ -381,7 +381,6 @@
             </div>
           </section> -->
         </section>
-        <section></section>
         <section data-transition="zoom-in fade-out">
           <section data-auto-animate>
             <img
@@ -514,11 +513,6 @@
     <script src="/plugin/anything/d3/d3.min.js"></script>
     <script src="/plugin/anything/anything.js" defer></script>
     <script src="/plugin/anything/d3/topojson.min.js" defer></script>
-    <!-- Used for plugin: Broadcast -->
-    <script src="/plugin/broadcast/RTCMultiConnection/RTCMultiConnection.js"></script>
-    <script src="/plugin/broadcast/RTCMultiConnection/adapter.js"></script>
-    <script src="/plugin/broadcast/bCrypt.js"></script>
-    <script src="/plugin/broadcast/broadcast.js" defer></script>
 
     <script>
       const anything = [
@@ -531,20 +525,6 @@
           },
         },
       ];
-      const broadcast = {
-        // Set master password to "123456"
-        secret: "$2a$05$4I879F2tQkzBxQiEFmJ5BuhsB3srd3wrov.IA3fmSlKynni7OHUNm",
-        // Configure RTCMultiConnection
-        connection: {
-          socketURL: "https://revealjs-broadcast.herokuapp.com:443/",
-          session: {
-            audio: false,
-            video: false,
-            screen: true,
-            oneway: true,
-          },
-        },
-      };
     </script>
     {{#admin}}
     <script>
@@ -562,7 +542,6 @@
           url: "https://reveal-js-multiplex-ccjbegmaii.now.sh", // Location of socket.io server
         },
         anything,
-        broadcast,
         // Learn about plugins: https://revealjs.com/plugins/
         plugins: [RevealZoom, RevealSearch, RevealMarkdown, RevealHighlight],
       });
@@ -570,7 +549,6 @@
     </script>
     <script src="/plugin/multiplex/master.js"></script>
     <script src="/plugin/server/client.js" crossorigin="anonymous"></script>
-    <script src="/plugin/broadcast/master.js" crossorigin="anonymous"></script>
     {{/admin}}
     {{^admin}}
     <script>
@@ -588,13 +566,11 @@
           url: "https://reveal-js-multiplex-ccjbegmaii.now.sh", // Location of socket.io server
         },
         anything,
-        broadcast,
         // Learn about plugins: https://revealjs.com/plugins/
         plugins: [RevealZoom, RevealSearch, RevealMarkdown, RevealHighlight],
       });
     </script>
     <script src="/plugin/multiplex/client.js"></script>
-    <script src="/plugin/broadcast/client.js" defer></script>
     {{/admin}}
   </body>
 </html>
