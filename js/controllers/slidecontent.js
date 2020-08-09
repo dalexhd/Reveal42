@@ -90,7 +90,9 @@ export default class SlideContent {
 
 				let backgroundImage = slide.getAttribute('data-background-image'),
 					backgroundVideo = slide.getAttribute('data-background-video'),
+					backgroundVideoSubtitles = slide.getAttribute('data-background-video-subtitles'),
 					backgroundVideoLoop = slide.hasAttribute('data-background-video-loop'),
+					backgroundInteractive = slide.getAttribute('data-background-interactive'),
 					backgroundVideoMuted = slide.hasAttribute('data-background-video-muted');
 
 				// Images
@@ -98,23 +100,33 @@ export default class SlideContent {
 					backgroundContent.style.backgroundImage = 'url(' + encodeURI(backgroundImage) + ')';
 				}
 				// Videos
-				else if (backgroundVideo && !this.Reveal.isSpeakerNotes()) {
+				else if (backgroundVideo) {
 					let video = document.createElement('video');
-
-					if (backgroundVideoLoop) {
-						video.setAttribute('loop', '');
+					let plyrOptions = {
+						...Plyr.defaults,
+						debug: false,
+						storage: {
+							enabled: false
+						}
+					};
+					if (!this.Reveal.isSpeakerNotes() || !Reveal.getConfig().postMessageEvents) {
+						plyrOptions.controls = [];
 					}
-
-					if (backgroundVideoMuted) {
-						video.muted = true;
+					if (backgroundVideoLoop) {
+						plyrOptions.loop.active = true;
+					}
+					if (!backgroundVideoMuted || this.Reveal.role === 'admin') {
+						plyrOptions.volume = 1;
+					}else{
+						plyrOptions.volume = 0;
 					}
 
 					// Inline video playback works (at least in Mobile Safari) as
 					// long as the video is muted and the `playsinline` attribute is
 					// present
 					if (isMobile) {
-						video.muted = true;
-						video.autoplay = true;
+						plyrOptions.muted = true;
+						plyrOptions.autoplay = true;
 						video.setAttribute('playsinline', '');
 					}
 
@@ -123,7 +135,66 @@ export default class SlideContent {
 						video.innerHTML += '<source src="' + source + '">';
 					});
 
+					if (backgroundVideoSubtitles) {
+						backgroundVideoSubtitles = JSON.parse(backgroundVideoSubtitles);
+						backgroundVideoSubtitles.forEach((subtitle) => {
+							video.innerHTML += `<track label="${subtitle.label}" kind="subtitles" srclang="${subtitle.srclang}" src="${subtitle.src}" ${subtitle.default ? "default" : ""} />`;
+						});
+						plyrOptions = {
+							...plyrOptions,
+							captions: {
+								active: true,
+								language: 'es',
+								update: false
+							}
+						}
+					}
 					backgroundContent.appendChild(video);
+					const player = new Plyr(video, plyrOptions);
+					window.currentPlyr = player;
+					if (backgroundInteractive && backgroundInteractive === "false" && !this.Reveal.isSpeakerNotes()) {
+						backgroundContent.style.pointerEvents = 'none';
+					}
+					if (Reveal.getConfig().postMessageEvents && window.parent !== window.self && this.Reveal.isSpeakerNotes()) {
+						['ready', 'play', 'pause', 'seeked', 'volumechange'].forEach(event => {
+							player.on(event, (data) => {
+								window.parent.postMessage(JSON.stringify({
+									namespace: 'plyr',
+									type: event,
+									data: {
+										isHTML5: data.detail.plyr.isHTML5,
+										isEmbed: data.detail.plyr.isEmbed,
+										playing: data.detail.plyr.playing,
+										paused: data.detail.plyr.paused,
+										stopped: data.detail.plyr.stopped,
+										ended: data.detail.plyr.ended,
+										buffered: data.detail.plyr.buffered,
+										currentTime: data.detail.plyr.currentTime,
+										seeking: data.detail.plyr.seeking,
+										duration: data.detail.plyr.duration,
+										volume: data.detail.plyr.volume,
+										muted: data.detail.plyr.muted,
+										hasAudio: data.detail.plyr.hasAudio,
+										speed: data.detail.plyr.speed,
+										quality: data.detail.plyr.quality,
+										loop: data.detail.plyr.loop,
+										source: data.detail.plyr.source,
+										poster: data.detail.plyr.poster,
+										autoplay: data.detail.plyr.autoplay,
+										currentTrack: data.detail.plyr.currentTrack,
+										language: data.detail.plyr.language,
+										pip: data.detail.plyr.pip,
+										ratio: data.detail.plyr.ratio,
+										download: data.detail.plyr.download,
+										fullScreenActive: data.detail.plyr.fullscreen.active,
+										fullScreenEnabled: data.detail.plyr.fullscreen.enabled,
+									}
+								}), '*' );
+							});
+						});
+
+					}
+
 				}
 				// Iframe
 				else if (backgroundIframe && options.excludeIframes !== true) {
@@ -151,7 +222,6 @@ export default class SlideContent {
 						iframe.setAttribute('webkitallowfullscreen', '');
 						iframe.setAttribute('allowTransparency', 'true');
 						iframe.setAttribute('data-src', backgroundIframe);
-	
 						iframe.style.width = '100%';
 						iframe.style.height = '100%';
 						iframe.style.maxHeight = '100%';
@@ -159,7 +229,6 @@ export default class SlideContent {
 						if (index === 0) {
 							iframe.style.position = 'fixed';
 						}
-	
 						backgroundContent.appendChild(iframe);
 					});
 				}

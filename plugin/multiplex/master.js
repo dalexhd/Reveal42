@@ -31,4 +31,25 @@
     Reveal.on('paused', post);
     Reveal.on('resumed', post);
 
+    window.addEventListener("message", function (event) {
+        var data = JSON.parse(event.data);
+        if (data) {
+          switch (data.namespace) {
+            case "plyr":
+              if (/ready|play|pause|seeked|volumechange/.test(data.type)) {
+                var messageData = {
+                    data,
+                    secret: multiplex.secret,
+                    socketId: multiplex.id,
+                    event: data.type
+                };
+                socket.emit("multiplex-plyrchanged", messageData);
+              }
+              break;
+            default:
+              break;
+          }
+        }
+      });
+
 }());

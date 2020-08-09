@@ -102,9 +102,10 @@
     }
   },
   "dependencies": {
+    "d3": "4.13.0",
     "express-basic-auth": "^1.2.0",
     "jquery": "^3.5.1",
-    "reveal-multiplex": "^0.1.0",
-    "d3": "4.13.0"
+    "plyr": "^3.6.2",
+    "reveal-multiplex": "^0.1.0"
   }
 }

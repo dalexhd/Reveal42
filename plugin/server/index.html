@@ -16,9 +16,7 @@
         <div class="clock">
           <span class="clock-value">0:00 AM</span>
         </div>
-        <div class="timer">
-          <span class="hours">00</span><span class="minutes">:00</span><span class="seconds">:00</span>
-        </div>
+        <div class="timer"><span class="hours">00</span><span class="minutes">:00</span><span class="seconds">:00</span></div>
         <div class="clear"></div>
       </div>
 
@@ -46,7 +44,7 @@
           layoutDropdown,
           connected = false;
 
-        var socket = io.connect(window.location.origin),
+        var socket = io.connect("/admin"),
           socketId = "{{socketId}}";
 
         var SPEAKER_LAYOUTS = {
@@ -82,20 +80,26 @@
         // message to be sent back
         window.addEventListener("message", function (event) {
           var data = JSON.parse(event.data);
-
-          if (data && data.namespace === "reveal") {
-            if (/ready/.test(data.eventName)) {
-              socket.emit("new-subscriber", { socketId: socketId });
-            }
-          }
-
-          // Messages sent by reveal.js inside of the current slide preview
-          if (data && data.namespace === "reveal") {
-            if (
-              /slidechanged|fragmentshown|fragmenthidden|overviewshown|overviewhidden|paused|resumed/.test(data.eventName) &&
-              currentState !== JSON.stringify(data.state)
-            ) {
-              socket.emit("statechanged-speaker", { state: data.state });
+          if (data) {
+            switch (data.namespace) {
+              case "reveal":
+                if (/ready/.test(data.eventName)) {
+                  socket.emit("new-subscriber", { socketId: socketId });
+                }
+                if (
+                  /slidechanged|fragmentshown|fragmenthidden|overviewshown|overviewhidden|paused|resumed/.test(data.eventName) &&
+                  currentState !== JSON.stringify(data.state)
+                ) {
+                  socket.emit("statechanged-speaker", { state: data.state });
+                }
+                break;
+              case "plyr":
+                if (/ready|play|pause|seeked|volumechange/.test(data.type)) {
+                  socket.emit("plyrchanged-speaker", { event: data.type, data: data });
+                }
+                break;
+              default:
+                break;
             }
           }
         });

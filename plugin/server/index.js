@@ -14,6 +14,7 @@ const authOptions = {
 const app = express();
 const server = http.createServer(app);
 const io = require('socket.io')(server);
+const adminNamespace = io.of('/admin');
 
 const opts = {
     port: process.env.PORT || 1947,
@@ -21,8 +22,7 @@ const opts = {
     pluginDir: __dirname
 };
 
-io.on('connection', socket => {
-
+adminNamespace.on('connection', socket => {
     socket.on('new-subscriber', data => {
         socket.broadcast.emit('new-subscriber', data);
     });
@@ -32,11 +32,35 @@ io.on('connection', socket => {
         socket.broadcast.emit('statechanged', data);
     });
 
+    socket.on('plyrchanged', data => {
+        socket.broadcast.emit('plyrchanged', data);
+    });
+
     socket.on('statechanged-speaker', data => {
         delete data.state.overview;
         socket.broadcast.emit('statechanged-speaker', data);
     });
 
+    socket.on('plyrchanged-speaker', data => {
+        socket.broadcast.emit('plyrchanged-speaker', data);
+    });
+});
+
+io.on('connection', socket => {
+	socket.on('multiplex-statechanged', data => {
+		if (typeof data.secret == 'undefined' || data.secret == null || data.secret === '') return;
+		if (data.secret === process.env.PASSWORD) {
+			data.secret = null;
+			socket.broadcast.emit(data.socketId, data);
+		};
+    });
+    socket.on('multiplex-plyrchanged', data => {
+		if (typeof data.secret == 'undefined' || data.secret == null || data.secret === '') return;
+		if (data.secret === process.env.PASSWORD) {
+			data.secret = null;
+			socket.broadcast.emit(data.socketId, data);
+		};
+    });
 });
 
 app.use(express.static(opts.revealDir, {
@@ -60,7 +84,7 @@ app.get('/admin', basicAuth(authOptions), (req, res) => {
     fs.readFile(opts.revealDir + '/index.html', (err, data) => {
         res.send(mustache.render(data.toString(), {
             admin: true,
-            token: process.env.MULTIPLEX_TOKEN,
+            password: process.env.PASSWORD,
             id: process.env.MULTIPLEX_ID,
             spotifyUrl: process.env.SPOTIFY_URL
         }));

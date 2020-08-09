@@ -4,7 +4,7 @@
 
 	if (window.location.search.match(/receiver/gi)) return;
 
-	var socket = io.connect(window.location.origin),
+	var socket = io.connect('/admin'),
 		socketId = Math.random().toString().slice(2);
 
 	console.log('View slide notes at ' + window.location.origin + '/notes/' + socketId);
@@ -14,7 +14,7 @@
 		spotifyIframe = document.querySelector("iframe[src*='/player']");
 		if (spotifyIframe !== null)
 			spotifyIframe.remove();
-			spotifyIframe = null;
+		spotifyIframe = null;
 	}
 
 	window.onbeforeunload = function () {
@@ -62,7 +62,7 @@
 	// Monitor events that trigger a change in state
 	['slidechanged', 'ready'].forEach(event => {
 		Reveal.on(event, (data) => {
-			if (data.indexh === 0 || data.indexh ===2) {
+			if (data.indexh === 0 || data.indexh === 2) {
 				removeSpotifyÌframe();
 			} else if (data.indexh === 1 && spotifyIframe === null) {
 				var iframe = document.createElement('iframe');
@@ -76,6 +76,49 @@
 	});
 	['fragmentshown', 'fragmenthidden', 'overviewhidden', 'overviewshown', 'paused', 'resumed'].forEach((event) => {
 		Reveal.on(event, post);
+	});
+	
+	socket.on('plyrchanged-speaker', function ({ event, data: { data } }) {
+		const player = window.currentPlyr;
+		switch (event) {
+			case 'play':
+				player.play();
+				break;
+			case 'pause':
+				player.pause();
+				break;
+			case 'seeked':
+				player.currentTime = data.currentTime;
+				break;
+			case 'volumechange':
+				player.volume = data.volume;
+				break;
+			default:
+				return;
+		}
+		window.postMessage(JSON.stringify({
+			namespace: 'plyr',
+			type: event,
+			data
+		}), '*' );
+	});
+
+	socket.on('plyrchanged', function ({ event, data: { data } }) {
+		const player = window.currentPlyr;
+		debugger;
+		switch (event) {
+			case 'play':
+				player.play();
+				break;
+			case 'pause':
+				player.pause();
+				break;
+			case 'seeked':
+				player.currentTime = data.currentTime;
+				break;
+			default:
+				return;
+		}
 	});
 
 	// Post the initial state
