@@ -23,6 +23,23 @@ const opts = {
     pluginDir: __dirname
 };
 
+const isValidJwt = (header) => {
+    const token = header.split(' ')[1];
+    if (token === process.env.PASSWORD) {
+      return true;
+    } else {
+      return false;
+    }
+};
+
+adminNamespace.use((socket, next) => {
+    const header = socket.handshake.headers['authorization'];
+    if (isValidJwt(header)) {
+        return next();
+    }
+    return next(new Error('authentication error'));
+});
+
 adminNamespace.on('connection', socket => {
     socket.on('new-subscriber', data => {
         socket.broadcast.emit('new-subscriber', data);
@@ -45,21 +62,18 @@ adminNamespace.on('connection', socket => {
     socket.on('plyrchanged-speaker', data => {
         socket.broadcast.emit('plyrchanged-speaker', data);
     });
+
+	socket.on('multiplex-statechanged', data => {
+        publicNamespace.emit('statechanged', data);
+    });
+
+    socket.on('multiplex-plyrchanged', data => {
+        publicNamespace.emit('plyrchanged', data);
+    });
 });
 
 publicNamespace.on('connection', socket => {
-	socket.on('multiplex-statechanged', data => {
-		if (data?.secret === process.env.PASSWORD) {
-			data.secret = null;
-			socket.broadcast.emit(data.socketId, data);
-		};
-    });
-    socket.on('multiplex-plyrchanged', data => {
-		if (data?.secret === process.env.PASSWORD) {
-			data.secret = null;
-			socket.broadcast.emit(data.socketId, data);
-		};
-    });
+    console.log("Client connected!");
 });
 
 app.use(express.static(opts.revealDir, {
@@ -90,11 +104,11 @@ app.get('/admin', basicAuth(authOptions), (req, res) => {
     });
 });
 
-app.get('/notes/:socketId', basicAuth(authOptions), (req, res) => {
+app.get('/notes', basicAuth(authOptions), (req, res) => {
     fs.readFile(opts.pluginDir + '/index.html', (err, data) => {
         res.send(mustache.render(data.toString(), {
             presenter: true,
-            // socketId: req.params.socketId
+            password: process.env.PASSWORD
         }));
     });
 });

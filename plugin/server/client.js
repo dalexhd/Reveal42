@@ -4,10 +4,18 @@
 
 	if (window.location.search.match(/receiver/gi)) return;
 
-	var socket = io.connect('/admin'),
-		socketId = Math.random().toString().slice(2);
+	const multiplex = Reveal.getConfig().multiplex;
+	const socket = io.connect('/admin', {
+		transportOptions: {
+		  polling: {
+			extraHeaders: {
+			  'Authorization': 'Bearer ' + multiplex.secret
+			}
+		  }
+		}
+	});
 
-	console.log('View slide notes at ' + window.location.origin + '/notes/' + socketId);
+	console.log('View slide notes at ' + window.location.origin + '/notes');
 
 	let spotifyIframe = null;
 	const removeSpotifyÌframe = function () {
@@ -22,6 +30,15 @@
 	}
 
 	/**
+	 * Posts the current slide data to the viewers
+	 */
+	function postMultiplex() {
+		socket.emit('multiplex-statechanged', {
+            state: Reveal.getState()
+        });
+	}
+
+	/**
 	 * Posts the current slide data to the notes window
 	 */
 	function post() {
@@ -32,7 +49,6 @@
 		var messageData = {
 			notes: '',
 			markdown: false,
-			socketId: socketId,
 			state: Reveal.getState()
 		};
 
@@ -47,6 +63,7 @@
 			messageData.markdown = typeof notesElement.getAttribute('data-markdown') === 'string';
 		}
 		socket.emit('statechanged', messageData);
+		postMultiplex();
 	}
 
 	// When a new notes window connects, post our current state
@@ -96,11 +113,15 @@
 			default:
 				return;
 		}
-		window.postMessage(JSON.stringify({
-			namespace: 'plyr',
-			type: event,
-			data
-		}), '*' );
+
+		if (/ready|play|pause|seeked|volumechange/.test(event)) {
+			var messageData = {
+				data,
+				secret: multiplex.secret,
+				event: event
+			};
+			socket.emit("multiplex-plyrchanged", messageData);
+		}
 	});
 
 	socket.on('plyrchanged', function ({ event, data: { data } }) {

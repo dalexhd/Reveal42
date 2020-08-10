@@ -5,19 +5,17 @@
 
     var multiplex = Reveal.getConfig().multiplex;
 
-    var socket = io.connect('/public');
+    var socket = io.connect('/public', {
+      transportOptions: {
+        polling: {
+          extraHeaders: {
+            'Authorization': 'Bearer ' + multiplex.secret
+          }
+        }
+      }
+    });
 
-    function post() {
 
-        var messageData = {
-            state: Reveal.getState(),
-            secret: multiplex.secret,
-            socketId: multiplex.id
-        };
-
-        socket.emit('multiplex-statechanged', messageData);
-
-    };
 
     // post once the page is loaded, so the client follows also on "open URL".
     window.addEventListener('load', post);

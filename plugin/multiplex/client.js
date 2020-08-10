@@ -1,28 +1,24 @@
 (function () {
-    var multiplex = Reveal.getConfig().multiplex;
-    var socketId = multiplex.id;
     var socket = io.connect('/public');
     
-    socket.on(multiplex.id, function (data) {
-        // ignore data from sockets that aren't ours
-        if (data.socketId !== socketId) { return; }
-        if (data?.data?.namespace === 'plyr') {
-            const player = window.currentPlyr;
-            switch (data.event) {
-                case 'play':
-                    player.play();
-                    break;
-                case 'pause':
-                    player.pause();
-                    break;
-                case 'seeked':
-                    player.currentTime = data.data.data.currentTime;
-                    break;
-                default:
-                    return;
-            }
-        } else {
-            Reveal.setState(data.state);
+    socket.on('statechanged', function (data) {
+        Reveal.setState(data.state);
+    });
+
+    socket.on('plyrchanged', function ({event, data}) {
+        const player = window.currentPlyr;
+        switch (event) {
+            case 'play':
+                player.play();
+                break;
+            case 'pause':
+                player.pause();
+                break;
+            case 'seeked':
+                player.currentTime = data.currentTime;
+                break;
+            default:
+                return;
         }
     });
 }());

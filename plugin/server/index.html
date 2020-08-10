@@ -2,7 +2,6 @@
 <html lang="es">
   <head>
     <meta charset="utf-8" />
-
     <title>reveal.js - Slide Notes</title>
     <link rel="stylesheet" href="/dist/server.css" />
   </head>
@@ -43,9 +42,23 @@
           layoutLabel,
           layoutDropdown,
           connected = false;
-
-        var socket = io.connect("/admin"),
-          socketId = "{{socketId}}";
+        
+        // alert volume notice
+        const lastNoticeValue = sessionStorage.getItem('volume-noticed');;
+        if (!lastNoticeValue) {
+          alert('Remember to mute your browser before going live!')
+          sessionStorage.setItem('volume-noticed', true)
+        }
+        
+        const socket = io.connect('/admin', {
+          transportOptions: {
+            polling: {
+            extraHeaders: {
+              'Authorization': 'Bearer {{{password}}}'
+            }
+            }
+          }
+        });
 
         var SPEAKER_LAYOUTS = {
           default: "Por defecto",
@@ -55,11 +68,6 @@
         };
 
         socket.on("statechanged", function (data) {
-          // ignore data from sockets that aren't ours
-          // if (data.socketId !== socketId) {
-          //   return;
-          // }
-
           if (connected === false) {
             connected = true;
             setupKeyboard();
@@ -84,7 +92,7 @@
             switch (data.namespace) {
               case "reveal":
                 if (/ready/.test(data.eventName)) {
-                  socket.emit("new-subscriber", { socketId: socketId });
+                  socket.emit("new-subscriber");
                 }
                 if (
                   /slidechanged|fragmentshown|fragmenthidden|overviewshown|overviewhidden|paused|resumed/.test(data.eventName) &&

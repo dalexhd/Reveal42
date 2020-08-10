@@ -579,8 +579,7 @@
         hash: true,
         multiplex: {
           // Example values. To generate your own, see the socket.io server instructions.
-          secret: "{{password}}", // Obtained from the socket.io server. Gives this (the master) control of the presentation
-          id: "{{id}}" // Obtained from socket.io server
+          secret: "{{password}}" // Obtained from the socket.io server. Gives this (the master) control of the presentation
         },
         anything,
         // Learn about plugins: https://revealjs.com/plugins/
@@ -588,8 +587,8 @@
       });
       const spotifyUrl = "{{{spotifyUrl}}}";
     </script>
-    <script src="/plugin/multiplex/master.js"></script>
-    <script src="/plugin/server/client.js" crossorigin="anonymous"></script>
+    <!-- <script src="/plugin/multiplex/master.js"></script> -->
+    <script src="/plugin/server/client.js"></script>
     {{/admin}}
     {{^admin}}
     <script>
@@ -602,8 +601,7 @@
         hash: true,
         multiplex: {
           // Example values. To generate your own, see the socket.io server instructions.
-          secret: null, // Obtained from the socket.io server. Gives this (the master) control of the presentation
-          id: "{{id}}" // Obtained from socket.io server
+          secret: null // Obtained from the socket.io server. Gives this (the master) control of the presentation
         },
         anything,
         // Learn about plugins: https://revealjs.com/plugins/

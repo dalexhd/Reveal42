@@ -115,9 +115,10 @@ export default class SlideContent {
 					if (backgroundVideoLoop) {
 						plyrOptions.loop.active = true;
 					}
-					if (!backgroundVideoMuted || this.Reveal.role === 'admin') {
+					if (this.Reveal.role === 'admin') {
 						plyrOptions.volume = 1;
-					}else{
+					}
+					if (backgroundVideoMuted) {
 						plyrOptions.volume = 0;
 					}
 
@@ -152,12 +153,13 @@ export default class SlideContent {
 					backgroundContent.appendChild(video);
 					const player = new Plyr(video, plyrOptions);
 					window.currentPlyr = player;
-					if (backgroundInteractive && backgroundInteractive === "false" && !this.Reveal.isSpeakerNotes()) {
+					if (backgroundInteractive && backgroundInteractive === "false" && !(this.Reveal.isSpeakerNotes() && Reveal.getConfig().postMessageEvents)) {
 						backgroundContent.style.pointerEvents = 'none';
 					}
-					if (Reveal.getConfig().postMessageEvents && window.parent !== window.self && this.Reveal.isSpeakerNotes()) {
+					if (this.Reveal.isSpeakerNotes() && Reveal.getConfig().postMessageEvents) {
 						['ready', 'play', 'pause', 'seeked', 'volumechange'].forEach(event => {
 							player.on(event, (data) => {
+								// We emit events to the parent window (notes window).
 								window.parent.postMessage(JSON.stringify({
 									namespace: 'plyr',
 									type: event,
@@ -189,12 +191,10 @@ export default class SlideContent {
 										fullScreenActive: data.detail.plyr.fullscreen.active,
 										fullScreenEnabled: data.detail.plyr.fullscreen.enabled,
 									}
-								}), '*' );
+								}), '*');
 							});
 						});
-
 					}
-
 				}
 				// Iframe
 				else if (backgroundIframe && options.excludeIframes !== true) {
