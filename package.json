@@ -9,7 +9,6 @@
   "license": "MIT",
   "scripts": {
     "test": "gulp test",
-    "install": "gulp build",
     "start": "node plugin/server",
     "start:client": "gulp",
     "build": "gulp",
