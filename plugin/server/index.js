@@ -64,10 +64,12 @@ adminNamespace.on('connection', socket => {
     });
 
 	socket.on('multiplex-statechanged', data => {
+        delete data.secret;
         publicNamespace.emit('statechanged', data);
     });
 
     socket.on('multiplex-plyrchanged', data => {
+        delete data.secret;
         publicNamespace.emit('plyrchanged', data);
     });
 });
