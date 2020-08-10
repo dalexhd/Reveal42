@@ -5,7 +5,7 @@
 
     var multiplex = Reveal.getConfig().multiplex;
 
-    var socket = io.connect(multiplex.url);
+    var socket = io.connect('/public');
 
     function post() {
 

@@ -15,6 +15,7 @@ const app = express();
 const server = http.createServer(app);
 const io = require('socket.io')(server);
 const adminNamespace = io.of('/admin');
+const publicNamespace = io.of('/public');
 
 const opts = {
     port: process.env.PORT || 1947,
@@ -32,13 +33,13 @@ adminNamespace.on('connection', socket => {
         socket.broadcast.emit('statechanged', data);
     });
 
-    socket.on('plyrchanged', data => {
-        socket.broadcast.emit('plyrchanged', data);
-    });
-
     socket.on('statechanged-speaker', data => {
         delete data.state.overview;
         socket.broadcast.emit('statechanged-speaker', data);
+    });
+
+    socket.on('plyrchanged', data => {
+        socket.broadcast.emit('plyrchanged', data);
     });
 
     socket.on('plyrchanged-speaker', data => {
@@ -46,17 +47,15 @@ adminNamespace.on('connection', socket => {
     });
 });
 
-io.on('connection', socket => {
+publicNamespace.on('connection', socket => {
 	socket.on('multiplex-statechanged', data => {
-		if (typeof data.secret == 'undefined' || data.secret == null || data.secret === '') return;
-		if (data.secret === process.env.PASSWORD) {
+		if (data?.secret === process.env.PASSWORD) {
 			data.secret = null;
 			socket.broadcast.emit(data.socketId, data);
 		};
     });
     socket.on('multiplex-plyrchanged', data => {
-		if (typeof data.secret == 'undefined' || data.secret == null || data.secret === '') return;
-		if (data.secret === process.env.PASSWORD) {
+		if (data?.secret === process.env.PASSWORD) {
 			data.secret = null;
 			socket.broadcast.emit(data.socketId, data);
 		};
@@ -95,7 +94,7 @@ app.get('/notes/:socketId', basicAuth(authOptions), (req, res) => {
     fs.readFile(opts.pluginDir + '/index.html', (err, data) => {
         res.send(mustache.render(data.toString(), {
             presenter: true,
-            socketId: req.params.socketId
+            // socketId: req.params.socketId
         }));
     });
 });

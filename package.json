@@ -14,6 +14,13 @@
     "build": "gulp",
     "package": "gulp package"
   },
+  "dependencies": {
+    "d3": "4.13.0",
+    "express-basic-auth": "^1.2.0",
+    "jquery": "^3.5.1",
+    "plyr": "^3.6.2",
+    "reveal-multiplex": "^0.1.0"
+  },
   "author": {
     "name": "Hakim El Hattab",
     "email": "hakim.elhattab@gmail.com",
@@ -99,12 +106,5 @@
       "no-eq-null": 2,
       "no-unused-expressions": 0
     }
-  },
-  "dependencies": {
-    "d3": "4.13.0",
-    "express-basic-auth": "^1.2.0",
-    "jquery": "^3.5.1",
-    "plyr": "^3.6.2",
-    "reveal-multiplex": "^0.1.0"
   }
 }
