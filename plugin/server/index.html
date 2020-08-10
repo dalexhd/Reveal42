@@ -56,9 +56,9 @@
 
         socket.on("statechanged", function (data) {
           // ignore data from sockets that aren't ours
-          if (data.socketId !== socketId) {
-            return;
-          }
+          // if (data.socketId !== socketId) {
+          //   return;
+          // }
 
           if (connected === false) {
             connected = true;
