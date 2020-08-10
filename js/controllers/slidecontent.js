@@ -91,6 +91,7 @@ export default class SlideContent {
 				let backgroundImage = slide.getAttribute('data-background-image'),
 					backgroundVideo = slide.getAttribute('data-background-video'),
 					backgroundVideoSubtitles = slide.getAttribute('data-background-video-subtitles'),
+					backgroundVideoVolume = slide.getAttribute('data-background-video-volume'),
 					backgroundVideoLoop = slide.hasAttribute('data-background-video-loop'),
 					backgroundInteractive = slide.getAttribute('data-background-interactive'),
 					backgroundVideoMuted = slide.hasAttribute('data-background-video-muted');
@@ -109,14 +110,14 @@ export default class SlideContent {
 							enabled: false
 						}
 					};
-					if (!this.Reveal.isSpeakerNotes() || !Reveal.getConfig().postMessageEvents) {
+					if (!Reveal.isSpeakerNotes() || !Reveal.getConfig().postMessageEvents) {
 						plyrOptions.controls = [];
 					}
 					if (backgroundVideoLoop) {
 						plyrOptions.loop.active = true;
 					}
-					if (this.Reveal.role === 'admin') {
-						plyrOptions.volume = 1;
+					if (Reveal.role === 'admin') {
+						plyrOptions.volume = backgroundVideoVolume ? parseFloat(backgroundVideoVolume) : 1;
 					}
 					if (backgroundVideoMuted) {
 						plyrOptions.volume = 0;
