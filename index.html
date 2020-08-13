@@ -417,6 +417,7 @@
           </section>
           <section
             data-background-video="/dist/video/algolia/What is Algolia.mp4"
+            data-background-video-thumbnails="/dist/video/algolia/thumbnails.vtt"
             data-background-size="contain"
             data-background-interactive="false"
             {{^admin}}data-background-video-muted{{/admin}}
@@ -489,6 +490,7 @@
           </section>
           <section
             data-background-video="/dist/video/sentry/sentry.mp4"
+            data-background-video-thumbnails="/dist/video/sentry/thumbnails.vtt"
             data-background-size="contain"
             data-background-interactive="false"
             data-background-video-volume="0.8"
@@ -522,6 +524,7 @@
           </section>
           <section
             data-background-video="/dist/video/datadog/datadog.mp4"
+            data-background-video-thumbnails="/dist/video/datadog/thumbnails.vtt"
             data-background-size="contain"
             data-background-interactive="false"
             {{^admin}}data-background-video-muted{{/admin}}
@@ -650,7 +653,8 @@
     <script src="/plugin/anything/d3/d3.min.js"></script>
     <script src="/plugin/anything/anything.js" defer></script>
     <script src="/plugin/anything/d3/topojson.min.js" defer></script>
-
+    <!-- Used for plugin: Reveal.js-menu -->
+    <script src="node_modules/reveal.js-menu/menu.js"></script>
     <script>
       const anything = [
         {
@@ -673,13 +677,20 @@
         progress: true,
         center: true,
         hash: true,
+        controlsTutorial: false,
+        navigationMode: 'linear',
         multiplex: {
           // Example values. To generate your own, see the socket.io server instructions.
           secret: "{{password}}" // Obtained from the socket.io server. Gives this (the master) control of the presentation
         },
         anything,
+        menu: {
+          themes: true,
+          themesPath: '/dist/theme',
+          markers: false,
+        },
         // Learn about plugins: https://revealjs.com/plugins/
-        plugins: [RevealZoom, RevealSearch, RevealMarkdown, RevealHighlight],
+        plugins: [RevealZoom, RevealSearch, RevealMarkdown, RevealHighlight, RevealMenu],
       });
       const spotifyUrl = "{{{spotifyUrl}}}";
     </script>
@@ -699,9 +710,16 @@
           // Example values. To generate your own, see the socket.io server instructions.
           secret: null // Obtained from the socket.io server. Gives this (the master) control of the presentation
         },
+        navigationMode: 'linear',
         anything,
+        menu: {
+          themes: true,
+          themesPath: '/dist/theme',
+          transitions: true,
+          markers: false
+        },
         // Learn about plugins: https://revealjs.com/plugins/
-        plugins: [RevealZoom, RevealSearch, RevealMarkdown, RevealHighlight],
+        plugins: [RevealZoom, RevealSearch, RevealMarkdown, RevealHighlight, RevealMenu]
       });
     </script>
     <script src="/plugin/multiplex/client.js"></script>

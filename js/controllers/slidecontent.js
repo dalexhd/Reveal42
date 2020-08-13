@@ -1,5 +1,5 @@
 import { HORIZONTAL_SLIDES_SELECTOR, VERTICAL_SLIDES_SELECTOR } from '../utils/constants.js'
-import { extend, queryAll, closest } from '../utils/util.js'
+import { extend, queryAll, closest, sleep } from '../utils/util.js'
 import { isMobile } from '../utils/device.js'
 
 /**
@@ -91,6 +91,7 @@ export default class SlideContent {
 				let backgroundImage = slide.getAttribute('data-background-image'),
 					backgroundVideo = slide.getAttribute('data-background-video'),
 					backgroundVideoSubtitles = slide.getAttribute('data-background-video-subtitles'),
+					backgroundVideoThumbnails = slide.getAttribute('data-background-video-thumbnails'),
 					backgroundVideoVolume = slide.getAttribute('data-background-video-volume'),
 					backgroundVideoLoop = slide.hasAttribute('data-background-video-loop'),
 					backgroundInteractive = slide.getAttribute('data-background-interactive'),
@@ -103,6 +104,8 @@ export default class SlideContent {
 				// Videos
 				else if (backgroundVideo) {
 					let video = document.createElement('video');
+					const { h, v } = Reveal.getIndices(slide);
+					video.id = ('id', `${backgroundVideo}-${h}-${v}`);
 					let plyrOptions = {
 						...Plyr.defaults,
 						debug: false,
@@ -110,25 +113,23 @@ export default class SlideContent {
 							enabled: false
 						}
 					};
-					if (!Reveal.isSpeakerNotes() || !Reveal.getConfig().postMessageEvents) {
-						plyrOptions.controls = [];
-					}
+					plyrOptions.autoPlay = false;
 					if (backgroundVideoLoop) {
-						plyrOptions.loop.active = true;
+						video.setAttribute('loop', '');
 					}
 					if (Reveal.role === 'admin') {
-						plyrOptions.volume = backgroundVideoVolume ? parseFloat(backgroundVideoVolume) : 1;
+						video.volume = backgroundVideoVolume ? parseFloat(backgroundVideoVolume) : 1;
 					}
 					if (backgroundVideoMuted) {
-						plyrOptions.volume = 0;
+						video.setAttribute('muted', '');
 					}
 
 					// Inline video playback works (at least in Mobile Safari) as
 					// long as the video is muted and the `playsinline` attribute is
 					// present
 					if (isMobile) {
-						plyrOptions.muted = true;
-						plyrOptions.autoplay = true;
+						// video.setAttribute('muted', '');
+						video.setAttribute('autoplay', '');
 						video.setAttribute('playsinline', '');
 					}
 
@@ -142,55 +143,60 @@ export default class SlideContent {
 						backgroundVideoSubtitles.forEach((subtitle) => {
 							video.innerHTML += `<track label="${subtitle.label}" kind="subtitles" srclang="${subtitle.srclang}" src="${subtitle.src}" ${subtitle.default ? "default" : ""} />`;
 						});
-						plyrOptions = {
-							...plyrOptions,
-							captions: {
-								active: true,
-								language: 'es',
-								update: false
-							}
-						}
+						plyrOptions = { ...plyrOptions, captions: { active: true, language: 'es', update: false } }
 					}
+					if (backgroundVideoThumbnails) {
+						plyrOptions = { ...plyrOptions, previewThumbnails: { src: backgroundVideoThumbnails, enabled: true } };
+					}
+
+					video.setAttribute('controls', '');
 					backgroundContent.appendChild(video);
-					const player = new Plyr(video, plyrOptions);
-					window.currentPlyr = player;
 					if (backgroundInteractive && backgroundInteractive === "false" && !(this.Reveal.isSpeakerNotes() && Reveal.getConfig().postMessageEvents)) {
+						plyrOptions.controls = [];
 						backgroundContent.style.pointerEvents = 'none';
 					}
+					const player = new Plyr(video, plyrOptions);
 					if (this.Reveal.isSpeakerNotes() && Reveal.getConfig().postMessageEvents) {
-						['ready', 'play', 'pause', 'seeked', 'volumechange'].forEach(event => {
-							player.on(event, (data) => {
+						['ready', 'play', 'pause', 'seeked', 'volumechange', 'controlshidden', 'controlsshown'].forEach(event => {
+							player.on(event, ({ detail: { plyr } }) => {
+								// Some ignore conditions
+								if (
+									event === 'pause' && plyr.currentTime === 0 ||
+									event === 'seeked' && plyr.currentTime < 0.2 ||
+									event === 'pause' && plyr.seeking === true
+								) return;
 								// We emit events to the parent window (notes window).
 								window.parent.postMessage(JSON.stringify({
 									namespace: 'plyr',
 									type: event,
 									data: {
-										isHTML5: data.detail.plyr.isHTML5,
-										isEmbed: data.detail.plyr.isEmbed,
-										playing: data.detail.plyr.playing,
-										paused: data.detail.plyr.paused,
-										stopped: data.detail.plyr.stopped,
-										ended: data.detail.plyr.ended,
-										buffered: data.detail.plyr.buffered,
-										currentTime: data.detail.plyr.currentTime,
-										seeking: data.detail.plyr.seeking,
-										duration: data.detail.plyr.duration,
-										volume: data.detail.plyr.volume,
-										muted: data.detail.plyr.muted,
-										hasAudio: data.detail.plyr.hasAudio,
-										speed: data.detail.plyr.speed,
-										quality: data.detail.plyr.quality,
-										loop: data.detail.plyr.loop,
-										source: data.detail.plyr.source,
-										poster: data.detail.plyr.poster,
-										autoplay: data.detail.plyr.autoplay,
-										currentTrack: data.detail.plyr.currentTrack,
-										language: data.detail.plyr.language,
-										pip: data.detail.plyr.pip,
-										ratio: data.detail.plyr.ratio,
-										download: data.detail.plyr.download,
-										fullScreenActive: data.detail.plyr.fullscreen.active,
-										fullScreenEnabled: data.detail.plyr.fullscreen.enabled,
+										id: plyr.media.id,
+										isHTML5: plyr.isHTML5,
+										isEmbed: plyr.isEmbed,
+										playing: plyr.playing,
+										paused: plyr.paused,
+										stopped: plyr.stopped,
+										ended: plyr.ended,
+										buffered: plyr.buffered,
+										currentTime: plyr.currentTime,
+										seeking: plyr.seeking,
+										duration: plyr.duration,
+										volume: plyr.volume,
+										muted: plyr.muted,
+										hasAudio: plyr.hasAudio,
+										speed: plyr.speed,
+										quality: plyr.quality,
+										loop: plyr.loop,
+										source: plyr.source,
+										poster: plyr.poster,
+										autoplay: plyr.autoplay,
+										currentTrack: plyr.currentTrack,
+										language: plyr.language,
+										pip: plyr.pip,
+										ratio: plyr.ratio,
+										download: plyr.download,
+										fullScreenActive: plyr.fullscreen.active,
+										fullScreenEnabled: plyr.fullscreen.enabled,
 									}
 								}), '*');
 							});
@@ -223,6 +229,7 @@ export default class SlideContent {
 						iframe.setAttribute('webkitallowfullscreen', '');
 						iframe.setAttribute('allowTransparency', 'true');
 						iframe.setAttribute('data-src', backgroundIframe);
+
 						iframe.style.width = '100%';
 						iframe.style.height = '100%';
 						iframe.style.maxHeight = '100%';
@@ -230,6 +237,7 @@ export default class SlideContent {
 						if (index === 0) {
 							iframe.style.position = 'fixed';
 						}
+
 						backgroundContent.appendChild(iframe);
 					});
 				}

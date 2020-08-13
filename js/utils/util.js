@@ -280,3 +280,8 @@ export const getRemainingHeight = (element, height = 0) => {
 	return height;
 
 }
+
+// sleep time expects milliseconds
+export const sleep = (time) => {
+	return new Promise((resolve) => setTimeout(resolve, time));
+}

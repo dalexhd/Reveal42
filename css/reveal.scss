@@ -194,6 +194,23 @@ html.reveal-full-page {
 	color: #1b91ff;
 }
 
+/*********************************************
+ * COLLAPSIBLE FRAGMENTS+
+ @source https://github.com/hakimel/reveal.js/pull/1744
+ *********************************************/
+
+ .reveal .slides section pre.fragment.collapsible,
+ .reveal .slides section p.fragment.collapsible,
+ .reveal .slides section div.fragment.collapsible {
+	 display: none;
+ }
+ 
+ .reveal .slides section pre.fragment.current-fragment,
+ .reveal .slides section p.fragment.current-fragment,
+ .reveal .slides section div.fragment.current-fragment {
+	 display: block;
+ }
+
 
 /*********************************************
  * DEFAULT ELEMENT STYLES

@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <title>reveal.js - Slide Notes</title>
     <link rel="stylesheet" href="/dist/server.css" />
+    <link rel="stylesheet" href="/node_modules/reveal.js-menu/font-awesome/css/all.css" />
   </head>
 
   <body>
@@ -23,6 +24,10 @@
         <h4 class="label">Notas</h4>
         <div class="value"></div>
       </div>
+
+      <div class="speaker-controls">
+        <a href="#"><i class="fas fa-bars"></i></a>
+      </div>
     </div>
     <div id="speaker-layout" class="overlay-element interactive">
       <span class="speaker-layout-label"></span>
@@ -36,28 +41,29 @@
       (function () {
         var notes,
           notesValue,
+          controls,
           currentState,
           currentSlide,
           upcomingSlide,
           layoutLabel,
           layoutDropdown,
           connected = false;
-        
+
         // alert volume notice
-        const lastNoticeValue = sessionStorage.getItem('volume-noticed');;
+        const lastNoticeValue = sessionStorage.getItem("volume-noticed");
         if (!lastNoticeValue) {
-          alert('Remember to mute your browser before going live!')
-          sessionStorage.setItem('volume-noticed', true)
+          alert("Remember to mute your browser before going live!");
+          sessionStorage.setItem("volume-noticed", true);
         }
-        
-        const socket = io.connect('/admin', {
+
+        const socket = io.connect("/admin", {
           transportOptions: {
             polling: {
-            extraHeaders: {
-              'Authorization': 'Bearer {{{password}}}'
-            }
-            }
-          }
+              extraHeaders: {
+                Authorization: "Bearer {{{password}}}",
+              },
+            },
+          },
         });
 
         var SPEAKER_LAYOUTS = {
@@ -82,6 +88,9 @@
 
         // Load our presentation iframes
         setupIframes();
+
+        // Load our presentation controls
+        setupControls();
 
         // Once the iframes have loaded, emit a signal saying there's
         // a new subscriber which will trigger a 'statechanged'
@@ -180,6 +189,26 @@
         function setupNotes() {
           notes = document.querySelector(".speaker-controls-notes");
           notesValue = document.querySelector(".speaker-controls-notes .value");
+        }
+
+        /**
+         * Setup the notes UI.
+         */
+        function setupControls() {
+          controls = document.querySelector(".speaker-controls");
+          const slide = currentSlide.contentWindow;
+          slide.addEventListener("menu-ready", function (event) {
+            const open = slide.document.querySelector("div.slide-menu-button a");
+            const close = slide.document.querySelector("li#close");
+            controls.onclick = function () {
+              let active = slide.document.querySelector(".slide-menu").classList.contains("active");
+              if (!active) {
+                open.click();
+              } else {
+                close.click();
+              }
+            };
+          });
         }
 
         /**

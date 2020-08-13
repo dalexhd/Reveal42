@@ -96,7 +96,7 @@
 	});
 	
 	socket.on('plyrchanged-speaker', function ({ event, data: { data } }) {
-		const player = window.currentPlyr;
+		const player = document.getElementById(data.id);
 		switch (event) {
 			case 'play':
 				player.play();
@@ -121,24 +121,6 @@
 				event: event
 			};
 			socket.emit("multiplex-plyrchanged", messageData);
-		}
-	});
-
-	socket.on('plyrchanged', function ({ event, data: { data } }) {
-		const player = window.currentPlyr;
-		debugger;
-		switch (event) {
-			case 'play':
-				player.play();
-				break;
-			case 'pause':
-				player.pause();
-				break;
-			case 'seeked':
-				player.currentTime = data.currentTime;
-				break;
-			default:
-				return;
 		}
 	});
 

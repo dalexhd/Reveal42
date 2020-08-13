@@ -55,9 +55,9 @@ adminNamespace.on('connection', socket => {
         socket.broadcast.emit('statechanged-speaker', data);
     });
 
-    socket.on('plyrchanged', data => {
-        socket.broadcast.emit('plyrchanged', data);
-    });
+    // socket.on('plyrchanged', data => {
+    //     socket.broadcast.emit('plyrchanged', data);
+    // });
 
     socket.on('plyrchanged-speaker', data => {
         socket.broadcast.emit('plyrchanged-speaker', data);
