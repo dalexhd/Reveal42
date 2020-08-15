@@ -120,7 +120,7 @@ export default class SlideContent {
 					if (Reveal.role === 'admin') {
 						video.volume = backgroundVideoVolume ? parseFloat(backgroundVideoVolume) : 1;
 					}
-					if (backgroundVideoMuted) {
+					if (backgroundVideoMuted || this.Reveal.isSpeakerNotes() && !Reveal.getConfig().postMessageEvents) {
 						video.setAttribute('muted', '');
 					}
 
@@ -201,6 +201,44 @@ export default class SlideContent {
 								}), '*');
 							});
 						});
+						setInterval(() => {
+							const { h, v } = Reveal.getIndices();
+							if (player.media.id === `${backgroundVideo}-${h}-${v}`) {
+								window.parent.postMessage(JSON.stringify({
+									namespace: 'plyr',
+									type: 'currentState',
+									data: {
+										id: player.media.id,
+										isHTML5: player.isHTML5,
+										isEmbed: player.isEmbed,
+										playing: player.playing,
+										paused: player.paused,
+										stopped: player.stopped,
+										ended: player.ended,
+										buffered: player.buffered,
+										currentTime: player.currentTime,
+										seeking: player.seeking,
+										duration: player.duration,
+										volume: player.volume,
+										muted: player.muted,
+										hasAudio: player.hasAudio,
+										speed: player.speed,
+										quality: player.quality,
+										loop: player.loop,
+										source: player.source,
+										poster: player.poster,
+										autoplay: player.autoplay,
+										currentTrack: player.currentTrack,
+										language: player.language,
+										pip: player.pip,
+										ratio: player.ratio,
+										download: player.download,
+										fullScreenActive: player.fullscreen.active,
+										fullScreenEnabled: player.fullscreen.enabled,
+									}
+								}), '*');
+							}
+						}, 1000);
 					}
 				}
 				// Iframe

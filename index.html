@@ -435,11 +435,20 @@
             }
           ]'>
           </section>
-          <section>
+          <section
+            data-auto-animate
+            data-transition="zoom-in fade-out"
+          >
             <h3>Uno de los motores más potentes de búsqueda del mercado.</h3>
+            <div class="r-stack">
+              <img src="https://media.giphy.com/media/4hRy0u1cgIYMg/giphy.gif" width="600" height="390">
+              <img class="fragment" src="https://media.giphy.com/media/eKUT5HnJk8EA8/source.gif" width="500" height="350">
+            </div>
+          </section>
+          <section data-background-iframe="https://react-instantsearch.netlify.app/examples/e-commerce/" data-background-interactive="true">
           </section>
           <section>
-            <h3>
+            <h3 class="justify">
               Indexa tu html para ofrecerte una experiencía de búsqueda mucho mas completa, interactiva y lo más importante:
               precisa!
             </h3>
@@ -460,7 +469,7 @@
             data-background-video="/dist/video/hotjar/hotjar.mp4"
             data-background-size="contain"
             data-background-interactive="false"
-            data-background-video-volume="0.4"
+            data-background-video-volume="0.3"
             {{^admin}}data-background-video-muted{{/admin}}
             data-background-video-subtitles='[
             {
@@ -476,6 +485,10 @@
             }
           ]'>
           </section>
+        </section>
+        <section data-background-iframe="https://insights.hotjar.com/h?site=1807485&heatmap=5914349&token=c3971ad9abbcc5774213e71b69553ce7" data-background-interactive="true">
+        </section>
+        <section data-background-iframe="https://insights.hotjar.com/r?site=1807485&recording=3536145500&token=dab1ce0b2b320c0518a82b78bb6b9563" data-background-interactive="true">
         </section>
         <section data-transition="zoom-in fade-out">
           <section data-transition="zoom-out">
@@ -542,6 +555,8 @@
             }
           ]'>
           </section>
+        </section>
+        <section data-background-iframe="https://p.datadoghq.com/sb/7svjk4jalcnlifw5-45b3a2a8bc3616303909036435520f53?from_ts=1597338189730&live=true&theme=dark&to_ts=1597424589730" data-background-interactive="true">
         </section>
         <section data-transition="zoom-in fade-out">
           <section>
@@ -638,7 +653,6 @@
         </section>
       </div>
     </div>
-
     <script src="/node_modules/plyr/dist/plyr.min.js"></script>
     <script src="/dist/reveal.js"></script>
     <script src="/plugin/zoom/zoom.js"></script>
@@ -653,76 +667,72 @@
     <script src="/plugin/anything/d3/d3.min.js"></script>
     <script src="/plugin/anything/anything.js" defer></script>
     <script src="/plugin/anything/d3/topojson.min.js" defer></script>
-    <!-- Used for plugin: Reveal.js-menu -->
-    <script src="node_modules/reveal.js-menu/menu.js"></script>
     <script>
-      const anything = [
-        {
-          className: "anything",
-          initialize: function (container, options) {
-            if (options && options.initialize) {
-              options.initialize(container);
-            }
-          },
-        },
-      ];
-      Reveal.role = '{{#admin}}admin{{/admin}}{{#presenter}}presenter{{/presenter}}{{#viewer}}viewer{{/viewer}}'
-    </script>
-    {{#admin}}
-    <script>
-      // Also available as an ES module, see:
-      // https://revealjs.com/initialization/
-      Reveal.initialize({
+      sharedConfig = {
         controls: true,
         progress: true,
         center: true,
         hash: true,
         controlsTutorial: false,
         navigationMode: 'linear',
-        multiplex: {
+        anything: [
+          {
+            className: "anything",
+            initialize: function (container, options) {
+              if (options && options.initialize) {
+                options.initialize(container);
+              }
+            },
+          }
+        ]
+      }
+      Reveal.role = '{{#admin}}admin{{/admin}}{{#presenter}}presenter{{/presenter}}{{#viewer}}viewer{{/viewer}}'
+    </script>
+    {{#presenter}}
+    <!-- Used for plugin: Reveal.js-menu -->
+    <script src="node_modules/reveal.js-menu/menu.js"></script>
+    <script>
+      Reveal.initialize({
+        ...sharedConfig,
+        server: {
           // Example values. To generate your own, see the socket.io server instructions.
           secret: "{{password}}" // Obtained from the socket.io server. Gives this (the master) control of the presentation
         },
-        anything,
         menu: {
           themes: true,
           themesPath: '/dist/theme',
           markers: false,
         },
-        // Learn about plugins: https://revealjs.com/plugins/
-        plugins: [RevealZoom, RevealSearch, RevealMarkdown, RevealHighlight, RevealMenu],
+        plugins: [RevealZoom, RevealSearch, RevealMarkdown, RevealHighlight, RevealMenu]
       });
       const spotifyUrl = "{{{spotifyUrl}}}";
     </script>
-    <!-- <script src="/plugin/multiplex/master.js"></script> -->
     <script src="/plugin/server/client.js"></script>
-    {{/admin}}
-    {{^admin}}
+    {{/presenter}}
+    {{#admin}}
     <script>
-      // Also available as an ES module, see:
-      // https://revealjs.com/initialization/
       Reveal.initialize({
-        controls: false,
-        progress: true,
-        center: true,
-        hash: true,
-        multiplex: {
+        ...sharedConfig,
+        server: {
           // Example values. To generate your own, see the socket.io server instructions.
-          secret: null // Obtained from the socket.io server. Gives this (the master) control of the presentation
-        },
-        navigationMode: 'linear',
-        anything,
-        menu: {
-          themes: true,
-          themesPath: '/dist/theme',
-          transitions: true,
-          markers: false
+          secret: "{{password}}" // Obtained from the socket.io server. Gives this (the master) control of the presentation
         },
         // Learn about plugins: https://revealjs.com/plugins/
-        plugins: [RevealZoom, RevealSearch, RevealMarkdown, RevealHighlight, RevealMenu]
+        plugins: [RevealZoom, RevealSearch, RevealMarkdown, RevealHighlight],
+      });
+      const spotifyUrl = "{{{spotifyUrl}}}";
+    </script>
+    <script src="/plugin/server/client.js"></script>
+    {{/admin}}
+    {{#viewer}}
+    <script>
+      Reveal.initialize({
+        ...sharedConfig,
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealZoom, RevealSearch, RevealMarkdown, RevealHighlight]
       });
     </script>
-    <script src="/plugin/multiplex/client.js"></script>
-    {{/admin}}
+    <script src="/plugin/server/guest.js"></script>
+    {{/viewer}}
   </body>
 </html>

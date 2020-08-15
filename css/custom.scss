@@ -21,6 +21,11 @@ div {
   }
 }
 
+iframe[data-src*="react-instantsearch.netlify.app"] {
+  background-color: #ffffff;
+}
+
+
 img.silhouette {
   filter: brightness(0) invert(1);
   opacity: 1;

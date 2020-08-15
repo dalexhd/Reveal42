@@ -20,7 +20,8 @@
     "jquery": "^3.5.1",
     "plyr": "^3.6.2",
     "reveal-multiplex": "^0.1.0",
-    "reveal.js-menu": "^2.1.0"
+    "reveal.js-menu": "^2.1.0",
+    "snapsvg": "^0.5.1"
   },
   "author": {
     "name": "Hakim El Hattab",

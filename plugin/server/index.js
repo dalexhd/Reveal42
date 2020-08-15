@@ -6,7 +6,7 @@ const basicAuth = require('express-basic-auth');
 
 const authOptions = {
     users: {
-      [process.env.USERNAME || 'admin']: process.env.PASSWORD || '1234'
+        [process.env.USERNAME || 'admin']: process.env.PASSWORD || '1234'
     },
     challenge: true,
     realm: 'Imb4T3st4pp',
@@ -26,9 +26,9 @@ const opts = {
 const isValidJwt = (header) => {
     const token = header.split(' ')[1];
     if (token === process.env.PASSWORD) {
-      return true;
+        return true;
     } else {
-      return false;
+        return false;
     }
 };
 
@@ -48,6 +48,8 @@ adminNamespace.on('connection', socket => {
     socket.on('statechanged', data => {
         delete data.state.overview;
         socket.broadcast.emit('statechanged', data);
+        delete data.notes;
+        publicNamespace.emit('statechanged', data);
     });
 
     socket.on('statechanged-speaker', data => {
@@ -63,12 +65,7 @@ adminNamespace.on('connection', socket => {
         socket.broadcast.emit('plyrchanged-speaker', data);
     });
 
-	socket.on('multiplex-statechanged', data => {
-        delete data.secret;
-        publicNamespace.emit('statechanged', data);
-    });
-
-    socket.on('multiplex-plyrchanged', data => {
+    socket.on('plyrchanged', data => {
         delete data.secret;
         publicNamespace.emit('plyrchanged', data);
     });
@@ -88,7 +85,7 @@ app.get('/', (req, res) => {
         res.send(mustache.render(data.toString(), {
             viewer: true,
             token: null,
-            id: process.env.MULTIPLEX_ID,
+            // id: process.env.MULTIPLEX_ID,
             spotifyUrl: process.env.SPOTIFY_URL
         }));
     });
@@ -97,10 +94,12 @@ app.get('/', (req, res) => {
 
 app.get('/admin', basicAuth(authOptions), (req, res) => {
     fs.readFile(opts.revealDir + '/index.html', (err, data) => {
+        const { receiver, postMessageEvents } = req.query;
+        const role = typeof receiver !== 'undefined' && typeof postMessageEvents !== 'undefined' ? 'presenter' : 'admin';
         res.send(mustache.render(data.toString(), {
-            admin: true,
+            [role]: true,
             password: process.env.PASSWORD,
-            id: process.env.MULTIPLEX_ID,
+            // id: process.env.MULTIPLEX_ID,
             spotifyUrl: process.env.SPOTIFY_URL
         }));
     });

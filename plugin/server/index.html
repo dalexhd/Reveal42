@@ -20,14 +20,14 @@
         <div class="clear"></div>
       </div>
 
+      <!-- <div class="speaker-controls">
+        <a href="#" id="side-menu"><i class="fas fa-bars"></i></a>
+      </div> -->
       <div class="speaker-controls-notes hidden">
         <h4 class="label">Notas</h4>
         <div class="value"></div>
       </div>
 
-      <div class="speaker-controls">
-        <a href="#"><i class="fas fa-bars"></i></a>
-      </div>
     </div>
     <div id="speaker-layout" class="overlay-element interactive">
       <span class="speaker-layout-label"></span>
@@ -80,7 +80,6 @@
             setupNotes();
             setupTimer();
           }
-
           handleStateMessage(data);
         });
 
@@ -111,8 +110,8 @@
                 }
                 break;
               case "plyr":
-                if (/ready|play|pause|seeked|volumechange/.test(data.type)) {
-                  socket.emit("plyrchanged-speaker", { event: data.type, data: data });
+                if (/ready|play|pause|seeked|volumechange|timeupdate|currentState/.test(data.type)) {
+                  socket.emit("plyrchanged-speaker", { event: data.type, ...data });
                 }
                 break;
               default:
@@ -195,12 +194,12 @@
          * Setup the notes UI.
          */
         function setupControls() {
-          controls = document.querySelector(".speaker-controls");
+          sideMenu = document.querySelector(".speaker-controls #side-menu");
           const slide = currentSlide.contentWindow;
           slide.addEventListener("menu-ready", function (event) {
             const open = slide.document.querySelector("div.slide-menu-button a");
             const close = slide.document.querySelector("li#close");
-            controls.onclick = function () {
+            sideMenu.onclick = function () {
               let active = slide.document.querySelector(".slide-menu").classList.contains("active");
               if (!active) {
                 open.click();

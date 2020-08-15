@@ -4,16 +4,17 @@
 
 	if (window.location.search.match(/receiver/gi)) return;
 
-	const multiplex = Reveal.getConfig().multiplex;
+	const server = Reveal.getConfig().server;
 	const socket = io.connect('/admin', {
 		transportOptions: {
 		  polling: {
 			extraHeaders: {
-			  'Authorization': 'Bearer ' + multiplex.secret
+			  'Authorization': 'Bearer ' + server.secret
 			}
 		  }
 		}
 	});
+	socket.on('error', (e) => console.log(e));
 
 	console.log('View slide notes at ' + window.location.origin + '/notes');
 
@@ -32,8 +33,8 @@
 	/**
 	 * Posts the current slide data to the viewers
 	 */
-	function postMultiplex() {
-		socket.emit('multiplex-statechanged', {
+	function postServer() {
+		socket.emit('statechanged', {
             state: Reveal.getState()
         });
 	}
@@ -63,7 +64,6 @@
 			messageData.markdown = typeof notesElement.getAttribute('data-markdown') === 'string';
 		}
 		socket.emit('statechanged', messageData);
-		postMultiplex();
 	}
 
 	// When a new notes window connects, post our current state
@@ -95,8 +95,8 @@
 		Reveal.on(event, post);
 	});
 	
-	socket.on('plyrchanged-speaker', function ({ event, data: { data } }) {
-		const player = document.getElementById(data.id);
+	socket.on('plyrchanged-speaker', function ({ event, data, data: {id, currentTime, paused, playing, ended, volume} }) {
+		const player = document.getElementById(id);
 		switch (event) {
 			case 'play':
 				player.play();
@@ -105,22 +105,26 @@
 				player.pause();
 				break;
 			case 'seeked':
-				player.currentTime = data.currentTime;
+				player.currentTime = currentTime;
+				break;
+			case 'currentState':
+				if (Math.abs(currentTime - player.currentTime) > 0.3) player.currentTime = currentTime;
+				if (player.paused !== paused && paused === true) player.pause();
+				if (player.play !== playing && playing === true) player.play();
 				break;
 			case 'volumechange':
-				player.volume = data.volume;
+				player.volume = volume;
 				break;
 			default:
 				return;
 		}
 
-		if (/ready|play|pause|seeked|volumechange/.test(event)) {
+		if (/ready|play|pause|seeked|volumechange|timeupdate|currentState/.test(event)) {
 			var messageData = {
 				data,
-				secret: multiplex.secret,
 				event: event
 			};
-			socket.emit("multiplex-plyrchanged", messageData);
+			socket.emit("plyrchanged", messageData);
 		}
 	});
 
