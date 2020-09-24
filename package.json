@@ -7,12 +7,40 @@
   "main": "dist/reveal.js",
   "module": "dist/reveal.esm.js",
   "license": "MIT",
+  "author": {
+    "name": "Hakim El Hattab",
+    "email": "hakim.elhattab@gmail.com",
+    "web": "https://hakim.se"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hakimel/reveal.js.git"
+  },
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "keywords": [
+    "reveal",
+    "slides",
+    "presentation"
+  ],
+  "browserslist": "> 0.5%, IE 11, not dead",
   "scripts": {
     "test": "gulp test",
     "start": "node plugin/server",
     "start:client": "gulp",
     "build": "gulp",
     "package": "gulp package"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.14.0",
+    "d3": "4.13.0",
+    "express": "^4.17.1",
+    "express-basic-auth": "^1.2.0",
+    "jquery": "^3.5.1",
+    "plyr": "^3.6.2",
+    "reveal.js-menu": "^2.1.0",
+    "socket.io": "2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
@@ -45,33 +73,6 @@
     "tailwindcss": "^1.6.0",
     "yargs": "^15.1.0"
   },
-  "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.14.0",
-    "d3": "4.13.0",
-    "express-basic-auth": "^1.2.0",
-    "jquery": "^3.5.1",
-    "plyr": "^3.6.2",
-    "reveal.js-menu": "^2.1.0",
-    "socket.io": "2.3.0"
-  },
-  "author": {
-    "name": "Hakim El Hattab",
-    "email": "hakim.elhattab@gmail.com",
-    "web": "https://hakim.se"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/hakimel/reveal.js.git"
-  },
-  "engines": {
-    "node": ">=10.0.0"
-  },
-  "keywords": [
-    "reveal",
-    "slides",
-    "presentation"
-  ],
-  "browserslist": "> 0.5%, IE 11, not dead",
   "eslintConfig": {
     "env": {
       "browser": true,
