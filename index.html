@@ -62,7 +62,7 @@
           data-preload
           data-background-opacity="0.2"
         >
-          <div data-id="box-42-logo-1" style="display: flex;">
+          <div data-id="box-42-logo-1" class="flex">
             <a href="https://www.42madrid.com/" target="_blank" rel="noopener noreferrer">
               <img
                 data-src="/dist/img/42logo.png"
@@ -235,47 +235,49 @@
           <section data-transition="zoom-in" data-auto-animate>
             <div class="flex justify-between items-center">
               <canvas width="400" height="401" class="anything">
-                <!-- {
-                    "initialize": "function(container) {
-                    var width = container.width,
-                        height = container.height;
-                    var radius = height / 2 - 5,
-                        scale = radius,
-                        velocity = .02;
-                    var projection = d3.geoOrthographic()
-                        .translate([width / 2, height / 2])
-                        .scale(scale)
-                        .clipAngle(90);
-                    var context = container.getContext('2d');
-                    var path = d3.geoPath()
-                        .projection(projection)
-                        .context(context);
+<!--
+{
+  "initialize": "function(container) {
+    var width = container.width,
+        height = container.height;
+    var radius = height / 2 - 5,
+        scale = radius,
+        velocity = .02;
+    var projection = d3.geoOrthographic()
+        .translate([width / 2, height / 2])
+        .scale(scale)
+        .clipAngle(90);
+    var context = container.getContext('2d');
+    var path = d3.geoPath()
+        .projection(projection)
+        .context(context);
 
-                    d3.json('/plugin/anything/d3/world-110m.json', function(error, world) {
-                      if (error) throw error;
-                      var land = topojson.feature(world, world.objects.land);
-                      d3.timer(function(elapsed) {
-                        context.clearRect(0, 0, width, height);
-                        context.beginPath();
-                        context.arc(width / 2, height / 2, radius, 0, 2 * Math.PI, true);
-                        context.lineWidth = 2.5;
-                        context.fillStyle = '#fff';
-                        context.fill();
-                  
-                        projection.rotate([velocity * elapsed, 0]);
-                        context.beginPath();
-                        path(land);
-                        context.fillStyle = '#42affa';
-                        context.fill();
-                        context.beginPath();
-                        context.arc(width / 2, height / 2, radius, 0, 2 * Math.PI, true);
-                        context.lineWidth = 2.5;
-                        context.strokeStyle = '#ccc';
-                        context.stroke();
-                      });
-                    });
-                      }"
-                  } -->
+    d3.json('/plugin/anything/d3/world-110m.json', function(error, world) {
+      if (error) throw error;
+      var land = topojson.feature(world, world.objects.land);
+      d3.timer(function(elapsed) {
+        context.clearRect(0, 0, width, height);
+        context.beginPath();
+        context.arc(width / 2, height / 2, radius, 0, 2 * Math.PI, true);
+        context.lineWidth = 2.5;
+        context.fillStyle = '#fff';
+        context.fill();
+  
+        projection.rotate([velocity * elapsed, 0]);
+        context.beginPath();
+        path(land);
+        context.fillStyle = '#42affa';
+        context.fill();
+        context.beginPath();
+        context.arc(width / 2, height / 2, radius, 0, 2 * Math.PI, true);
+        context.lineWidth = 2.5;
+        context.strokeStyle = '#ccc';
+        context.stroke();
+      });
+    });
+  }"
+}
+-->
               </canvas>
               <span
                 class="text-6xl font-black font-mono bg-blue-500 bg-opacity-100"
@@ -285,8 +287,43 @@
               >
             </div>
           </section>
-          <section>
-            Max potencia, a diario, 24h, 0.15eur el KWH => 10.51 al año
+          <section data-auto-animate>
+            <h3>Precios</h3>
+            <i class="fab fa-aws"></i>
+            <canvas data-chart="horizontalBar">
+<!--
+return {
+  data: {
+    labels: ["\uf391", "\uf375", "\uf7bb", "\uf1a0", "\uf3ca"],
+    datasets:[
+      {
+        data:[5,6.81,80],
+        label:"My first dataset",backgroundColor:"rgba(20,220,220,.8)"
+      }
+    ]
+  },
+  options: {
+    pointRadius: 0,  //<- set this
+    responsive: true,
+    dataset: {
+      color: 'red'
+    },
+    tooltips: {
+      titleFontFamily: "'Font Awesome 5 Brands', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
+    },
+    scales: {
+      yAxes: [{
+        ticks: {
+          fontFamily: "'Font Awesome 5 Brands'",
+          fontSize: 40
+        }
+      }]
+    }
+  }
+}
+-->
+            </canvas>
+            <!-- Max potencia, a diario, 24h, 0.15eur el KWH => 10.51 al año -->
           </section>
           <!-- <section data-transition="zoom-in" data-auto-animate>
             <div data-fragment-index="1">
@@ -665,8 +702,11 @@
     <script src="/plugin/revealjs-animated/revealjs-animated.js"></script>
     <!-- Used for plugin: Anything -->
     <script src="/plugin/anything/d3/d3.min.js"></script>
-    <script src="/plugin/anything/anything.js" defer></script>
-    <script src="/plugin/anything/d3/topojson.min.js" defer></script>
+    <script src="/plugin/anything/d3/topojson.min.js"></script>
+    <script src="/plugin/anything/anything.js"></script>
+    <!-- Used for plugin: ChartJS -->
+    <script src="/plugin/chart/chart.js"></script>
+    <script src="/plugin/chart/plugin.js"></script>
     <script>
       sharedConfig = {
         controls: true,
@@ -703,7 +743,7 @@
           themesPath: '/dist/theme',
           markers: false,
         },
-        plugins: [RevealZoom, RevealSearch, RevealMarkdown, RevealHighlight, RevealMenu]
+        plugins: [RevealZoom, RevealSearch, RevealMarkdown, RevealHighlight, RevealMenu, RevealAnything, RevealChart]
       });
       const spotifyUrl = "{{{spotifyUrl}}}";
     </script>
@@ -718,7 +758,7 @@
           secret: "{{password}}" // Obtained from the socket.io server. Gives this (the master) control of the presentation
         },
         // Learn about plugins: https://revealjs.com/plugins/
-        plugins: [RevealZoom, RevealSearch, RevealMarkdown, RevealHighlight],
+        plugins: [RevealZoom, RevealSearch, RevealMarkdown, RevealHighlight, RevealAnything, RevealChart],
       });
       const spotifyUrl = "{{{spotifyUrl}}}";
     </script>
@@ -729,7 +769,7 @@
       Reveal.initialize({
         ...sharedConfig,
         // Learn about plugins: https://revealjs.com/plugins/
-        plugins: [RevealZoom, RevealSearch, RevealMarkdown, RevealHighlight]
+        plugins: [RevealZoom, RevealSearch, RevealMarkdown, RevealHighlight, RevealAnything, RevealChart]
       });
     </script>
     <script src="/plugin/server/guest.js"></script>

@@ -118,7 +118,7 @@ export default class SlideContent {
 						video.setAttribute('loop', '');
 					}
 					if (Reveal.role === 'admin') {
-						video.volume = backgroundVideoVolume ? parseFloat(backgroundVideoVolume) : 1;
+						plyrOptions.volume = backgroundVideoVolume ? parseFloat(backgroundVideoVolume) : 1;
 					}
 					if (backgroundVideoMuted || this.Reveal.isSpeakerNotes() && !Reveal.getConfig().postMessageEvents) {
 						video.setAttribute('muted', '');
