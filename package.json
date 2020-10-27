@@ -40,6 +40,7 @@
     "jquery": "^3.5.1",
     "plyr": "^3.6.2",
     "reveal.js-menu": "^2.1.0",
+    "mustache": "^4.0.1",
     "socket.io": "2.3.0"
   },
   "devDependencies": {
