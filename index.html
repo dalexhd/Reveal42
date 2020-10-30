@@ -24,6 +24,18 @@
 
     <!-- User for plyr module -->
     <link rel="stylesheet" href="/node_modules/plyr/dist/plyr.css" />
+
+    <!-- User for Particles.js module -->
+    <style>
+      #particles {
+        position: fixed;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        left: 0px;
+        top: 0px;
+      }
+    </style>
   </head>
 
   <body>
@@ -689,6 +701,7 @@ return {
           </section>
         </section>
       </div>
+      <div id="particles"></div>
     </div>
     <script src="/node_modules/plyr/dist/plyr.min.js"></script>
     <script src="/dist/reveal.js"></script>
@@ -707,6 +720,77 @@ return {
     <!-- Used for plugin: ChartJS -->
     <script src="/plugin/chart/chart.js"></script>
     <script src="/plugin/chart/plugin.js"></script>
+    <!-- Used for plugin: ParticlesJS -->
+    <script src="/plugin/particles.js/particles.min.js"></script>
+    <script>
+      particlesJS("particles", {
+        "particles": {
+          "number": {
+            "value": 50,
+            "density": {
+              "enable": true,
+              "value_area": 800
+            }
+          },
+          "color": {
+            "value": "#ffffff"
+          },
+          "shape": {
+            "type": "circle",
+            "stroke": {
+              "width": 0,
+              "color": "#000000"
+            },
+            "polygon": {
+              "nb_sides": 5
+            },
+            "image": {
+              "src": "img/github.svg",
+              "width": 300,
+              "height": 100
+            }
+          },
+          "opacity": {
+            "value": 0.5,
+            "random": false,
+            "anim": {
+              "enable": true,
+              "speed": 0.2,
+              "opacity_min": 0,
+              "sync": false
+            }
+          },
+          "size": {
+            "value": 3,
+            "random": true,
+            "anim": {
+              "enable": true,
+              "speed": 2,
+              "size_min": 0,
+              "sync": false
+            }
+          },
+          "line_linked": {
+            "enable": false
+          },
+          "move": {
+            "enable": true,
+            "speed": 1,
+            "direction": "none",
+            "random": true,
+            "straight": false,
+            "out_mode": "out",
+            "bounce": false,
+            "attract": {
+              "enable": false,
+              "rotateX": 600,
+              "rotateY": 1200
+            }
+          }
+        },
+        "retina_detect": true
+      });
+    </script>
     <script>
       sharedConfig = {
         controls: true,
