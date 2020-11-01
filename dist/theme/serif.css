@@ -11,14 +11,14 @@
  * GLOBAL STYLES
  *********************************************/
 :root {
-  --background-color: #F0F1EB;
-  --main-font: Palatino Linotype, Book Antiqua, Palatino, FreeSerif, serif;
+  --background-color: #f0f1eb;
+  --main-font: Palatino Linotype, Book Antiqua, palatino, freeserif, serif;
   --main-font-size: 40px;
   --main-color: #000;
   --block-margin: 20px;
   --heading-margin: 0 0 20px 0;
-  --heading-font: Palatino Linotype, Book Antiqua, Palatino, FreeSerif, serif;
-  --heading-color: #383D3D;
+  --heading-font: Palatino Linotype, Book Antiqua, palatino, freeserif, serif;
+  --heading-color: #383d3d;
   --heading-line-height: 1.2;
   --heading-letter-spacing: normal;
   --heading-text-transform: none;
@@ -30,29 +30,29 @@
   --heading3-size: 1.55em;
   --heading4-size: 1em;
   --code-font: monospace;
-  --link-color: #51483D;
+  --link-color: #51483d;
   --link-color-hover: #8b7c69;
-  --selection-background-color: #26351C;
+  --selection-background-color: #26351c;
   --selection-color: #fff; }
 
 .reveal-viewport {
-  background: #F0F1EB;
-  background-color: #F0F1EB; }
+  background: #f0f1eb;
+  background-color: #f0f1eb; }
 
 .reveal {
-  font-family: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;
+  font-family: "Palatino Linotype", "Book Antiqua", palatino, freeserif, serif;
   font-size: 40px;
   font-weight: normal;
   color: #000; }
 
 .reveal ::selection {
   color: #fff;
-  background: #26351C;
+  background: #26351c;
   text-shadow: none; }
 
 .reveal ::-moz-selection {
   color: #fff;
-  background: #26351C;
+  background: #26351c;
   text-shadow: none; }
 
 .reveal .slides section,
@@ -70,8 +70,8 @@
 .reveal h5,
 .reveal h6 {
   margin: 0 0 20px 0;
-  color: #383D3D;
-  font-family: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;
+  color: #383d3d;
+  font-family: "Palatino Linotype", "Book Antiqua", palatino, freeserif, serif;
   font-weight: normal;
   line-height: 1.2;
   letter-spacing: normal;
@@ -80,7 +80,8 @@
   word-wrap: break-word; }
 
 .reveal h1 {
-  font-size: 3.77em; }
+  font-size: 3.77em;
+  text-shadow: none; }
 
 .reveal h2 {
   font-size: 2.11em; }
@@ -90,9 +91,6 @@
 
 .reveal h4 {
   font-size: 1em; }
-
-.reveal h1 {
-  text-shadow: none; }
 
 /*********************************************
  * OTHER
@@ -155,7 +153,7 @@
   padding: 5px;
   font-style: italic;
   background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2); }
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2); }
 
 .reveal blockquote p:first-child,
 .reveal blockquote p:last-child {
@@ -174,7 +172,7 @@
   font-family: monospace;
   line-height: 1.2em;
   word-wrap: break-word;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15); }
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); }
 
 .reveal code {
   font-family: monospace;
@@ -237,16 +235,16 @@
  * LINKS
  *********************************************/
 .reveal a {
-  color: #51483D;
+  color: #51483d;
   text-decoration: none;
-  transition: color .15s ease; }
+  transition: color 0.15s ease; }
 
 .reveal a:hover {
   color: #8b7c69;
   text-shadow: none;
   border: none; }
 
-.reveal .roll span:after {
+.reveal .roll span::after {
   color: #fff;
   background: #25211c; }
 
@@ -258,28 +256,28 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
 
 .reveal a .r-frame {
-  transition: all .15s linear; }
+  transition: all 0.15s linear; }
 
 .reveal a:hover .r-frame {
-  border-color: #51483D;
+  border-color: #51483d;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.55); }
 
 /*********************************************
  * NAVIGATION CONTROLS
  *********************************************/
 .reveal .controls {
-  color: #51483D; }
+  color: #51483d; }
 
 /*********************************************
  * PROGRESS BAR
  *********************************************/
 .reveal .progress {
   background: rgba(0, 0, 0, 0.2);
-  color: #51483D; }
+  color: #51483d; }
 
 /*********************************************
  * PRINT BACKGROUND
  *********************************************/
 @media print {
   .backgrounds {
-    background-color: #F0F1EB; } }
+    background-color: #f0f1eb; } }

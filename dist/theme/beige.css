@@ -15,7 +15,7 @@
   --main-color: #333;
   --block-margin: 20px;
   --heading-margin: 0 0 20px 0;
-  --heading-font: League Gothic, Impact, sans-serif;
+  --heading-font: League Gothic, impact, sans-serif;
   --heading-color: #333;
   --heading-line-height: 1.2;
   --heading-letter-spacing: normal;
@@ -36,7 +36,7 @@
 .reveal-viewport {
   background: #f7f2d3;
   background: -moz-radial-gradient(center, circle cover, white 0%, #f7f2d3 100%);
-  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, white), color-stop(100%, #f7f2d3));
+  background: -webkit-gradient(radial, center center, 0, center center, 100%, color-stop(0%, white), color-stop(100%, #f7f2d3));
   background: -webkit-radial-gradient(center, circle cover, white 0%, #f7f2d3 100%);
   background: -o-radial-gradient(center, circle cover, white 0%, #f7f2d3 100%);
   background: -ms-radial-gradient(center, circle cover, white 0%, #f7f2d3 100%);
@@ -75,7 +75,7 @@
 .reveal h6 {
   margin: 0 0 20px 0;
   color: #333;
-  font-family: "League Gothic", Impact, sans-serif;
+  font-family: "League Gothic", impact, sans-serif;
   font-weight: normal;
   line-height: 1.2;
   letter-spacing: normal;
@@ -84,7 +84,8 @@
   word-wrap: break-word; }
 
 .reveal h1 {
-  font-size: 3.77em; }
+  font-size: 3.77em;
+  text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25), 0 20px 20px rgba(0, 0, 0, 0.15); }
 
 .reveal h2 {
   font-size: 2.11em; }
@@ -94,9 +95,6 @@
 
 .reveal h4 {
   font-size: 1em; }
-
-.reveal h1 {
-  text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25), 0 20px 20px rgba(0, 0, 0, 0.15); }
 
 /*********************************************
  * OTHER
@@ -159,7 +157,7 @@
   padding: 5px;
   font-style: italic;
   background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2); }
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2); }
 
 .reveal blockquote p:first-child,
 .reveal blockquote p:last-child {
@@ -178,7 +176,7 @@
   font-family: monospace;
   line-height: 1.2em;
   word-wrap: break-word;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15); }
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); }
 
 .reveal code {
   font-family: monospace;
@@ -243,14 +241,14 @@
 .reveal a {
   color: #8b743d;
   text-decoration: none;
-  transition: color .15s ease; }
+  transition: color 0.15s ease; }
 
 .reveal a:hover {
   color: #c0a86e;
   text-shadow: none;
   border: none; }
 
-.reveal .roll span:after {
+.reveal .roll span::after {
   color: #fff;
   background: #564826; }
 
@@ -262,7 +260,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
 
 .reveal a .r-frame {
-  transition: all .15s linear; }
+  transition: all 0.15s linear; }
 
 .reveal a:hover .r-frame {
   border-color: #8b743d;

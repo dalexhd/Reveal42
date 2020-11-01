@@ -1,8 +1,8 @@
+/* global spotifyUrl */
 (function () {
   // don't emit events from inside the previews themselves
 
   if (window.location.search.match(/receiver/gi)) return;
-
   const server = Reveal.getConfig().server;
   const socket = io.connect('/admin', {
     transportOptions: {

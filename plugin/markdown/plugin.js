@@ -62,7 +62,7 @@ const Plugin = () => {
         value = attributes[i].value;
 
       // disregard attributes that are used for markdown loading/parsing
-      if (/data\-(markdown|separator|vertical|notes)/gi.test(name)) continue;
+      if (/data-(markdown|separator|vertical|notes)/gi.test(name)) continue;
 
       if (value) {
         result.push(`${name}="${value}"`);
@@ -266,7 +266,7 @@ const Plugin = () => {
       var datacharset = section.getAttribute('data-charset');
 
       // see https://developer.mozilla.org/en-US/docs/Web/API/element.getAttribute#Notes
-      if (datacharset != null && datacharset != '') {
+      if (datacharset !== null && datacharset !== '') {
         xhr.overrideMimeType(`text/html; charset=${datacharset}`);
       }
 
@@ -341,8 +341,8 @@ const Plugin = () => {
     separatorSectionAttributes
   ) {
     if (
-      element != null &&
-      element.childNodes != undefined &&
+      element !== null &&
+      element.childNodes !== undefined &&
       element.childNodes.length > 0
     ) {
       var previousParentElement = element;
@@ -354,7 +354,7 @@ const Plugin = () => {
             var aPreviousChildElement = element.childNodes[j];
             if (
               typeof aPreviousChildElement.setAttribute === 'function' &&
-              aPreviousChildElement.tagName != 'BR'
+              aPreviousChildElement.tagName !== 'BR'
             ) {
               previousParentElement = aPreviousChildElement;
               break;
@@ -363,13 +363,13 @@ const Plugin = () => {
           }
         }
         var parentSection = section;
-        if (childElement.nodeName == 'section') {
+        if (childElement.nodeName === 'section') {
           parentSection = childElement;
           previousParentElement = childElement;
         }
         if (
           typeof childElement.setAttribute === 'function' ||
-          childElement.nodeType == Node.COMMENT_NODE
+          childElement.nodeType === Node.COMMENT_NODE
         ) {
           addAttributes(
             parentSection,
@@ -382,13 +382,13 @@ const Plugin = () => {
       }
     }
 
-    if (element.nodeType == Node.COMMENT_NODE) {
+    if (element.nodeType === Node.COMMENT_NODE) {
       if (
         addAttributeInElement(
           element,
           previousElement,
           separatorElementAttributes
-        ) == false
+        ) === false
       ) {
         addAttributeInElement(element, section, separatorSectionAttributes);
       }

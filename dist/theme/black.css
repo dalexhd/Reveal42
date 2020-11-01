@@ -4,7 +4,13 @@
  * By Hakim El Hattab, http://hakim.se
  */
 @import url(fonts/source-sans-pro/source-sans-pro.css);
-section.has-light-background, section.has-light-background h1, section.has-light-background h2, section.has-light-background h3, section.has-light-background h4, section.has-light-background h5, section.has-light-background h6 {
+section.has-light-background,
+section.has-light-background h1,
+section.has-light-background h2,
+section.has-light-background h3,
+section.has-light-background h4,
+section.has-light-background h5,
+section.has-light-background h6 {
   color: #222; }
 
 /*********************************************
@@ -12,12 +18,12 @@ section.has-light-background, section.has-light-background h1, section.has-light
  *********************************************/
 :root {
   --background-color: #191919;
-  --main-font: Source Sans Pro, Helvetica, sans-serif;
+  --main-font: Source Sans Pro, helvetica, sans-serif;
   --main-font-size: 42px;
   --main-color: #fff;
   --block-margin: 20px;
   --heading-margin: 0 0 20px 0;
-  --heading-font: Source Sans Pro, Helvetica, sans-serif;
+  --heading-font: Source Sans Pro, helvetica, sans-serif;
   --heading-color: #fff;
   --heading-line-height: 1.2;
   --heading-letter-spacing: normal;
@@ -40,7 +46,7 @@ section.has-light-background, section.has-light-background h1, section.has-light
   background-color: #191919; }
 
 .reveal {
-  font-family: "Source Sans Pro", Helvetica, sans-serif;
+  font-family: "Source Sans Pro", helvetica, sans-serif;
   font-size: 42px;
   font-weight: normal;
   color: #fff; }
@@ -71,7 +77,7 @@ section.has-light-background, section.has-light-background h1, section.has-light
 .reveal h6 {
   margin: 0 0 20px 0;
   color: #fff;
-  font-family: "Source Sans Pro", Helvetica, sans-serif;
+  font-family: "Source Sans Pro", helvetica, sans-serif;
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: normal;
@@ -80,7 +86,8 @@ section.has-light-background, section.has-light-background h1, section.has-light
   word-wrap: break-word; }
 
 .reveal h1 {
-  font-size: 2.5em; }
+  font-size: 2.5em;
+  text-shadow: none; }
 
 .reveal h2 {
   font-size: 1.6em; }
@@ -90,9 +97,6 @@ section.has-light-background, section.has-light-background h1, section.has-light
 
 .reveal h4 {
   font-size: 1em; }
-
-.reveal h1 {
-  text-shadow: none; }
 
 /*********************************************
  * OTHER
@@ -155,7 +159,7 @@ section.has-light-background, section.has-light-background h1, section.has-light
   padding: 5px;
   font-style: italic;
   background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2); }
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2); }
 
 .reveal blockquote p:first-child,
 .reveal blockquote p:last-child {
@@ -174,7 +178,7 @@ section.has-light-background, section.has-light-background h1, section.has-light
   font-family: monospace;
   line-height: 1.2em;
   word-wrap: break-word;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15); }
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); }
 
 .reveal code {
   font-family: monospace;
@@ -239,14 +243,14 @@ section.has-light-background, section.has-light-background h1, section.has-light
 .reveal a {
   color: #42affa;
   text-decoration: none;
-  transition: color .15s ease; }
+  transition: color 0.15s ease; }
 
 .reveal a:hover {
   color: #8dcffc;
   text-shadow: none;
   border: none; }
 
-.reveal .roll span:after {
+.reveal .roll span::after {
   color: #fff;
   background: #068de9; }
 
@@ -258,7 +262,7 @@ section.has-light-background, section.has-light-background h1, section.has-light
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
 
 .reveal a .r-frame {
-  transition: all .15s linear; }
+  transition: all 0.15s linear; }
 
 .reveal a:hover .r-frame {
   border-color: #42affa;

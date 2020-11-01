@@ -15,12 +15,12 @@
  *********************************************/
 :root {
   --background-color: #222;
-  --main-font: Ubuntu, sans-serif;
+  --main-font: ubuntu, sans-serif;
   --main-font-size: 40px;
   --main-color: #eee;
   --block-margin: 20px;
   --heading-margin: 0 0 20px 0;
-  --heading-font: Ubuntu, sans-serif;
+  --heading-font: ubuntu, sans-serif;
   --heading-color: #eee;
   --heading-line-height: 1.2;
   --heading-letter-spacing: normal;
@@ -43,7 +43,7 @@
   background-color: #222; }
 
 .reveal {
-  font-family: Ubuntu, "sans-serif";
+  font-family: ubuntu, "sans-serif";
   font-size: 40px;
   font-weight: normal;
   color: #eee; }
@@ -74,7 +74,7 @@
 .reveal h6 {
   margin: 0 0 20px 0;
   color: #eee;
-  font-family: Ubuntu, "sans-serif";
+  font-family: ubuntu, "sans-serif";
   font-weight: normal;
   line-height: 1.2;
   letter-spacing: normal;
@@ -83,7 +83,8 @@
   word-wrap: break-word; }
 
 .reveal h1 {
-  font-size: 3.77em; }
+  font-size: 3.77em;
+  text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25), 0 20px 20px rgba(0, 0, 0, 0.15); }
 
 .reveal h2 {
   font-size: 2.11em; }
@@ -93,9 +94,6 @@
 
 .reveal h4 {
   font-size: 1em; }
-
-.reveal h1 {
-  text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25), 0 20px 20px rgba(0, 0, 0, 0.15); }
 
 /*********************************************
  * OTHER
@@ -158,7 +156,7 @@
   padding: 5px;
   font-style: italic;
   background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2); }
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2); }
 
 .reveal blockquote p:first-child,
 .reveal blockquote p:last-child {
@@ -177,7 +175,7 @@
   font-family: monospace;
   line-height: 1.2em;
   word-wrap: break-word;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15); }
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); }
 
 .reveal code {
   font-family: monospace;
@@ -242,14 +240,14 @@
 .reveal a {
   color: #a23;
   text-decoration: none;
-  transition: color .15s ease; }
+  transition: color 0.15s ease; }
 
 .reveal a:hover {
   color: #dd5566;
   text-shadow: none;
   border: none; }
 
-.reveal .roll span:after {
+.reveal .roll span::after {
   color: #fff;
   background: #6a1520; }
 
@@ -261,7 +259,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
 
 .reveal a .r-frame {
-  transition: all .15s linear; }
+  transition: all 0.15s linear; }
 
 .reveal a:hover .r-frame {
   border-color: #a23;

@@ -1,0 +1,37 @@
+﻿WEBVTT
+
+00:00:00.030 --> 00:00:04.110
+Sentry le permite identificar y corregir errores de producción en todos los
+
+00:00:04.110 --> 00:00:09.090
+aplicación en su pila comience instalando el SDK apropiado para su
+
+00:00:09.090 --> 00:00:15.540
+plataforma o plataformas una vez hecho esto, todas las excepciones no controladas son
+
+00:00:15.540 --> 00:00:20.460
+capturados automáticamente por siglo y los errores individuales se acumulan en
+
+00:00:20.460 --> 00:00:27.000
+cuestiones más importantes que le permiten ver el impacto de problemas específicos examinar el
+
+00:00:27.000 --> 00:00:34.710
+seguimiento de pila obtener contexto adicional sobre el estado de la aplicación y conectar el problema
+
+00:00:34.710 --> 00:00:40.140
+a la confirmación que probablemente lo causó, ya que estamos completos si un front-end
+
+00:00:40.140 --> 00:00:44.190
+El error es causado por algo roto en su código de back-end, puede rastrear eso
+
+00:00:44.190 --> 00:00:50.280
+dentro de un siglo, puede asignar estos problemas a un desarrollador o equipo directamente
+
+00:00:50.280 --> 00:00:55.500
+dentro de un siglo o mediante un rastreador de problemas y le enviará notificaciones
+
+00:00:55.500 --> 00:01:04.439
+sobre problemas a través de alertas que usted controla por completo.
+
+00:01:04.439 --> 00:01:08.390
+código toma la siesta ocasional

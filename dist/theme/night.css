@@ -15,7 +15,7 @@
   --main-color: #eee;
   --block-margin: 20px;
   --heading-margin: 0 0 20px 0;
-  --heading-font: Montserrat, Impact, sans-serif;
+  --heading-font: Montserrat, impact, sans-serif;
   --heading-color: #eee;
   --heading-line-height: 1.2;
   --heading-letter-spacing: -0.03em;
@@ -69,7 +69,7 @@
 .reveal h6 {
   margin: 0 0 20px 0;
   color: #eee;
-  font-family: "Montserrat", Impact, sans-serif;
+  font-family: "Montserrat", impact, sans-serif;
   font-weight: normal;
   line-height: 1.2;
   letter-spacing: -0.03em;
@@ -78,7 +78,8 @@
   word-wrap: break-word; }
 
 .reveal h1 {
-  font-size: 3.77em; }
+  font-size: 3.77em;
+  text-shadow: none; }
 
 .reveal h2 {
   font-size: 2.11em; }
@@ -88,9 +89,6 @@
 
 .reveal h4 {
   font-size: 1em; }
-
-.reveal h1 {
-  text-shadow: none; }
 
 /*********************************************
  * OTHER
@@ -153,7 +151,7 @@
   padding: 5px;
   font-style: italic;
   background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2); }
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2); }
 
 .reveal blockquote p:first-child,
 .reveal blockquote p:last-child {
@@ -172,7 +170,7 @@
   font-family: monospace;
   line-height: 1.2em;
   word-wrap: break-word;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15); }
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); }
 
 .reveal code {
   font-family: monospace;
@@ -237,14 +235,14 @@
 .reveal a {
   color: #e7ad52;
   text-decoration: none;
-  transition: color .15s ease; }
+  transition: color 0.15s ease; }
 
 .reveal a:hover {
   color: #f3d7ac;
   text-shadow: none;
   border: none; }
 
-.reveal .roll span:after {
+.reveal .roll span::after {
   color: #fff;
   background: #d08a1d; }
 
@@ -256,7 +254,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
 
 .reveal a .r-frame {
-  transition: all .15s linear; }
+  transition: all 0.15s linear; }
 
 .reveal a:hover .r-frame {
   border-color: #e7ad52;

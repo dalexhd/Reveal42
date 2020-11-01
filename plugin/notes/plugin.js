@@ -168,7 +168,7 @@ const Plugin = () => {
 
       if (!/receiver/i.test(window.location.search)) {
         // If the there's a 'notes' query set, open directly
-        if (window.location.search.match(/(\?|\&)notes/gi) !== null) {
+        if (window.location.search.match(/(\?|&)notes/gi) !== null) {
           openNotes();
         }
 

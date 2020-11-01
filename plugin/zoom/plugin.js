@@ -1,40 +1,6 @@
 /*!
  * reveal.js Zoom plugin
  */
-const Plugin = {
-  id: 'zoom',
-
-  init: function (reveal) {
-    reveal.getRevealElement().addEventListener('mousedown', function (event) {
-      var defaultModifier = /Linux/.test(window.navigator.platform)
-        ? 'ctrl'
-        : 'alt';
-
-      var modifier = `${
-        reveal.getConfig().zoomKey
-          ? reveal.getConfig().zoomKey
-          : defaultModifier
-      }Key`;
-      var zoomLevel = reveal.getConfig().zoomLevel
-        ? reveal.getConfig().zoomLevel
-        : 2;
-
-      if (event[modifier] && !reveal.isOverview()) {
-        event.preventDefault();
-
-        zoom.to({
-          x: event.clientX,
-          y: event.clientY,
-          scale: zoomLevel,
-          pan: false
-        });
-      }
-    });
-  }
-};
-
-export default () => Plugin;
-
 /*!
  * zoom.js 0.3 (modified for use with reveal.js)
  * http://lab.hakim.se/zoom-js
@@ -297,3 +263,37 @@ var zoom = (function () {
     }
   };
 })();
+
+const Plugin = {
+  id: 'zoom',
+
+  init: function (reveal) {
+    reveal.getRevealElement().addEventListener('mousedown', function (event) {
+      var defaultModifier = /Linux/.test(window.navigator.platform)
+        ? 'ctrl'
+        : 'alt';
+
+      var modifier = `${
+        reveal.getConfig().zoomKey
+          ? reveal.getConfig().zoomKey
+          : defaultModifier
+      }Key`;
+      var zoomLevel = reveal.getConfig().zoomLevel
+        ? reveal.getConfig().zoomLevel
+        : 2;
+
+      if (event[modifier] && !reveal.isOverview()) {
+        event.preventDefault();
+
+        zoom.to({
+          x: event.clientX,
+          y: event.clientY,
+          scale: zoomLevel,
+          pan: false
+        });
+      }
+    });
+  }
+};
+
+export default () => Plugin;

@@ -1,14 +1,3 @@
-/*****************************************************************
- ** Author: Asvin Goel, goel@telematique.eu
- **
- ** A plugin for reveal.js allowing to easily integrate any content
- **
- ** Version: 1.0.0
- **
- ** License: MIT license (see LICENSE.md)
- **
- ******************************************************************/
-
 const initAnything = function (Reveal) {
   function parseJSON(str) {
     str = str.replace(/(\r\n|\n|\r|\t)/gm, ''); // remove line breaks and tabs
@@ -40,7 +29,7 @@ const initAnything = function (Reveal) {
     for (var p in obj2) {
       try {
         // Property in destination object set; update its value.
-        if (obj2[p].constructor == Object) {
+        if (obj2[p].constructor === Object) {
           obj1[p] = mergeRecursive(obj1[p], obj2[p]);
         } else {
           if (!obj1[p]) obj1[p] = obj2[p];

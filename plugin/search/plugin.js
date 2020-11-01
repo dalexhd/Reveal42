@@ -150,7 +150,7 @@ const Plugin = () => {
 
     // recursively apply word highlighting
     this.hiliteWords = function (node) {
-      if (node == undefined || !node) return;
+      if (node === undefined || !node) return;
       if (!matchRegex) return;
       if (skipTags.test(node.nodeName)) return;
 
@@ -158,20 +158,20 @@ const Plugin = () => {
         for (var i = 0; i < node.childNodes.length; i++)
           this.hiliteWords(node.childNodes[i]);
       }
-      if (node.nodeType == 3) {
+      if (node.nodeType === 3) {
         // NODE_TEXT
         var nv, regs;
         if ((nv = node.nodeValue) && (regs = matchRegex.exec(nv))) {
           //find the slide's section element and save it in our list of matching slides
           var secnode = node;
-          while (secnode != null && secnode.nodeName != 'SECTION') {
+          while (secnode !== null && secnode.nodeName !== 'SECTION') {
             secnode = secnode.parentNode;
           }
 
           var slideIndex = deck.getIndices(secnode);
           var slidelen = matchingSlides.length;
           var alreadyAdded = false;
-          for (var i = 0; i < slidelen; i++) {
+          for (let i = 0; i < slidelen; i++) {
             if (
               matchingSlides[i].h === slideIndex.h &&
               matchingSlides[i].v === slideIndex.v
@@ -212,7 +212,7 @@ const Plugin = () => {
 
     // start highlighting at target node
     this.apply = function (input) {
-      if (input == undefined || !input) return;
+      if (input === undefined || !input) return;
       this.remove();
       this.setRegex(input);
       this.hiliteWords(targetNode);
@@ -230,7 +230,7 @@ const Plugin = () => {
       document.addEventListener(
         'keydown',
         function (event) {
-          if (event.key == 'F' && (event.ctrlKey || event.metaKey)) {
+          if (event.key === 'F' && (event.ctrlKey || event.metaKey)) {
             //Control+Shift+f
             event.preventDefault();
             toggleSearch();

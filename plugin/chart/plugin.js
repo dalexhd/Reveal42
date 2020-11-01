@@ -1,45 +1,19 @@
-/*****************************************************************
- ** Author: Asvin Goel, goel@telematique.eu
- ** Fixed for Reveal4: kotborealis@awooo.ru
- **
- ** A plugin for reveal.js allowing to integrate Chart.js
- **
- ** Version: 1.0.0
- **
- ** License: MIT license (see LICENSE.md)
- **
- ******************************************************************/
-
 /**
  * Reveal Plugin
  * https://revealjs.com/creating-plugins/
  */
-window.RevealChart = window.RevealChart || {
-  id: 'RevealChart',
-  init: function (deck) {
-    initChart(deck);
-  }
-};
-
 const initChart = function (Reveal) {
-  function parseJSON(str) {
-    var json;
-    try {
-      json = JSON.parse(str);
-    } catch (e) {
-      return null;
-    }
-    return json;
-  }
+  // check if chart option is given or not
+  var chartConfig = Reveal.getConfig().chart || {};
 
-  /*
-   * Recursively merge properties of two objects
-   */
+  // set global chart options
+  var config = chartConfig['defaults'];
+
   function mergeRecursive(obj1, obj2) {
     for (var p in obj2) {
       try {
         // Property in destination object set; update its value.
-        if (obj1[p].constructor == Object && obj2[p].constructor == Object) {
+        if (obj1[p].constructor === Object && obj2[p].constructor === Object) {
           obj1[p] = mergeRecursive(obj1[p], obj2[p]);
         } else {
           obj1[p] = obj2[p];
@@ -51,6 +25,10 @@ const initChart = function (Reveal) {
     }
 
     return obj1;
+  }
+
+  if (config) {
+    mergeRecursive(Chart.defaults, config);
   }
 
   function createChart(canvas, CSV, comments) {
@@ -83,7 +61,7 @@ const initChart = function (Reveal) {
       lines.shift();
     }
     // get data values
-    for (var j = 0; j < lines.length; j++) {
+    for (let j = 0; j < lines.length; j++) {
       if (chartData.datasets.length <= j) chartData.datasets[j] = {};
       chartData.datasets[j].data = lines[j].split(','); //.filter(function(v){return v!==''});
       chartData.datasets[j].label = chartData.datasets[j].data[0];
@@ -94,9 +72,9 @@ const initChart = function (Reveal) {
     }
 
     // add chart options
-    var config = chartConfig[canvas.getAttribute('data-chart')];
+    config = chartConfig[canvas.getAttribute('data-chart')];
     if (config) {
-      for (var j = 0; j < chartData.datasets.length; j++) {
+      for (let j = 0; j < chartData.datasets.length; j++) {
         for (var attrname in config) {
           if (!chartData.datasets[j][attrname]) {
             chartData.datasets[j][attrname] =
@@ -162,15 +140,6 @@ const initChart = function (Reveal) {
     }, 500); // wait for slide transition
   }
 
-  // check if chart option is given or not
-  var chartConfig = Reveal.getConfig().chart || {};
-
-  // set global chart options
-  var config = chartConfig['defaults'];
-  if (config) {
-    mergeRecursive(Chart.defaults, config);
-  }
-
   Reveal.addEventListener('ready', function () {
     initializeCharts();
     Reveal.addEventListener('slidechanged', function () {
@@ -184,4 +153,11 @@ const initChart = function (Reveal) {
       }
     });
   });
+};
+
+window.RevealChart = window.RevealChart || {
+  id: 'RevealChart',
+  init: function (deck) {
+    initChart(deck);
+  }
 };

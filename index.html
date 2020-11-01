@@ -2,7 +2,7 @@
 <html lang="es">
   <head>
     <meta charset="utf-8" />
-    <title>Evento 42. aborboll</title>
+    <title>Evento 42: aborboll</title>
     <meta
       name="description"
       content="Herramientas para ser un estudiante más productivo sin que nuestra cartera sufra 🧑‍🎓"
@@ -34,7 +34,7 @@
               <img
                 data-src="/dist/img/42logo.png"
                 alt="42 Madrid logo"
-                style="margin: 0 auto 4rem auto; background: transparent"
+                style="margin: 0 auto 4rem auto; background: transparent;"
                 class="demo-logo"
               />
             </a>
@@ -67,7 +67,7 @@
                 data-src="/dist/img/42logo.png"
                 alt="42 Madrid logo"
                 height="80"
-                style="margin: 0 auto 4rem auto; background: transparent"
+                style="margin: 0 auto 4rem auto; background: transparent;"
                 class="demo-logo"
               />
             </a>
@@ -76,9 +76,9 @@
             Herramientas para ser un estudiante más productivo sin que nuestra cartera sufra 🧑‍🎓
           </h3>
           <div data-id="box-music-widget-1">
-            <iframe data-src="{{spotifyUrl}}/widget" data-preload style="width: 100%"></iframe>
+            <iframe data-src="{{spotifyUrl}}/widget" data-preload style="width: 100%;"></iframe>
           </div>
-          <p style="margin: 0">
+          <p style="margin: 0;">
             <small
               >Presentación creada por
               <a
@@ -98,7 +98,7 @@
               src="/dist/img/built-on-heroku-light.svg"
               height="80"
               alt="Hecho en heroku"
-              style="margin: 0"
+              style="margin: 0;"
             />
           </a>
         </section>
@@ -337,7 +337,7 @@ return {
               src="/dist/img/algolia.svg"
               alt="Algolia Logo"
               height="300"
-              style="object-fit: cover; width: 305px; object-position: 0% 0"
+              style="object-fit: cover; width: 305px; object-position: 0% 0;"
               data-id="algolia"
             />
           </section>
@@ -527,7 +527,7 @@ return {
           <section data-transition="zoom-out">
             <img
               src="/dist/img/datadog.svg"
-              style="object-fit: cover; width: 305px; object-position: 0% 0"
+              style="object-fit: cover; width: 305px; object-position: 0% 0;"
               alt="DataDog square Logo"
               height="300"
             />
@@ -690,27 +690,95 @@ return {
       </div>
       <div id="particles"></div>
     </div>
-    <script type="text/javascript" src="/node_modules/plyr/dist/plyr.min.js"></script>
-    <script type="text/javascript" src="/dist/reveal.js"></script>
-    <script type="text/javascript" src="/plugin/zoom/zoom.js"></script>
-    <script type="text/javascript" src="/plugin/search/search.js"></script>
-    <script type="text/javascript" src="/plugin/markdown/markdown.js"></script>
-    <script type="text/javascript" src="/plugin/highlight/highlight.js"></script>
+    <script src="/node_modules/plyr/dist/plyr.min.js"></script>
+    <script src="/dist/reveal.js"></script>
+    <script src="/plugin/zoom/zoom.js"></script>
+    <script src="/plugin/search/search.js"></script>
+    <script src="/plugin/markdown/markdown.js"></script>
+    <script src="/plugin/highlight/highlight.js"></script>
     <!-- Scripts used by multiple plugins -->
-    <script type="text/javascript" src="/node_modules/socket.io-client/dist/socket.io.js"></script>
+    <script src="/node_modules/socket.io-client/dist/socket.io.js"></script>
     <!-- Used for plugin: Reveal animated -->
-    <script type="text/javascript" src="/plugin/revealjs-animated/revealjs-animated.js"></script>
+    <script src="/plugin/revealjs-animated/revealjs-animated.js"></script>
     <!-- Used for plugin: Anything -->
-    <script type="text/javascript" src="/plugin/anything/d3/d3.min.js"></script>
-    <script type="text/javascript" src="/plugin/anything/d3/topojson.min.js"></script>
-    <script type="text/javascript" src="/plugin/anything/anything.js"></script>
+    <script src="/plugin/anything/d3/d3.min.js"></script>
+    <script src="/plugin/anything/d3/topojson.min.js"></script>
+    <script src="/plugin/anything/anything.js"></script>
     <!-- Used for plugin: ChartJS -->
-    <script type="text/javascript" src="/plugin/chart/chart.js"></script>
-    <script type="text/javascript" src="/plugin/chart/plugin.js"></script>
+    <script src="/plugin/chart/chart.js"></script>
+    <script src="/plugin/chart/plugin.js"></script>
     <!-- Used for plugin: ParticlesJS -->
-    <script type="text/javascript" src="/plugin/particles.js/particles.min.js"></script>
-    <script type="text/javascript" src="/plugin/particles.js/plugin.js"></script>
-    <script type="text/javascript">
+    <script src="/plugin/particles.js/particles.min.js"></script>
+    <script>
+      particlesJS('particles', {
+        particles: {
+          number: {
+            value: 50,
+            density: {
+              enable: true,
+              value_area: 800
+            }
+          },
+          color: {
+            value: '#ffffff'
+          },
+          shape: {
+            type: 'circle',
+            stroke: {
+              width: 0,
+              color: '#000000'
+            },
+            polygon: {
+              nb_sides: 5
+            },
+            image: {
+              src: 'img/github.svg',
+              width: 300,
+              height: 100
+            }
+          },
+          opacity: {
+            value: 0.5,
+            random: false,
+            anim: {
+              enable: true,
+              speed: 0.2,
+              opacity_min: 0,
+              sync: false
+            }
+          },
+          size: {
+            value: 3,
+            random: true,
+            anim: {
+              enable: true,
+              speed: 2,
+              size_min: 0,
+              sync: false
+            }
+          },
+          line_linked: {
+            enable: false
+          },
+          move: {
+            enable: true,
+            speed: 1,
+            direction: 'none',
+            random: true,
+            straight: false,
+            out_mode: 'out',
+            bounce: false,
+            attract: {
+              enable: false,
+              rotateX: 600,
+              rotateY: 1200
+            }
+          }
+        },
+        retina_detect: true
+      });
+    </script>
+    <script>
       sharedConfig = {
         controls: true,
         progress: true,

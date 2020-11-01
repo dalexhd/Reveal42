@@ -1,3 +1,5 @@
+/* eslint-disable new-cap */
+/* global MathJax */
 /**
  * A plugin which enables rendering of math equations inside
  * of reveal.js slides. Essentially a thin wrapper for MathJax.

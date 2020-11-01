@@ -1,8 +1,5 @@
 const pkg = require('./package.json');
-const path = require('path');
-const glob = require('glob');
 const yargs = require('yargs');
-const colors = require('colors');
 const tailwindcss = require('tailwindcss');
 
 const { rollup } = require('rollup');
@@ -23,6 +20,7 @@ const autoprefixer = require('gulp-autoprefixer');
 const concat = require('gulp-concat');
 const browserSync = require('browser-sync').create();
 const nodemon = require('gulp-nodemon');
+const image = require('gulp-image');
 
 const root = yargs.argv.root || '.';
 const port = yargs.argv.port || 8000;
@@ -83,7 +81,7 @@ let cache = {};
 gulp.task('js-es5', () => {
   return rollup({
     cache: cache.umd,
-    input: 'js/index.js',
+    input: './assets/js/index.js',
     plugins: [resolve(), commonjs(), babel(babelConfig), terser()]
   }).then((bundle) => {
     cache.umd = bundle.cache;
@@ -101,7 +99,7 @@ gulp.task('js-es5', () => {
 gulp.task('js-es6', () => {
   return rollup({
     cache: cache.esm,
-    input: 'js/index.js',
+    input: './assets/js/index.js',
     plugins: [resolve(), commonjs(), babel(babelConfigESM), terser()]
   }).then((bundle) => {
     cache.esm = bundle.cache;
@@ -183,14 +181,14 @@ gulp.task('plugins', () => {
 
 gulp.task('css-themes', () =>
   gulp
-    .src(['./css/theme/source/*.{sass,scss}'])
+    .src(['./assets/css/theme/source/*.{sass,scss}'])
     .pipe(sass())
     .pipe(gulp.dest('./dist/theme'))
 );
 
 gulp.task('css-themes-stream', () =>
   gulp
-    .src(['./css/theme/source/*.{sass,scss}'])
+    .src(['./assets/css/theme/source/*.{sass,scss}'])
     .pipe(sass())
     .pipe(gulp.dest('./dist/theme'))
     .pipe(browserSync.stream())
@@ -198,7 +196,7 @@ gulp.task('css-themes-stream', () =>
 
 gulp.task('css-core', () =>
   gulp
-    .src(['css/reveal.scss'])
+    .src(['./assets/css/reveal.scss'])
     .pipe(sass())
     .pipe(autoprefixer())
     .pipe(minify({ compatibility: 'ie9' }))
@@ -208,7 +206,11 @@ gulp.task('css-core', () =>
 
 gulp.task('css-custom', () =>
   gulp
-    .src(['css/custom.scss', 'css/helper.scss', 'css/reset.scss'])
+    .src([
+      './assets/css/custom.scss',
+      './assets/css/helper.scss',
+      './assets/css/reset.scss'
+    ])
     .pipe(sass())
     .pipe(postcss([tailwindcss()]))
     .pipe(autoprefixer())
@@ -219,7 +221,11 @@ gulp.task('css-custom', () =>
 
 gulp.task('css-custom-stream', () =>
   gulp
-    .src(['css/custom.scss', 'css/helper.scss', 'css/reset.scss'])
+    .src([
+      './assets/css/custom.scss',
+      './assets/css/helper.scss',
+      './assets/css/reset.scss'
+    ])
     .pipe(sass())
     .pipe(postcss([tailwindcss()]))
     .pipe(autoprefixer())
@@ -231,7 +237,7 @@ gulp.task('css-custom-stream', () =>
 
 gulp.task('css-server', () =>
   gulp
-    .src(['css/server.scss'])
+    .src(['./assets/css/server.scss'])
     .pipe(sass())
     .pipe(autoprefixer())
     .pipe(minify({ compatibility: 'ie9' }))
@@ -243,9 +249,27 @@ gulp.task(
   gulp.parallel('css-themes', 'css-core', 'css-custom', 'css-server')
 );
 
-gulp.task('default', gulp.series(gulp.parallel('js', 'css', 'plugins')));
+gulp.task('image-optimize', async () => {
+  return gulp
+    .src('./assets/img/*')
+    .pipe(image({ concurrent: 10 }))
+    .pipe(gulp.dest('./assets/img'));
+});
 
-gulp.task('build', gulp.parallel('js', 'css', 'plugins'));
+gulp.task('image', gulp.series('image-optimize'), async () => {
+  return gulp.src('./assets/img').pipe(gulp.dest('./dist/img'));
+});
+
+gulp.task('video', async () => {
+  return gulp.src('./assets/video/**/*').pipe(gulp.dest('./dist/video'));
+});
+
+gulp.task(
+  'default',
+  gulp.series(gulp.parallel('js', 'css', 'plugins', 'image', 'video'))
+);
+
+gulp.task('build', gulp.parallel('js', 'css', 'plugins', 'image', 'video'));
 
 gulp.task(
   'package',
@@ -286,16 +310,25 @@ gulp.task(
       port: 9000
     });
     gulp.watch(['*.html', '*.md']).on('change', browserSync.reload);
-    gulp.watch(['js/**'], gulp.series('js')).on('change', browserSync.reload);
+    gulp
+      .watch(['./assets/js/**'], gulp.series('js'))
+      .on('change', browserSync.reload);
     gulp
       .watch(['plugin/**/plugin.js'], gulp.series('plugins'))
       .on('change', browserSync.reload);
     gulp.watch(
-      ['css/theme/source/*.{sass,scss}', 'css/theme/template/*.{sass,scss}'],
+      [
+        './assets/css/theme/source/*.{sass,scss}',
+        './assets/css/theme/template/*.{sass,scss}'
+      ],
       gulp.series('css-themes-stream')
     );
     gulp.watch(
-      ['css/custom.scss', 'css/helper.scss', 'css/reset.scss'],
+      [
+        './assets/css/custom.scss',
+        './assets/css/helper.scss',
+        './assets/css/reset.scss'
+      ],
       gulp.series('css-custom-stream')
     );
   })

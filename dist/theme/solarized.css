@@ -7,10 +7,6 @@
 /**
  * Solarized colors by Ethan Schoonover
  */
-html * {
-  color-profile: sRGB;
-  rendering-intent: auto; }
-
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
@@ -21,7 +17,7 @@ html * {
   --main-color: #657b83;
   --block-margin: 20px;
   --heading-margin: 0 0 20px 0;
-  --heading-font: League Gothic, Impact, sans-serif;
+  --heading-font: League Gothic, impact, sans-serif;
   --heading-color: #586e75;
   --heading-line-height: 1.2;
   --heading-letter-spacing: normal;
@@ -75,7 +71,7 @@ html * {
 .reveal h6 {
   margin: 0 0 20px 0;
   color: #586e75;
-  font-family: "League Gothic", Impact, sans-serif;
+  font-family: "League Gothic", impact, sans-serif;
   font-weight: normal;
   line-height: 1.2;
   letter-spacing: normal;
@@ -84,7 +80,8 @@ html * {
   word-wrap: break-word; }
 
 .reveal h1 {
-  font-size: 3.77em; }
+  font-size: 3.77em;
+  text-shadow: none; }
 
 .reveal h2 {
   font-size: 2.11em; }
@@ -94,9 +91,6 @@ html * {
 
 .reveal h4 {
   font-size: 1em; }
-
-.reveal h1 {
-  text-shadow: none; }
 
 /*********************************************
  * OTHER
@@ -159,7 +153,7 @@ html * {
   padding: 5px;
   font-style: italic;
   background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2); }
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2); }
 
 .reveal blockquote p:first-child,
 .reveal blockquote p:last-child {
@@ -178,7 +172,7 @@ html * {
   font-family: monospace;
   line-height: 1.2em;
   word-wrap: break-word;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15); }
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); }
 
 .reveal code {
   font-family: monospace;
@@ -243,14 +237,14 @@ html * {
 .reveal a {
   color: #268bd2;
   text-decoration: none;
-  transition: color .15s ease; }
+  transition: color 0.15s ease; }
 
 .reveal a:hover {
   color: #78b9e6;
   text-shadow: none;
   border: none; }
 
-.reveal .roll span:after {
+.reveal .roll span::after {
   color: #fff;
   background: #1a6091; }
 
@@ -262,7 +256,7 @@ html * {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
 
 .reveal a .r-frame {
-  transition: all .15s linear; }
+  transition: all 0.15s linear; }
 
 .reveal a:hover .r-frame {
   border-color: #268bd2;

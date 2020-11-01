@@ -69,6 +69,7 @@
     "gulp-concat": "^2.6.1",
     "gulp-connect": "^5.7.0",
     "gulp-header": "^2.0.9",
+    "gulp-image": "^6.2.1",
     "gulp-nodemon": "^2.5.0",
     "gulp-postcss": "^8.0.0",
     "gulp-sass": "^4.0.2",
@@ -122,7 +123,10 @@
       "console": false,
       "unescape": false,
       "define": false,
-      "exports": false
+      "exports": false,
+      "Reveal": true,
+      "io": true,
+      "Chart": true
     },
     "rules": {
       "curly": 0,
