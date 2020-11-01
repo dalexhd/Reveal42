@@ -249,15 +249,12 @@ gulp.task(
   gulp.parallel('css-themes', 'css-core', 'css-custom', 'css-server')
 );
 
-gulp.task('image-optimize', async () => {
+gulp.task('image', async () => {
   return gulp
-    .src('./assets/img/*')
+    .src('./assets/img/**/*')
     .pipe(image({ concurrent: 10 }))
-    .pipe(gulp.dest('./assets/img'));
-});
-
-gulp.task('image', gulp.series('image-optimize'), async () => {
-  return gulp.src('./assets/img').pipe(gulp.dest('./dist/img'));
+    .pipe(gulp.dest('./assets/img'))
+    .pipe(gulp.dest('./dist/img'));
 });
 
 gulp.task('video', async () => {
