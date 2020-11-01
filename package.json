@@ -31,7 +31,7 @@
     "start:client": "gulp",
     "build": "gulp",
     "serve": "gulp serve",
-    "lint:js": "eslint 'js/**/*.js' --quiet --fix",
+    "lint:js": "eslint 'plugin/' --quiet --fix && eslint 'js/**/*.js' --quiet --fix",
     "lint:css": "stylelint 'css/**/*.scss' --fix",
     "package": "gulp package"
   },
@@ -89,7 +89,18 @@
   "prettier": {
     "singleQuote": true,
     "trailingComma": "none",
-    "arrowParens": "always"
+    "arrowParens": "always",
+    "printWidth": 80,
+    "overrides": [
+      {
+        "files": [
+          "index.html"
+        ],
+        "options": {
+          "printWidth": 100
+        }
+      }
+    ]
   },
   "eslintConfig": {
     "env": {
