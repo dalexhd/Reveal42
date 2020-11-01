@@ -3,6 +3,9 @@ const express = require('express');
 const fs = require('fs');
 const mustache = require('mustache');
 const basicAuth = require('express-basic-auth');
+require('dotenv').config({
+    path: 'presentation.env'
+});
 
 const authOptions = {
     users: {

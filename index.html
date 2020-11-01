@@ -14,7 +14,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="/dist/img/favicon.png" type="image/x-icon" />
 
-    <link rel="stylesheet" href="/dist/reset.css" />
     <link rel="stylesheet" href="/dist/reveal.css" />
     <link rel="stylesheet" href="/dist/custom.css" />
     <link rel="stylesheet" href="/dist/theme/black.css" id="theme" />
@@ -40,7 +39,6 @@
 
   <body>
     <div class="reveal">
-      <div id="screen-sharing"></div>
       <!-- Any section element inside of this container is displayed as a slide -->
       <div class="slides">
         <section data-auto-animate data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
@@ -121,6 +119,9 @@
             <h1>¿Quién soy?</h1>
           </section>
           <section data-auto-animate>
+            <aside class="notes">
+              Nombre, Años, Trabajo
+            </aside>
             <h1>¿Quién soy?</h1>
             <img src="/dist/img/avatar.jpeg" alt="Yo" height="150" />
             <p class="fragment fade-in-then-semi-out">Me llamo Alex Borbolla</p>
@@ -130,6 +131,9 @@
             </p>
           </section>
           <section>
+            <aside class="notes">
+              Autodidacta, reddit, ❤️ Open source, nuevas tecnologías, rata
+            </aside>
             <h1>¿Cosas sobre mi?</h1>
             <p class="fragment fade-in-then-semi-out">📚 Autodidacta 90%</p>
             <p class="fragment fade-in-then-semi-out">Amante de reddit 👀</p>
@@ -142,6 +146,54 @@
             </p>
           </section>
         </section>
+        <section data-transition="zoom-in fade-out">
+          <section
+            data-background-color="rgba(127, 255, 212, 0.5)"
+            data-auto-animate
+          >
+            <img src="/dist/img/student-developer-pack-logo.png" height="400" alt="GitHub developer pack">
+          </section>
+          <section
+            data-background-color="rgba(3, 223, 252, 0.5)"
+            data-auto-animate
+          >
+            <img src="/dist/img/student-developer-pack-logo.png" height="150" alt="GitHub developer pack">
+            <img src="/dist/img/github_dev_pack_partners.png" height="400" alt="GitHub developer pack partners">
+          </section>
+          <section
+            data-background-color="rgba(127, 255, 212, 0.5)"
+            data-transition="concave-out"
+            data-auto-animate
+          >
+            <img src="/dist/img/student-developer-pack-logo.png" height="150" alt="GitHub developer pack">
+            <div class="flex items-center">
+              <div class="w-1/2">
+                <div class="r-stack">
+                  <div class="fragment fade-out" data-fragment-index="0">
+                    <img src="/dist/img/github_dev_pack_partners.png" height="250" alt="GitHub developer partners">
+                  </div>
+                  <div class="fragment fade-in" data-fragment-index="0">
+                    <img src="/dist/img/person-rocket.gif" alt="Rocket">
+                  </div>
+                </div>
+              </div>
+              <div class="w-1/2">
+                <div class="r-stack">
+                  <div class="fragment fade-out" data-fragment-index="0">
+                    <span class="text-6xl text-white animate-pulse">
+                      🤑 $45000
+                    </span>
+                  </div>
+                  <div class="fragment fade-in" data-fragment-index="0" data-background-image="/dist/img/person-rocket.gif">
+                    <a href="https://github-portal.42.fr" target="_blank" rel="noopener noreferrer">github-portal.42.fr</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </section>
+        <section data-background-iframe="https://meet.jit.si/testdalexhd#jitsi_meet_external_api_id=0&config.startWithAudioMuted=false&config.startWithVideoMuted=true&config.enableWelcomePage=false&config.prejoinPageEnabled=false&interfaceConfig.TOOLBAR_BUTTONS=%5B%5D&interfaceConfig.HIDE_INVITE_MORE_HEADER=true&interfaceConfig.DISPLAY_WELCOME_PAGE_CONTENT=false&interfaceConfig.SHOW_CHROME_EXTENSION_BANNER=false&interfaceConfig.DISABLE_JOIN_LEAVE_NOTIFICATIONS=true&appData.localStorageContent=null">
+        </section>
         <section
           data-transition="zoom"
           data-background-image="/dist/img/Pokemon-Rage.gif"
@@ -149,7 +201,7 @@
           data-background-repeat="repeat"
         ></section>
         <section data-transition="zoom-in fade-out">
-          <section id="fragments" data-auto-animate>
+          <section data-auto-animate>
             <img src="/dist/img/Raspberry_Pi_Logo.svg" class="silhouette" alt="Raspberry Pi Logo" height="300" />
           </section>
           <section data-auto-animate>
@@ -179,124 +231,45 @@
             />
             <h2>Raspberry PI</h2>
           </section>
-          <section id="fragments" data-auto-animate>
+          <section data-auto-animate>
             <img src="/dist/img/Raspberry_Pi.png" alt="Raspberry Pi" height="300" />
             <h2>Raspberry PI</h2>
-            <p>
-              <span class="fragment">Buen rendimiento, </span>
-              <span class="fragment">Bajo Consumo, </span>
+            <div class="r-stack">
+              <span class="fragment fade-out" data-fragment-index="0">Buen rendimiento</span>
+              <span class="fragment current-visible" data-fragment-index="0">Bajo Consumo</span>
               <span class="fragment">Muy compacto</span>
-            </p>
-          </section>
-          <section data-transition="zoom-in" data-auto-animate>
-            <div class="inline-block">
-              <h3>IoT</h3>
-              <img src="/dist/img/iot.png" height="300" />
-            </div>
-          </section>
-
-          <section data-transition="zoom-in" data-auto-animate>
-            <div class="flex justify-around">
-              <div>
-                <h3>IoT</h3>
-                <img src="/dist/img/iot.png" height="200" />
-              </div>
-              <div>
-                <h3>Servidores</h3>
-                <img src="/dist/img/server.png" height="300" />
-              </div>
-            </div>
-          </section>
-          <section data-transition="zoom-in" data-auto-animate>
-            <div class="flex justify-around">
-              <div>
-                <h3>IoT</h3>
-                <img src="/dist/img/iot.png" height="200" />
-              </div>
-              <div>
-                <h3>Servidores</h3>
-                <img src="/dist/img/server.png" height="200" />
-              </div>
-              <div>
-                <h3>Gaming</h3>
-                <img src="/dist/img/press+start+retro+gaming.gif" height="200" />
-              </div>
             </div>
           </section>
           <section data-auto-animate>
-            <h1 data-fragment-index="1">DNS</h1>
-            <div class="flex justify-between">
-              <h2 class="fragment inline" data-fragment-index="2">DOMAIN</h2>
-              <h2 class="fragment inline" data-fragment-index="2">+</h2>
-              <h2 class="fragment inline" data-fragment-index="3">NAME</h2>
-              <h2 class="fragment inline" data-fragment-index="3">+</h2>
-              <h2 class="fragment inline" data-fragment-index="4">SYSTEM</h2>
-            </div>
-          </section>
-          <section data-auto-animate>
-            <h1>DNS</h1>
-            <div class="flex justify-between">
-              <h2 class="inline">DOMAIN</h2>
-              <h2 class="inline">+</h2>
-              <h2 class="inline">NAME</h2>
-              <h2 class="inline">+</h2>
-              <h2 class="inline">SYSTEM</h2>
-            </div>
-            <img src="/dist/img/paginas-amarillas.jpg" alt="Páginas amarillas" />
-          </section>
-          <section data-transition="zoom-in" data-auto-animate>
-            <div class="flex justify-between items-center">
-              <canvas width="400" height="401" class="anything">
-<!--
-{
-  "initialize": "function(container) {
-    var width = container.width,
-        height = container.height;
-    var radius = height / 2 - 5,
-        scale = radius,
-        velocity = .02;
-    var projection = d3.geoOrthographic()
-        .translate([width / 2, height / 2])
-        .scale(scale)
-        .clipAngle(90);
-    var context = container.getContext('2d');
-    var path = d3.geoPath()
-        .projection(projection)
-        .context(context);
-
-    d3.json('/plugin/anything/d3/world-110m.json', function(error, world) {
-      if (error) throw error;
-      var land = topojson.feature(world, world.objects.land);
-      d3.timer(function(elapsed) {
-        context.clearRect(0, 0, width, height);
-        context.beginPath();
-        context.arc(width / 2, height / 2, radius, 0, 2 * Math.PI, true);
-        context.lineWidth = 2.5;
-        context.fillStyle = '#fff';
-        context.fill();
-  
-        projection.rotate([velocity * elapsed, 0]);
-        context.beginPath();
-        path(land);
-        context.fillStyle = '#42affa';
-        context.fill();
-        context.beginPath();
-        context.arc(width / 2, height / 2, radius, 0, 2 * Math.PI, true);
-        context.lineWidth = 2.5;
-        context.strokeStyle = '#ccc';
-        context.stroke();
-      });
-    });
-  }"
-}
--->
-              </canvas>
-              <span
-                class="text-6xl font-black font-mono bg-blue-500 bg-opacity-100"
-                data-animated-scale-up-to="1.2"
-                data-animated-duration="200"
-                >4,294,967,296</span
-              >
+            <div class="flex items-center">
+              <div class="w-1/2">
+                <img src="/dist/img/Raspberry_Pi.png" alt="Raspberry Pi" height="300" />
+                <h2>Raspberry PI</h2>
+                <div class="r-stack">
+                  <div class="fragment fade-out" data-fragment-index="0">
+                    <span>IOT</span>
+                  </div>
+                  <div class="fragment current-visible" data-fragment-index="0">
+                    <span>Servidores</span>
+                  </div>
+                  <div class="fragment" data-fragment-index="2">
+                    <span>Gaming</span>
+                  </div>
+                </div>
+              </div>
+              <div class="w-1/2">
+                <div class="r-stack">
+                  <div class="fragment fade-out" data-fragment-index="0">
+                    <img src="/dist/img/iot.png" height="400" />
+                  </div>
+                  <div class="fragment current-visible" data-fragment-index="0">
+                    <img src="/dist/img/server.png" height="400" />
+                  </div>
+                  <div class="fragment"  data-fragment-index="2">
+                    <img src="/dist/img/press+start+retro+gaming.gif" height="320" />
+                  </div>
+                </div>
+              </div>
             </div>
           </section>
           <section data-auto-animate>
@@ -337,119 +310,6 @@ return {
             </canvas>
             <!-- Max potencia, a diario, 24h, 0.15eur el KWH => 10.51 al año -->
           </section>
-          <!-- <section data-transition="zoom-in" data-auto-animate>
-            <div data-fragment-index="1">
-              <div class="earth">
-                <div class="earth--shadow"></div>
-              </div>
-              <div class="moon"></div>
-              <div class="stars"></div>
-            </div>
-            <span
-              class="text-6xl font-black font-mono scale-up fixed bg-green-500 bg-opacity-100"
-              style="top: 80%; left: 25%;"
-              data-fragment-index="2"
-              data-animated-scale-up-to="1.5"
-              data-animated-duration="200"
-              >4,294,967,296</span
-            >
-          </section>
-          <section data-transition="zoom-in" data-auto-animate>
-            <span
-              class="text-6xl font-black font-mono scale-up bg-green-500 bg-opacity-100"
-              data-fragment-index="2"
-              data-animated-scale-up-to="1.5"
-              data-animated-duration="200"
-              >4,294,967,296</span
-            >
-          </section> -->
-          <!-- <section data-transition="zoom-in" data-auto-animate>
-            <div class="flex justify-between items-center">
-              <img src="/dist/img/server.png" height="200" />
-              <canvas width="400" height="400" class="anything">
-                
-                  {
-                    "initialize": "function(container) { 
-                    var width = container.width,
-                        height = container.height;
-                    var radius = height / 2 - 5,
-                        scale = radius,
-                        velocity = .02;
-                    var projection = d3.geoOrthographic()
-                        .translate([width / 2, height / 2])
-                        .scale(scale)
-                        .clipAngle(90);
-                    var context = container.getContext('2d');
-                    var path = d3.geoPath()
-                        .projection(projection)
-                        .context(context);
-
-                    d3.json('/plugin/anything/d3/world-110m.json', function(error, world) {
-                      if (error) throw error;
-                      var land = topojson.feature(world, world.objects.land);
-                      d3.timer(function(elapsed) {
-                        context.clearRect(0, 0, width, height);
-                        context.beginPath();
-                        context.arc(width / 2, height / 2, radius, 0, 2 * Math.PI, true);
-                        context.lineWidth = 2.5;
-                        context.fillStyle = '#fff';
-                        context.fill();
-                  
-                        projection.rotate([velocity * elapsed, 0]);
-                        context.beginPath();
-                        path(land);
-                        context.fillStyle = '#42affa';
-                        context.fill();
-                        context.beginPath();
-                        context.arc(width / 2, height / 2, radius, 0, 2 * Math.PI, true);
-                        context.lineWidth = 2.5;
-                        context.strokeStyle = '#ccc';
-                        context.stroke();
-                      });
-                    });
-                    d3.select(self.frameElement).style('height', height + 'px');
-                  
-                      }"
-                  }
-                  
-              </canvas>
-            </div>
-          </section> -->
-          <!-- <section data-transition="zoom-in" data-auto-animate>
-            <div class="inline-block">
-              <h3>IoT</h3>
-              <img src="/dist/img/iot.png" height="300" />
-            </div>
-          </section>
-
-          <section data-transition="zoom-in" data-auto-animate>
-            <div class="flex justify-around">
-              <div>
-                <h3>IoT</h3>
-                <img src="/dist/img/iot.png" height="200" />
-              </div>
-              <div>
-                <h3>Servidores</h3>
-                <img src="/dist/img/server.png" height="300" />
-              </div>
-            </div>
-          </section>
-          <section data-transition="zoom-in" data-auto-animate>
-            <div class="flex justify-around">
-              <div>
-                <h3>IoT</h3>
-                <img src="/dist/img/iot.png" height="200" />
-              </div>
-              <div>
-                <h3>Servidores</h3>
-                <img src="/dist/img/server.png" height="200" />
-              </div>
-              <div>
-                <h3>Gaming</h3>
-                <img src="/dist/img/press+start+retro+gaming.gif" height="200" />
-              </div>
-            </div>
-          </section> -->
         </section>
         <section data-transition="zoom-in fade-out">
           <section data-auto-animate>

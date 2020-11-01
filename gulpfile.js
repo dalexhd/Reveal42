@@ -3,11 +3,10 @@ const path = require('path')
 const glob = require('glob')
 const yargs = require('yargs')
 const colors = require('colors')
-const qunit = require('node-qunit-puppeteer')
 const tailwindcss = require('tailwindcss')
 
-const {rollup} = require('rollup')
-const {terser} = require('rollup-plugin-terser')
+const { rollup } = require('rollup')
+const { terser } = require('rollup-plugin-terser')
 const babel = require('@rollup/plugin-babel').default
 const commonjs = require('@rollup/plugin-commonjs')
 const resolve = require('@rollup/plugin-node-resolve').default
@@ -23,6 +22,8 @@ const minify = require('gulp-clean-css')
 const connect = require('gulp-connect')
 const autoprefixer = require('gulp-autoprefixer')
 const concat = require('gulp-concat')
+const browserSync = require('browser-sync').create();
+const nodemon = require("gulp-nodemon");
 
 const root = yargs.argv.root || '.'
 const port = yargs.argv.port || 8000
@@ -60,14 +61,16 @@ const babelConfig = {
 // module support. Browsers are targeted explicitly instead
 // of using the "esmodule: true" target since that leads to
 // polyfilling older browsers and a larger bundle.
-const babelConfigESM = JSON.parse( JSON.stringify( babelConfig ) );
-babelConfigESM.presets[0][1].targets = { browsers: [
-    'last 2 Chrome versions', 'not Chrome < 60',
-    'last 2 Safari versions', 'not Safari < 10.1',
-    'last 2 iOS versions', 'not iOS < 10.3',
-    'last 2 Firefox versions', 'not Firefox < 60',
-    'last 2 Edge versions', 'not Edge < 16',
-] };
+const babelConfigESM = JSON.parse(JSON.stringify(babelConfig));
+babelConfigESM.presets[0][1].targets = {
+    browsers: [
+        'last 2 Chrome versions', 'not Chrome < 60',
+        'last 2 Safari versions', 'not Safari < 10.1',
+        'last 2 iOS versions', 'not iOS < 10.3',
+        'last 2 Firefox versions', 'not Firefox < 60',
+        'last 2 Edge versions', 'not Edge < 16',
+    ]
+};
 
 let cache = {};
 
@@ -80,10 +83,10 @@ gulp.task('js-es5', () => {
         plugins: [
             resolve(),
             commonjs(),
-            babel( babelConfig ),
+            babel(babelConfig),
             terser()
         ]
-    }).then( bundle => {
+    }).then(bundle => {
         cache.umd = bundle.cache;
         return bundle.write({
             name: 'Reveal',
@@ -103,10 +106,10 @@ gulp.task('js-es6', () => {
         plugins: [
             resolve(),
             commonjs(),
-            babel( babelConfigESM ),
+            babel(babelConfigESM),
             terser()
         ]
-    }).then( bundle => {
+    }).then(bundle => {
         cache.esm = bundle.cache;
         return bundle.write({
             file: './dist/reveal.esm.js',
@@ -128,144 +131,91 @@ gulp.task('plugins', () => {
         { name: 'RevealNotes', input: './plugin/notes/plugin.js', output: './plugin/notes/notes' },
         { name: 'RevealZoom', input: './plugin/zoom/plugin.js', output: './plugin/zoom/zoom' },
         { name: 'RevealMath', input: './plugin/math/plugin.js', output: './plugin/math/math' },
-    ].map( plugin => {
+    ].map(plugin => {
         return rollup({
-                cache: cache[plugin.input],
-                input: plugin.input,
-                plugins: [
-                    resolve(),
-                    commonjs(),
-                    babel({
-                        ...babelConfig,
-                        ignore: [/node_modules\/(?!(highlight\.js|marked)\/).*/],
-                    }),
-                    terser()
-                ]
-            }).then( bundle => {
-                cache[plugin.input] = bundle.cache;
-                bundle.write({
-                    file: plugin.output + '.esm.js',
-                    name: plugin.name,
-                    format: 'es'
-                })
+            cache: cache[plugin.input],
+            input: plugin.input,
+            plugins: [
+                resolve(),
+                commonjs(),
+                babel({
+                    ...babelConfig,
+                    ignore: [/node_modules\/(?!(highlight\.js|marked)\/).*/],
+                }),
+                terser()
+            ]
+        }).then(bundle => {
+            cache[plugin.input] = bundle.cache;
+            bundle.write({
+                file: plugin.output + '.esm.js',
+                name: plugin.name,
+                format: 'es'
+            })
 
-                bundle.write({
-                    file: plugin.output + '.js',
-                    name: plugin.name,
-                    format: 'umd'
-                })
-            });
-    } ));
+            bundle.write({
+                file: plugin.output + '.js',
+                name: plugin.name,
+                format: 'umd'
+            })
+        });
+    }));
 })
 
 gulp.task('css-themes', () => gulp.src(['./css/theme/source/*.{sass,scss}'])
-        .pipe(sass())
-        .pipe(gulp.dest('./dist/theme')))
+    .pipe(sass())
+    .pipe(gulp.dest('./dist/theme')))
+
+gulp.task('css-themes-stream', () => gulp.src(['./css/theme/source/*.{sass,scss}'])
+    .pipe(sass())
+    .pipe(gulp.dest('./dist/theme'))
+    .pipe(browserSync.stream()))
 
 gulp.task('css-core', () => gulp.src(['css/reveal.scss'])
     .pipe(sass())
     .pipe(autoprefixer())
-    .pipe(minify({compatibility: 'ie9'}))
+    .pipe(minify({ compatibility: 'ie9' }))
     .pipe(header(banner))
     .pipe(gulp.dest('./dist')))
 
-gulp.task('css-custom', () => gulp.src(['css/custom.scss', 'css/helper.scss'])
+gulp.task('css-custom', () => gulp.src(['css/custom.scss', 'css/helper.scss', 'css/reset.scss'])
     .pipe(sass())
     .pipe(postcss([
         tailwindcss()
     ]))
     .pipe(autoprefixer())
-    .pipe(minify({compatibility: 'ie9'}))
+    .pipe(minify({ compatibility: 'ie9' }))
     .pipe(concat('custom.css'))
     .pipe(gulp.dest('./dist')))
+
+gulp.task('css-custom-stream', () => gulp.src(['css/custom.scss', 'css/helper.scss', 'css/reset.scss'])
+    .pipe(sass())
+    .pipe(postcss([
+        tailwindcss()
+    ]))
+    .pipe(autoprefixer())
+    .pipe(minify({ compatibility: 'ie9' }))
+    .pipe(concat('custom.css'))
+    .pipe(gulp.dest('./dist'))
+    .pipe(browserSync.stream()))
 
 gulp.task('css-server', () => gulp.src(['css/server.scss'])
     .pipe(sass())
     .pipe(autoprefixer())
-    .pipe(minify({compatibility: 'ie9'}))
+    .pipe(minify({ compatibility: 'ie9' }))
     .pipe(gulp.dest('./dist')))
 
 gulp.task('css', gulp.parallel('css-themes', 'css-core', 'css-custom', 'css-server'))
 
-gulp.task('qunit', () => {
-
-    let serverConfig = {
-        root,
-        port: 8009,
-        host: '0.0.0.0',
-        name: 'test-server'
-    }
-
-    let server = connect.server( serverConfig )
-
-    let testFiles = glob.sync('test/*.html' )
-
-    let totalTests = 0;
-    let failingTests = 0;
-
-    let tests = Promise.all( testFiles.map( filename => {
-        return new Promise( ( resolve, reject ) => {
-            qunit.runQunitPuppeteer({
-                targetUrl: `http://${serverConfig.host}:${serverConfig.port}/${filename}`,
-                timeout: 20000,
-                redirectConsole: false,
-                puppeteerArgs: ['--no-sandbox', '--allow-file-access-from-files']
-            })
-                .then(result => {
-                    if( result.stats.failed > 0 ) {
-                        console.log(`${'!'} ${filename} [${result.stats.passed}/${result.stats.total}] in ${result.stats.runtime}ms`.red);
-                        // qunit.printResultSummary(result, console);
-                        qunit.printFailedTests(result, console);
-                    }
-                    else {
-                        console.log(`${'✔'} ${filename} [${result.stats.passed}/${result.stats.total}] in ${result.stats.runtime}ms`.green);
-                    }
-
-                    totalTests += result.stats.total;
-                    failingTests += result.stats.failed;
-
-                    resolve();
-                })
-                .catch(error => {
-                    console.error(error);
-                    reject();
-                });
-        } )
-    } ) );
-
-    return new Promise( ( resolve, reject ) => {
-
-        tests.then( () => {
-                if( failingTests > 0 ) {
-                    reject( new Error(`${failingTests}/${totalTests} tests failed`.red) );
-                }
-                else {
-                    console.log(`${'✔'} Passed ${totalTests} tests`.green.bold);
-                    resolve();
-                }
-            } )
-            .catch( () => {
-                reject();
-            } )
-            .finally( () => {
-                server.close();
-            } );
-
-    } );
-} )
 
 gulp.task('eslint', () => gulp.src(['./js/**', 'gulpfile.js'])
-        .pipe(eslint())
-        .pipe(eslint.format()))
+    .pipe(eslint())
+    .pipe(eslint.format()))
 
-gulp.task('test', gulp.series( 'eslint', 'qunit' ))
-
-gulp.task('default', gulp.series(gulp.parallel('js', 'css', 'plugins'), 'test'))
+gulp.task('default', gulp.series(gulp.parallel('js', 'css', 'plugins')))
 
 gulp.task('build', gulp.parallel('js', 'css', 'plugins'))
 
 gulp.task('package', gulp.series('default', () =>
-
     gulp.src([
         './index.html',
         './dist/**',
@@ -274,41 +224,39 @@ gulp.task('package', gulp.series('default', () =>
         './plugin/**',
         './**.md'
     ]).pipe(zip('reveal-js-presentation.zip')).pipe(gulp.dest('./'))
-
 ))
 
 gulp.task('reload', () => gulp.src(['*.html', '*.md'])
     .pipe(connect.reload()));
 
-gulp.task('serve', () => {
 
-    connect.server({
-        root: root,
-        port: port,
-        host: '0.0.0.0',
-        livereload: true
+gulp.task("nodemon", cb => {
+    let started = false;
+    return nodemon({
+        script: "./plugin/server"
+    }).on("start", () => {
+        if (!started) {
+            cb();
+            started = true;
+        }
+    });
+});
+
+gulp.task("serve", gulp.series("nodemon", () => {
+        browserSync.init(null, {
+            proxy: "http://localhost:1947",
+            browser: "google chrome",
+            port: 9000
+        });
+        gulp.watch(['*.html', '*.md']).on('change', browserSync.reload)
+        gulp.watch(['js/**'], gulp.series('eslint', 'js')).on('change', browserSync.reload)
+        gulp.watch(['plugin/**/plugin.js'], gulp.series('plugins')).on('change', browserSync.reload)
+        gulp.watch([
+            'css/theme/source/*.{sass,scss}',
+            'css/theme/template/*.{sass,scss}',
+        ], gulp.series('css-themes-stream'))
+        gulp.watch([
+            'css/custom.scss', 'css/helper.scss', 'css/reset.scss',
+        ], gulp.series('css-custom-stream'))
     })
-
-    gulp.watch(['*.html', '*.md'], gulp.series('reload'))
-
-    gulp.watch(['js/**'], gulp.series('js', 'reload', 'test'))
-
-    gulp.watch(['plugin/**/plugin.js'], gulp.series('plugins', 'reload'))
-
-    gulp.watch([
-        'css/theme/source/*.{sass,scss}',
-        'css/theme/template/*.{sass,scss}',
-    ], gulp.series('css-themes', 'reload'))
-
-    gulp.watch([
-        'css/theme/source/*.{sass,scss}',
-        'css/theme/template/*.{sass,scss}',
-    ], gulp.series('css-themes', 'reload'))
-
-    gulp.watch([
-        'css/custom.scss',
-    ], gulp.series('css-custom', 'reload'))
-
-    gulp.watch(['test/*.html'], gulp.series('test'))
-
-})
+);
