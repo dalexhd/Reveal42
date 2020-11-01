@@ -3,13 +3,10 @@
  * Author: Achim Staebler
  */
 
-
 // Default mixins and settings -----------------
 @import "../template/mixins";
 @import "../template/settings";
 // ---------------------------------------------
-
-
 
 // Include theme-specific fonts
 @import url(fonts/league-gothic/league-gothic.css);
@@ -18,10 +15,6 @@
 /**
  * Solarized colors by Ethan Schoonover
  */
-html * {
-	color-profile: sRGB;
-	rendering-intent: auto;
-}
 
 // Solarized colors
 $base03:    #002b36;
@@ -47,10 +40,8 @@ $headingColor: $base2;
 $headingTextShadow: none;
 $backgroundColor: $base03;
 $linkColor: $blue;
-$linkColorHover: lighten( $linkColor, 20% );
+$linkColorHover: lighten($linkColor, 20%);
 $selectionBackgroundColor: $magenta;
-
-
 
 // Theme template ------------------------------
 @import "../template/theme";

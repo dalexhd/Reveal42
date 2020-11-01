@@ -59,6 +59,7 @@
     "colors": "^1.4.0",
     "core-js": "^3.6.5",
     "eslint": "^7.12.1",
+    "eslint-config-airbnb-base": "^14.2.0",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.1.4",
     "glob": "^7.1.6",
@@ -132,6 +133,22 @@
       "no-unused-vars": "warn",
       "no-unused-expressions": 0,
       "prefer-template": "error"
+    }
+  },
+  "stylelint": {
+    "extends": "stylelint-config-standard",
+    "rules": {
+      "indentation": 2,
+      "no-descending-specificity": null,
+      "at-rule-no-unknown": null,
+      "font-family-no-missing-generic-family-keyword": [
+        true,
+        {
+          "ignoreFontFamilies": [
+            "feather"
+          ]
+        }
+      ]
     }
   }
 }

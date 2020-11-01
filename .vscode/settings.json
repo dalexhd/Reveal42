@@ -7,8 +7,10 @@
     "eslint.alwaysShowStatus": true,
     "eslint.format.enable": true,
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
+        "source.fixAll.eslint": true,
+        "source.fixAll.stylelint": true
     },
+    "editor.codeActionsOnSaveTimeout": 5000,
     "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.formatOnSave": true
 }

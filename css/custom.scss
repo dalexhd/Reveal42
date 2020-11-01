@@ -12,6 +12,7 @@ div {
       opacity: 0.4;
     }
   }
+
   &.slide-background.present[data-background-hash*="background"] {
     > .slide-background-content {
       pointer-events: none;
@@ -22,7 +23,7 @@ div {
 }
 
 iframe[data-src*="react-instantsearch.netlify.app"] {
-  background-color: #ffffff;
+  background-color: #fff;
 }
 
 img.silhouette {
