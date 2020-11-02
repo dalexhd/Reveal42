@@ -6,11 +6,11 @@ services:
             dockerfile: Dockerfile
         ports:
             - 1947:1947
+            - 9000:9000
         env_file: 
             - presentation.env
         volumes:
             - .:/usr/src/presentation
-            - /usr/src/presentation/spotify-widget
         container_name: presentation
     
     spotify:
@@ -23,5 +23,4 @@ services:
             - 3000:3000
         volumes:
             - ./spotify-widget:/usr/src/spotify-widget
-            - /usr/src/spotify-widget/node_modules
         container_name: spotify

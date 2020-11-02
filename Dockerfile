@@ -4,7 +4,6 @@ WORKDIR /usr/src/presentation
 
 COPY . .
 
-RUN npm install --unsafe-perm
+RUN npm install
 
-EXPOSE 1947
-CMD ["npm", "start"]
+CMD ["npm", "run", "serve"]
