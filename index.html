@@ -13,9 +13,17 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="/dist/img/favicon.png" type="image/x-icon" />
+
     <link rel="stylesheet" href="/dist/reveal.css" />
-    <link rel="stylesheet" href="/dist/custom.css" />
     <link rel="stylesheet" href="/dist/theme/black.css" id="theme" />
+    
+    <!-- Own styles -->
+    <link rel="stylesheet" href="/dist/css/reset.css" />
+    <link rel="stylesheet" href="/dist/css/custom.css" />
+    <link rel="stylesheet" href="/dist/css/fontawesome.css" />
+    <link rel="stylesheet" href="/dist/css/tailwind.css" />
+    <link rel="stylesheet" href="/dist/css/plyr.css" />
+
     <!-- Theme used for syntax highlighting of code -->
     <link rel="stylesheet" href="/dist/plugin/highlight/monokai.css" id="highlight-theme" />
   </head>
@@ -110,12 +118,9 @@
           </section>
           <section data-auto-animate>
             <h1>Antes de nada...</h1>
-            <img
-              class="r-frame"
-              height="400"
-              src="/dist/img/los-payasos-de-la-tele.gif"
-              alt="Payasos de la tele"
-            />
+            <video class="r-frame" height="400" loop autoplay muted>
+              <source src="/dist/video/los-payasos-de-la-tele.mp4" type="video/mp4" />
+            </video>
             <aside class="notes">Shhh, these are your private notes 📝</aside>
           </section>
           <section data-auto-animate>
@@ -182,7 +187,9 @@
                     />
                   </div>
                   <div class="fragment fade-in" data-fragment-index="0">
-                    <img src="/dist/img/person-rocket.gif" alt="Rocket" />
+                    <video loop autoplay muted>
+                      <source src="/dist/video/persona-cohete.mp4" type="video/mp4" />
+                    </video>
                   </div>
                 </div>
               </div>
@@ -389,17 +396,12 @@ return {
           <section data-auto-animate data-transition="zoom-in fade-out">
             <h3>Uno de los motores más potentes de búsqueda del mercado.</h3>
             <div class="r-stack">
-              <img
-                src="https://media.giphy.com/media/4hRy0u1cgIYMg/giphy.gif"
-                width="600"
-                height="390"
-              />
-              <img
-                class="fragment"
-                src="https://media.giphy.com/media/eKUT5HnJk8EA8/source.gif"
-                width="500"
-                height="350"
-              />
+              <video width="600" height="390" loop autoplay muted>
+                <source src="/dist/video/flash.mp4" type="video/mp4" />
+              </video>
+              <video width="500" height="350" loop autoplay muted>
+                <source src="/dist/video/dentadura-voladora.mp4" type="video/mp4" />
+              </video>
             </div>
           </section>
           <section
@@ -607,10 +609,9 @@ return {
           </section>
           <section>
             <h3>Ahora puedes pescar tus ramas de GIT perdidas de forma interactiva y rápida 🎣</h3>
-            <img
-              src="https://media1.tenor.com/images/3ced3a86d9c73131011b18d3c6d1542d/tenor.gif"
-              alt="Homer pescando"
-            />
+            <video loop autoplay muted>
+              <source src="/dist/video/homer-pescando.mp4" type="video/mp4" />
+            </video>
           </section>
         </section>
         <!-- <section data-transition="zoom-in fade-out">

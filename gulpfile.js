@@ -137,11 +137,6 @@ gulp.task('plugins', () => {
         output: './dist/plugin/search/search'
       },
       {
-        name: 'RevealNotes',
-        input: './plugin/notes/plugin.js',
-        output: './dist/plugin/notes/notes'
-      },
-      {
         name: 'RevealChartJS',
         input: './plugin/chart/plugin.js',
         output: './dist/plugin/chart/chart'
@@ -263,16 +258,17 @@ gulp.task('css-core', () =>
 gulp.task('css-custom', () =>
   gulp
     .src([
+      './assets/css/fontawesome.scss',
+      'node_modules/plyr/src/sass/plyr.scss',
       './assets/css/custom.scss',
-      './assets/css/helper.scss',
+      './assets/css/tailwind.scss',
       './assets/css/reset.scss'
     ])
     .pipe(sass())
     .pipe(postcss([tailwindcss()]))
     .pipe(autoprefixer())
     .pipe(minify({ compatibility: 'ie9' }))
-    .pipe(concat('custom.css'))
-    .pipe(gulp.dest('./dist'))
+    .pipe(gulp.dest('./dist/css'))
 );
 
 gulp.task('css-custom-stream', () =>
@@ -297,7 +293,7 @@ gulp.task('css-server', () =>
     .pipe(sass())
     .pipe(autoprefixer())
     .pipe(minify({ compatibility: 'ie9' }))
-    .pipe(gulp.dest('./dist'))
+    .pipe(gulp.dest('./dist/css'))
 );
 
 gulp.task(
@@ -316,7 +312,7 @@ gulp.task('generate-service-worker', () => {
     .generateSW({
       globDirectory: './',
       globPatterns: [
-        'dist/**/*.{png,js,json,css,svg,jpg,jpeg,gif,ttf,woff,eot}'
+        'dist/**/*.{png,js,json,css,svg,jpg,jpeg,gif,ttf,woff,woff2,eot,mp4}'
       ],
       runtimeCaching: [
         {

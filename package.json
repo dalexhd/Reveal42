@@ -29,7 +29,7 @@
     "test": "gulp test",
     "start": "node plugin/server",
     "start:client": "gulp",
-    "build": "gulp",
+    "build": "NODE_ENV=production gulp",
     "serve": "gulp serve",
     "lint:js": "eslint 'plugin/' --quiet --fix && eslint 'js/**/*.js' --quiet --fix",
     "lint:css": "stylelint 'css/**/*.scss' --fix",
