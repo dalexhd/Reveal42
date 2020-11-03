@@ -11,3 +11,5 @@ tmp/**
 node_modules/
 .sass-cache
 dist/
+sw.js
+workbox-*.js

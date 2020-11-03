@@ -1,4 +1,6 @@
 /* global spotifyUrl */
+import io from 'socket.io-client';
+
 (function () {
   // don't emit events from inside the previews themselves
 

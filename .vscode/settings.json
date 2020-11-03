@@ -12,5 +12,5 @@
     },
     "editor.codeActionsOnSaveTimeout": 5000,
     "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-    "editor.formatOnSave": true
+    "editor.formatOnSave": false
 }

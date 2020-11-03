@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>Evento 42: aborboll</title>
+    <link rel="manifest" href="manifest.json">
     <meta
       name="description"
       content="Herramientas para ser un estudiante más productivo sin que nuestra cartera sufra 🧑‍🎓"
@@ -16,9 +17,7 @@
     <link rel="stylesheet" href="/dist/custom.css" />
     <link rel="stylesheet" href="/dist/theme/black.css" id="theme" />
     <!-- Theme used for syntax highlighting of code -->
-    <link rel="stylesheet" href="/plugin/highlight/monokai.css" id="highlight-theme" />
-    <!-- User for plyr module -->
-    <link rel="stylesheet" href="/node_modules/plyr/dist/plyr.css" />
+    <link rel="stylesheet" href="/dist/plugin/highlight/monokai.css" id="highlight-theme" />
   </head>
 
   <body>
@@ -34,7 +33,7 @@
               <img
                 data-src="/dist/img/42logo.png"
                 alt="42 Madrid logo"
-                style="margin: 0 auto 4rem auto; background: transparent"
+                style="margin: 0 auto 4rem auto; background: transparent;"
                 class="demo-logo"
               />
             </a>
@@ -67,7 +66,7 @@
                 data-src="/dist/img/42logo.png"
                 alt="42 Madrid logo"
                 height="80"
-                style="margin: 0 auto 4rem auto; background: transparent"
+                style="margin: 0 auto 4rem auto; background: transparent;"
                 class="demo-logo"
               />
             </a>
@@ -76,9 +75,9 @@
             Herramientas para ser un estudiante más productivo sin que nuestra cartera sufra 🧑‍🎓
           </h3>
           <div data-id="box-music-widget-1">
-            <iframe data-src="{{spotifyUrl}}/widget" data-preload style="width: 100%"></iframe>
+            <iframe data-src="{{spotifyUrl}}/widget" data-preload style="width: 100%;"></iframe>
           </div>
-          <p style="margin: 0">
+          <p style="margin: 0;">
             <small
               >Presentación creada por
               <a
@@ -98,7 +97,7 @@
               src="/dist/img/built-on-heroku-light.svg"
               height="80"
               alt="Hecho en heroku"
-              style="margin: 0"
+              style="margin: 0;"
             />
           </a>
         </section>
@@ -300,10 +299,11 @@
 return {
   data: {
     labels: ["\uf391", "\uf375", "\uf7bb", "\uf1a0", "\uf3ca"],
-    datasets:[
+    datasets: [
       {
-        data:[5,6.81,80],
-        label:"My first dataset",backgroundColor:"rgba(20,220,220,.8)"
+        data: [5, 6.81, 80],
+        label: "My first dataset",
+        backgroundColor: "rgba(20,220,220,.8)"
       }
     ]
   },
@@ -337,7 +337,7 @@ return {
               src="/dist/img/algolia.svg"
               alt="Algolia Logo"
               height="300"
-              style="object-fit: cover; width: 305px; object-position: 0% 0"
+              style="object-fit: cover; width: 305px; object-position: 0% 0;"
               data-id="algolia"
             />
           </section>
@@ -527,7 +527,7 @@ return {
           <section data-transition="zoom-out">
             <img
               src="/dist/img/datadog.svg"
-              style="object-fit: cover; width: 305px; object-position: 0% 0"
+              style="object-fit: cover; width: 305px; object-position: 0% 0;"
               alt="DataDog square Logo"
               height="300"
             />
@@ -690,94 +690,14 @@ return {
       </div>
       <div id="particles"></div>
     </div>
-    <script src="/node_modules/plyr/dist/plyr.min.js"></script>
+    <!-- <script src="/node_modules/plyr/dist/plyr.min.js"></script> -->
     <script src="/dist/reveal.js"></script>
-    <script src="/plugin/zoom/zoom.js"></script>
-    <script src="/plugin/search/search.js"></script>
-    <script src="/plugin/markdown/markdown.js"></script>
-    <script src="/plugin/highlight/highlight.js"></script>
-    <!-- Scripts used by multiple plugins -->
-    <script src="/node_modules/socket.io-client/dist/socket.io.js"></script>
-    <!-- Used for plugin: Reveal animated -->
-    <script src="/plugin/revealjs-animated/revealjs-animated.js"></script>
-    <!-- Used for plugin: Anything -->
-    <script src="/plugin/anything/d3/d3.min.js"></script>
-    <script src="/plugin/anything/d3/topojson.min.js"></script>
-    <script src="/plugin/anything/anything.js"></script>
-    <!-- Used for plugin: ChartJS -->
-    <script src="/plugin/chart/chart.js"></script>
-    <script src="/plugin/chart/plugin.js"></script>
-    <!-- Used for plugin: ParticlesJS -->
-    <script src="/plugin/particles.js/particles.min.js"></script>
-    <script>
-      particlesJS('particles', {
-        particles: {
-          number: {
-            value: 50,
-            density: {
-              enable: true,
-              value_area: 800
-            }
-          },
-          color: {
-            value: '#ffffff'
-          },
-          shape: {
-            type: 'circle',
-            stroke: {
-              width: 0,
-              color: '#000000'
-            },
-            polygon: {
-              nb_sides: 5
-            },
-            image: {
-              src: 'img/github.svg',
-              width: 300,
-              height: 100
-            }
-          },
-          opacity: {
-            value: 0.5,
-            random: false,
-            anim: {
-              enable: true,
-              speed: 0.2,
-              opacity_min: 0,
-              sync: false
-            }
-          },
-          size: {
-            value: 3,
-            random: true,
-            anim: {
-              enable: true,
-              speed: 2,
-              size_min: 0,
-              sync: false
-            }
-          },
-          line_linked: {
-            enable: false
-          },
-          move: {
-            enable: true,
-            speed: 1,
-            direction: 'none',
-            random: true,
-            straight: false,
-            out_mode: 'out',
-            bounce: false,
-            attract: {
-              enable: false,
-              rotateX: 600,
-              rotateY: 1200
-            }
-          }
-        },
-        retina_detect: true
-      });
-    </script>
+    <script src="/dist/plugin/zoom/zoom.js"></script>
+    <script src="/dist/plugin/search/search.js"></script>
+    <script src="/dist/plugin/markdown/markdown.js"></script>
+    <script src="/dist/plugin/highlight/highlight.js"></script>
+    <script src="/dist/plugin/chart/chart.js"></script>
+    <script src="/dist/plugin/particles.js/particles.js"></script>
     <script>
       const spotifyUrl = '{{{spotifyUrl}}}';
       window.addEventListener('message', ({ origin, data }) => {
@@ -795,6 +715,14 @@ return {
           }
         }
       });
+      if ('serviceWorker' in navigator) {
+			  navigator.serviceWorker.register('sw.js')
+			  .then(function(reg) {
+			    console.log('Service worker running 😄');
+			  }).catch(function(err) {
+			    console.log('Service worker not detected 😢', err);
+			  });
+			}
     </script>
     <script>
       sharedConfig = {
@@ -804,16 +732,73 @@ return {
         hash: true,
         controlsTutorial: false,
         navigationMode: 'linear',
-        anything: [
-          {
-            className: 'anything',
-            initialize: function (container, options) {
-              if (options && options.initialize) {
-                options.initialize(container);
+        particlesJS: {
+          particles: {
+            number: {
+              value: 50,
+              density: {
+                enable: true,
+                value_area: 800
+              }
+            },
+            color: {
+              value: '#ffffff'
+            },
+            shape: {
+              type: 'circle',
+              stroke: {
+                width: 0,
+                color: '#000000'
+              },
+              polygon: {
+                nb_sides: 5
+              },
+              image: {
+                src: 'img/github.svg',
+                width: 300,
+                height: 100
+              }
+            },
+            opacity: {
+              value: 0.5,
+              random: false,
+              anim: {
+                enable: true,
+                speed: 0.2,
+                opacity_min: 0,
+                sync: false
+              }
+            },
+            size: {
+              value: 3,
+              random: true,
+              anim: {
+                enable: true,
+                speed: 2,
+                size_min: 0,
+                sync: false
+              }
+            },
+            line_linked: {
+              enable: false
+            },
+            move: {
+              enable: true,
+              speed: 1,
+              direction: 'none',
+              random: true,
+              straight: false,
+              out_mode: 'out',
+              bounce: false,
+              attract: {
+                enable: false,
+                rotateX: 600,
+                rotateY: 1200
               }
             }
-          }
-        ]
+          },
+          retina_detect: true
+        }
       };
       Reveal.role =
         '{{#admin}}admin{{/admin}}{{#presenter}}presenter{{/presenter}}{{#viewer}}viewer{{/viewer}}';
@@ -839,12 +824,12 @@ return {
           RevealMarkdown,
           RevealHighlight,
           RevealMenu,
-          RevealAnything,
-          RevealChart
+          RevealChart,
+          RevealParticles
         ]
       });
     </script>
-    <script type="text/javascript" src="/plugin/server/client.js"></script>
+    <script type="text/javascript" src="/dist/plugin/server/client.js"></script>
     {{/presenter}} {{#admin}}
     <script type="text/javascript">
       Reveal.initialize({
@@ -858,12 +843,12 @@ return {
           RevealSearch,
           RevealMarkdown,
           RevealHighlight,
-          RevealAnything,
-          RevealChart
+          RevealChart,
+          RevealParticles
         ]
       });
     </script>
-    <script type="text/javascript" src="/plugin/server/client.js"></script>
+    <script type="text/javascript" src="/dist/plugin/server/client.js"></script>
     {{/admin}} {{#viewer}}
     <script type="text/javascript">
       Reveal.initialize({
@@ -874,12 +859,12 @@ return {
           RevealSearch,
           RevealMarkdown,
           RevealHighlight,
-          RevealAnything,
-          RevealChart
+          RevealChart,
+          RevealParticles
         ]
       });
     </script>
-    <script type="text/javascript" src="/plugin/server/guest.js"></script>
+    <script type="text/javascript" src="/dist/plugin/server/guest.js"></script>
     {{/viewer}}
   </body>
 </html>

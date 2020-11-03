@@ -1,0 +1,55 @@
+{
+  "short_name": "Evento 42: aborboll",
+  "name": "Evento 42",
+  "lang": "es",
+  "description": "Herramientas para ser un estudiante más productivo sin que nuestra cartera sufra 🧑‍🎓",
+  "start_url": "/",
+  "background_color": "#00d1f2",
+  "theme_color": "#00d1f2",
+  "dir": "ltr",
+  "display": "standalone",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/dist/img/icon/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "/dist/img/icon/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/dist/img/icon/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/dist/img/icon/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/dist/img/icon/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "/dist/img/icon/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/dist/img/icon/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/dist/img/icon/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "prefer_related_applications": "false"
+}

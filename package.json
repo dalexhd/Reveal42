@@ -17,7 +17,7 @@
     "url": "git://github.com/hakimel/reveal.js.git"
   },
   "engines": {
-    "node": ">=10.0.0"
+    "node": ">=15.0.0"
   },
   "keywords": [
     "reveal",
@@ -37,12 +37,15 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.1",
-    "d3": "4.13.0",
+    "chart.js": "^2.9.4",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-basic-auth": "^1.2.0",
+    "highlight.js": "^10.3.2",
     "jquery": "^3.5.1",
+    "mathjax": "^3.1.2",
     "mustache": "^4.0.1",
+    "particles.js": "github:VincentGarreau/particles.js#dev",
     "plyr": "^3.6.2",
     "reveal.js-menu": "^2.1.0",
     "socket.io": "2.3.0"
@@ -69,12 +72,11 @@
     "gulp-concat": "^2.6.1",
     "gulp-connect": "^5.7.0",
     "gulp-header": "^2.0.9",
-    "gulp-image": "^6.2.1",
+    "gulp-if": "^3.0.0",
     "gulp-nodemon": "^2.5.0",
     "gulp-postcss": "^9.0.0",
     "gulp-sass": "^4.1.0",
     "gulp-zip": "^5.0.2",
-    "highlight.js": "^10.3.2",
     "marked": "^1.2.2",
     "node-qunit-puppeteer": "^2.0.3",
     "prettier": "^2.1.2",
@@ -84,6 +86,7 @@
     "stylelint": "^13.7.2",
     "stylelint-config-standard": "^20.0.0",
     "tailwindcss": "^1.9.6",
+    "workbox-build": "^5.1.4",
     "yargs": "^16.1.0"
   },
   "prettier": {

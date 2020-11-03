@@ -1,6 +1,9 @@
 const pkg = require('./package.json');
 const yargs = require('yargs');
 const tailwindcss = require('tailwindcss');
+require('dotenv').config({
+  path: 'presentation.env'
+});
 
 const { rollup } = require('rollup');
 const { terser } = require('rollup-plugin-terser');
@@ -10,6 +13,8 @@ const resolve = require('@rollup/plugin-node-resolve').default;
 
 const gulp = require('gulp');
 const zip = require('gulp-zip');
+const gulpif = require('gulp-if');
+const workbox = require('workbox-build');
 const sass = require('gulp-sass');
 const postcss = require('gulp-postcss');
 const header = require('gulp-header');
@@ -19,7 +24,6 @@ const autoprefixer = require('gulp-autoprefixer');
 const concat = require('gulp-concat');
 const browserSync = require('browser-sync').create();
 const nodemon = require('gulp-nodemon');
-const image = require('gulp-image');
 
 const root = yargs.argv.root || '.';
 const port = yargs.argv.port || 8000;
@@ -89,7 +93,7 @@ gulp.task('js-es5', () => {
       file: './dist/reveal.js',
       format: 'umd',
       banner: banner,
-      sourcemap: true
+      sourcemap: false
     });
   });
 });
@@ -106,7 +110,7 @@ gulp.task('js-es6', () => {
       file: './dist/reveal.esm.js',
       format: 'es',
       banner: banner,
-      sourcemap: true
+      sourcemap: false
     });
   });
 });
@@ -120,39 +124,64 @@ gulp.task('plugins', () => {
       {
         name: 'RevealHighlight',
         input: './plugin/highlight/plugin.js',
-        output: './plugin/highlight/highlight'
+        output: './dist/plugin/highlight/highlight'
       },
       {
         name: 'RevealMarkdown',
         input: './plugin/markdown/plugin.js',
-        output: './plugin/markdown/markdown'
+        output: './dist/plugin/markdown/markdown'
       },
       {
         name: 'RevealSearch',
         input: './plugin/search/plugin.js',
-        output: './plugin/search/search'
+        output: './dist/plugin/search/search'
       },
       {
         name: 'RevealNotes',
         input: './plugin/notes/plugin.js',
-        output: './plugin/notes/notes'
+        output: './dist/plugin/notes/notes'
+      },
+      {
+        name: 'RevealChartJS',
+        input: './plugin/chart/plugin.js',
+        output: './dist/plugin/chart/chart'
+      },
+      {
+        name: 'RevealParticles',
+        input: './plugin/particles.js/plugin.js',
+        output: './dist/plugin/particles.js/particles'
       },
       {
         name: 'RevealZoom',
         input: './plugin/zoom/plugin.js',
-        output: './plugin/zoom/zoom'
+        output: './dist/plugin/zoom/zoom'
       },
       {
         name: 'RevealMath',
         input: './plugin/math/plugin.js',
-        output: './plugin/math/math'
+        output: './dist/plugin/math/math'
+      },
+      {
+        name: 'Client',
+        input: './plugin/server/client.js',
+        output: './dist/plugin/server/client'
+      },
+      {
+        name: 'Guest',
+        input: './plugin/server/guest.js',
+        output: './dist/plugin/server/guest'
+      },
+      {
+        name: 'Admin',
+        input: './plugin/server/admin.js',
+        output: './dist/plugin/server/admin'
       }
     ].map((plugin) => {
       return rollup({
         cache: cache[plugin.input],
         input: plugin.input,
         plugins: [
-          resolve(),
+          resolve({ browser: true }),
           commonjs(),
           babel({
             ...babelConfig,
@@ -178,11 +207,39 @@ gulp.task('plugins', () => {
   );
 });
 
-gulp.task('css-themes', () =>
+gulp.task('css-themes-plugins', () =>
   gulp
-    .src(['./assets/css/theme/source/*.{sass,scss}'])
+    .src([
+      'node_modules/highlight.js/scss/monokai.scss',
+      'node_modules/highlight.js/scss/zenburn.scss'
+    ])
     .pipe(sass())
-    .pipe(gulp.dest('./dist/theme'))
+    .pipe(autoprefixer())
+    .pipe(minify({ compatibility: 'ie9' }))
+    .pipe(gulp.dest('./dist/plugin/highlight'))
+);
+
+gulp.task('css-themes-fonts', () =>
+  gulp
+    .src(['./assets/css/theme/source/fonts/**/*'])
+    .pipe(
+      gulpif((file) => {
+        return file.extname === '.css';
+      }, minify({ compatibility: 'ie9' }))
+    )
+    .pipe(gulp.dest('./dist/theme/fonts'))
+);
+
+gulp.task(
+  'css-themes',
+  gulp.series('css-themes-fonts', () =>
+    gulp
+      .src(['./assets/css/theme/source/*.{sass,scss}'])
+      .pipe(sass())
+      .pipe(autoprefixer())
+      .pipe(minify({ compatibility: 'ie9' }))
+      .pipe(gulp.dest('./dist/theme'))
+  )
 );
 
 gulp.task('css-themes-stream', () =>
@@ -245,15 +302,48 @@ gulp.task('css-server', () =>
 
 gulp.task(
   'css',
-  gulp.parallel('css-themes', 'css-core', 'css-custom', 'css-server')
+  gulp.parallel(
+    'css-themes',
+    'css-core',
+    'css-custom',
+    'css-server',
+    'css-themes-plugins'
+  )
 );
 
+gulp.task('generate-service-worker', () => {
+  return workbox
+    .generateSW({
+      globDirectory: './',
+      globPatterns: [
+        'dist/**/*.{png,js,json,css,svg,jpg,jpeg,gif,ttf,woff,eot}'
+      ],
+      runtimeCaching: [
+        {
+          urlPattern: new RegExp(process.env.REVEAL_URL),
+          handler: 'StaleWhileRevalidate'
+        }
+      ],
+      swDest: `./sw.js`,
+      clientsClaim: true,
+      skipWaiting: true,
+      sourcemap: false,
+      maximumFileSizeToCacheInBytes: 4194304
+    })
+    .then(({ warnings }) => {
+      // In case there are any warnings from workbox-build, log them.
+      for (const warning of warnings) {
+        console.warn(warning);
+      }
+      console.info('Service worker generation completed.');
+    })
+    .catch((error) => {
+      console.warn('Service worker generation failed:', error);
+    });
+});
+
 gulp.task('image', async () => {
-  return gulp
-    .src('./assets/img/**/*')
-    .pipe(image({ concurrent: 10 }))
-    .pipe(gulp.dest('./assets/img'))
-    .pipe(gulp.dest('./dist/img'));
+  return gulp.src('./assets/img/**/*').pipe(gulp.dest('./dist/img'));
 });
 
 gulp.task('video', async () => {
@@ -262,10 +352,23 @@ gulp.task('video', async () => {
 
 gulp.task(
   'default',
-  gulp.series(gulp.parallel('js', 'css', 'plugins', 'image', 'video'))
+  gulp.series(
+    gulp.parallel('js', 'css', 'plugins', 'image', 'video'),
+    'generate-service-worker'
+  )
 );
 
-gulp.task('build', gulp.parallel('js', 'css', 'plugins', 'image', 'video'));
+gulp.task(
+  'build',
+  gulp.parallel(
+    'js',
+    'css',
+    'plugins',
+    'image',
+    'video',
+    'generate-service-worker'
+  )
+);
 
 gulp.task(
   'package',

@@ -2,6 +2,8 @@
  * Reveal Plugin
  * https://revealjs.com/creating-plugins/
  */
+import Chart from 'chart.js';
+
 const initChart = function (Reveal) {
   // check if chart option is given or not
   var chartConfig = Reveal.getConfig().chart || {};

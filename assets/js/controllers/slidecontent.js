@@ -4,6 +4,7 @@ import {
 } from '../utils/constants.js';
 import { extend, queryAll, closest, sleep } from '../utils/util.js';
 import { isMobile } from '../utils/device.js';
+import Plyr from "plyr/dist/plyr.polyfilled";
 
 /**
  * Handles loading, unloading and playback of slide

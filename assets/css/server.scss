@@ -1,3 +1,6 @@
+// Font awesome
+@import "/node_modules/@fortawesome/fontawesome-free/css/all.css";
+
 #current-slide,
 #upcoming-slide,
 #speaker-controls {
@@ -70,6 +73,7 @@
 }
 
 .speaker-controls-time .label,
+.speaker-controls-pace .label,
 .speaker-controls-notes .label {
   text-transform: uppercase;
   font-weight: normal;
@@ -78,13 +82,16 @@
   margin: 0;
 }
 
-.speaker-controls-time {
+.speaker-controls-time,
+.speaker-controls-pace {
   border-bottom: 1px solid rgba(200, 200, 200, 0.5);
   margin-bottom: 10px;
   padding: 10px 16px;
   padding-bottom: 20px;
   cursor: pointer;
+}
 
+.speaker-controls-time {
   .reset-button {
     opacity: 0;
     float: right;
@@ -98,8 +105,28 @@
 
   .timer,
   .clock {
-    width: 50%;
     font-size: 1.9em;
+    width: 50%;
+  }
+
+  .pacing {
+    &.ahead {
+      color: blue;
+    }
+
+    &.on-track {
+      color: green;
+    }
+
+    &.behind {
+      color: red;
+    }
+
+    .hours-value,
+    .minutes-value,
+    .seconds-value {
+      font-size: 1.9em;
+    }
   }
 
   .timer {
@@ -112,7 +139,11 @@
   }
 
   span.mute {
-    color: #bbb;
+    opacity: 0.3;
+  }
+
+  .pacing-title {
+    margin-top: 5px;
   }
 }
 
