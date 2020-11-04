@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>reveal.js - Slide Notes</title>
+    <link rel="stylesheet" href="/dist/css/server.css" />
+    <link rel="stylesheet" href="/dist/css/fontawesome.css" />
+  </head>
+
+  <body>
+    <div id="current-slide"></div>
+    <div id="upcoming-slide"><span class="overlay-element label">Siguiente</span></div>
+    <div id="speaker-controls">
+      <div class="speaker-controls-time">
+        <h4 class="label">Tiempo <span class="reset-button">Reiniciar</span></h4>
+        <div class="clock">
+          <span class="clock-value">0:00 AM</span>
+        </div>
+        <div class="timer">
+          <span class="hours">00</span>
+          <span class="minutes">:00</span>
+          <span class="seconds">:00</span>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="speaker-controls-notes hidden">
+        <h4 class="label">Notas</h4>
+        <div class="value"></div>
+      </div>
+    </div>
+    <div id="speaker-layout" class="overlay-element interactive">
+      <span class="speaker-layout-label"></span>
+      <select class="speaker-layout-dropdown"></select>
+    </div>
+    <script src="/dist/plugin/markdown/markdown.js"></script>
+    <script>
+      const authSecret = '{{{password}}}';
+    </script>
+    <script src="/dist/plugin/server/admin.js"></script>
+  </body>
+</html>

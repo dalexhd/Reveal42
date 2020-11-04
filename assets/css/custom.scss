@@ -1,0 +1,127 @@
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100vh;
+}
+
+:root {
+  --plyr-font-size-large: 40px;
+  --plyr-font-size-xlarge: 45px;
+}
+
+div {
+  &.slide-background.present[data-background-hash*='youtube'] {
+    > .slide-background-content {
+      pointer-events: none;
+      filter: blur(20px);
+      opacity: 0.4;
+    }
+  }
+
+  &.slide-background.present[data-background-hash*='background'] {
+    > .slide-background-content {
+      pointer-events: none;
+      filter: blur(30px);
+      opacity: 0.4;
+    }
+  }
+}
+
+iframe[data-src*='react-instantsearch.netlify.app'] {
+  background-color: #fff;
+}
+
+img.silhouette {
+  filter: brightness(0) invert(1);
+  opacity: 1;
+}
+
+body {
+  background: #1b2b2f;
+  font-family: sans-serif;
+}
+
+#particles {
+  position: fixed;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+.stream-pointer.has-position.visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+.stream-pointer svg {
+  position: relative;
+  left: -28%;
+  top: -9%;
+}
+
+.stream-pointer svg path {
+  fill: #000;
+  stroke: #fff;
+  stroke-width: 1px;
+}
+
+.stream-pointer::before,
+.stream-pointer::after {
+  content: '';
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  left: -0.5em;
+  top: -0.5em;
+  border-radius: 1em;
+  background-color: rgba(27, 174, 225, 0.5);
+  z-index: -1;
+  opacity: 0;
+}
+
+.stream-pointer::before {
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  -webkit-transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.stream-pointer.is-down::before {
+  opacity: 1;
+  -webkit-transform: scale(0.3);
+  transform: scale(0.3);
+}
+
+.stream-pointer::after {
+  -webkit-transform: scale(2);
+  transform: scale(2);
+  -webkit-transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.stream-pointer.is-down::after {
+  opacity: 1;
+  -webkit-transform: scale(0);
+  transform: scale(0);
+  -webkit-transition: none;
+  transition: none;
+}
+
+.stream-pointer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1em;
+  height: 1em;
+  z-index: 200;
+  pointer-events: none;
+  -webkit-transform-origin: top left;
+  transform-origin: top left;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: visibility 0.2s ease, opacity 0.2s ease;
+  transition: visibility 0.2s ease, opacity 0.2s ease;
+}

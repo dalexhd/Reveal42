@@ -1,0 +1,44 @@
+{
+  "name": "42presentation-v2",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "lint:style": "stylelint **/*.{vue,css} --ignore-path .gitignore",
+    "lint": "npm run lint:js && npm run lint:style"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.1",
+    "@nuxtjs/pwa": "^3.0.2",
+    "chart.js": "^2.9.4",
+    "core-js": "^3.6.5",
+    "highlight.js": "^9.18.3",
+    "marked": "^1.2.2",
+    "nuxt": "^2.14.6",
+    "particles.js": "github:VincentGarreau/particles.js#dev",
+    "plyr": "^3.6.2",
+    "tailwindcss": "^1.9.6"
+  },
+  "devDependencies": {
+    "@nuxtjs/eslint-config": "^3.1.0",
+    "@nuxtjs/eslint-module": "^2.0.0",
+    "@nuxtjs/stylelint-module": "^4.0.0",
+    "@nuxtjs/tailwindcss": "^3.2.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.10.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-nuxt": "^1.0.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "fibers": "^5.0.0",
+    "prettier": "^2.1.2",
+    "sass": "^1.28.0",
+    "sass-loader": "^10.0.5",
+    "stylelint": "^13.7.2",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-standard": "^20.0.0"
+  }
+}
