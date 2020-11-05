@@ -59,8 +59,8 @@ export default {
 
   // Server Configuration (https://nuxtjs.org/faq/host-port)
   server: {
-    port: process.env.PORT || 3000, // default: 3000
-    host: "0.0.0.0", // default: localhost
+    port: process.env.PORT || 3000,
+    host: process.env.PORT ? "0.0.0.0" : "localhost", // This is just a solution for heroku
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)

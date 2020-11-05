@@ -1,8 +1,5 @@
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
 }
 
 :root {
@@ -11,7 +8,7 @@
 }
 
 div {
-  &.slide-background.present[data-background-hash*='youtube'] {
+  &.slide-background.present[data-background-hash*="youtube"] {
     > .slide-background-content {
       pointer-events: none;
       filter: blur(20px);
@@ -19,7 +16,7 @@ div {
     }
   }
 
-  &.slide-background.present[data-background-hash*='background'] {
+  &.slide-background.present[data-background-hash*="background"] {
     > .slide-background-content {
       pointer-events: none;
       filter: blur(30px);
@@ -28,7 +25,7 @@ div {
   }
 }
 
-iframe[data-src*='react-instantsearch.netlify.app'] {
+iframe[data-src*="react-instantsearch.netlify.app"] {
   background-color: #fff;
 }
 
@@ -70,7 +67,7 @@ body {
 
 .stream-pointer::before,
 .stream-pointer::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 1em;
   height: 1em;
