@@ -1,5 +1,6 @@
 {
   "name": "42presentation-v2",
+  "description": "Herramientas para ser un estudiante más productivo sin que nuestra cartera sufra 🧑‍🎓",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -29,6 +30,7 @@
     "@nuxtjs/stylelint-module": "^4.0.0",
     "@nuxtjs/tailwindcss": "^3.2.0",
     "babel-eslint": "^10.1.0",
+    "copy-webpack-plugin": "^6.3.0",
     "eslint": "^7.10.0",
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-nuxt": "^1.0.0",

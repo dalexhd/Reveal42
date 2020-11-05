@@ -375,17 +375,17 @@ return {
           require(`@/assets/video/algolia/thumbnails.vtt`)
         "
         :data-background-video-subtitles="
-          loadSubs([
+          JSON.stringify([
             {
               label: 'Español',
               srclang: 'es',
-              src: require(`@/assets/video/algolia/es.vtt`),
+              src: require(`~/assets/video/algolia/es.vtt`),
               default: true,
             },
             {
               label: 'English',
               srclang: 'en',
-              src: require(`@/assets/video/algolia/en.vtt`),
+              src: require(`~/assets/video/algolia/en.vtt`),
             },
           ])
         "
@@ -421,7 +421,7 @@ return {
     <section data-transition="zoom-in fade-out">
       <section data-transition="zoom-out">
         <img
-          src="@/assets/img/hotjar-square.svg"
+          src="~/assets/img/hotjar-square.svg"
           alt="Hotjar square Logo"
           height="300"
         />
@@ -432,17 +432,17 @@ return {
       <section
         :data-background-video="require(`@/assets/video/hotjar/hotjar.mp4`)"
         :data-background-video-subtitles="
-          loadSubs([
+          JSON.stringify([
             {
               label: 'Español',
               srclang: 'es',
-              src: require(`@/assets/video/hotjar/es.vtt`),
+              src: require('~/assets/video/hotjar/es.vtt'),
               default: true,
             },
             {
               label: 'English',
               srclang: 'en',
-              src: require(`@/assets/video/hotjar/en.vtt`),
+              src: require('~/assets/video/hotjar/en.vtt'),
             },
           ])
         "
@@ -477,17 +477,17 @@ return {
           require(`@/assets/video/sentry/thumbnails.vtt`)
         "
         :data-background-video-subtitles="
-          loadSubs([
+          JSON.stringify([
             {
               label: 'Español',
               srclang: 'es',
-              src: require(`@/assets/video/sentry/es.vtt`),
+              src: require(`~/assets/video/sentry/es.vtt`),
               default: true,
             },
             {
               label: 'English',
               srclang: 'en',
-              src: require(`@/assets/video/sentry/en.vtt`),
+              src: require(`~/assets/video/sentry/en.vtt`),
             },
           ])
         "
@@ -515,17 +515,17 @@ return {
           require(`@/assets/video/datadog/thumbnails.vtt`)
         "
         :data-background-video-subtitles="
-          loadSubs([
+          JSON.stringify([
             {
               label: 'Español',
               srclang: 'es',
-              src: require(`@/assets/video/datadog/es.vtt`),
+              src: require(`~/assets/video/datadog/es.vtt`),
               default: true,
             },
             {
               label: 'English',
               srclang: 'en',
-              src: require(`@/assets/video/datadog/en.vtt`),
+              src: require(`~/assets/video/datadog/en.vtt`),
             },
           ])
         "
@@ -662,16 +662,3 @@ return {
     </section>
   </div>
 </template>
-
-<script>
-export default {
-  methods: {
-    loadAsset(asset) {
-      return asset;
-    },
-    loadSubs(subs) {
-      return JSON.stringify(subs);
-    },
-  },
-};
-</script>

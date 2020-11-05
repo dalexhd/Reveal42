@@ -1,11 +1,23 @@
+import path from "path";
+import CopyPlugin from "copy-webpack-plugin";
+
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: "42presentation-v2",
+    title: "Evento 42: aborboll",
     meta: [
       { charset: "utf-8" },
+      { lang: "es" },
+      { author: "Alex Borbolla, https://github.com/dalexhd" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: "" },
+      {
+        hid: "description",
+        name: "description",
+        content:
+          "Herramientas para ser un estudiante más productivo sin que nuestra cartera sufra 🧑‍🎓",
+      },
+      { ogHost: "https://aborboll.herokuapp.com/" },
+      { twitterCreator: "@dalexhd" },
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
   },
@@ -35,6 +47,16 @@ export default {
     "@nuxtjs/pwa",
   ],
 
+  pwa: {
+    manifest: {
+      name: "Evento 42: aborboll",
+      short_name: "Evento 42",
+      description:
+        "Herramientas para ser un estudiante más productivo sin que nuestra cartera sufra 🧑‍🎓",
+      lang: "es",
+    },
+  },
+
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
     extractCSS: true,
@@ -43,9 +65,20 @@ export default {
         test: /\.vtt$/i,
         loader: "file-loader",
         options: {
-          name: "[path][name].[ext]",
+          name: "vtt/[folder]/[name].[hash:6].[ext]",
         },
       });
     },
+    plugins: [
+      new CopyPlugin({
+        patterns: [
+          {
+            context: "./assets/video",
+            from: "**/thumbnails/*",
+            to: "vtt/[path]/[name].[ext]",
+          },
+        ],
+      }),
+    ],
   },
 };
