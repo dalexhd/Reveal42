@@ -20,7 +20,7 @@
       </div>
       <h3>
         Herramientas para ser un estudiante más productivo sin que nuestra
-        cartera sufra 🧑‍🎓
+        cartera sufra ‍🎓
       </h3>
       <div class="r-hstack justify-center">
         <div data-id="box-music-widget-1"></div>
@@ -58,7 +58,7 @@
       </div>
       <h3>
         Herramientas para ser un estudiante más productivo sin que nuestra
-        cartera sufra 🧑‍🎓
+        cartera sufra ‍🎓
       </h3>
       <div data-id="box-music-widget-1">
         <iframe

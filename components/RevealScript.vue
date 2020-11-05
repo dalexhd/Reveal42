@@ -1,7 +1,6 @@
 <template>
-  <div id="app" class="reveal"></div>
+  <div></div>
 </template>
-
 <script>
 import Reveal from "~/assets/reveal.js";
 import RevealChart from "~/assets/plugins/chart/plugin";

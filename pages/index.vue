@@ -1,10 +1,8 @@
 <template>
-  <div>
-    <div id="app" class="reveal">
-      <!-- Any section element inside of this container is displayed as a slide -->
-      <Slides />
-      <div id="particles"></div>
-    </div>
+  <div id="app" class="reveal">
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <Slides />
+    <div id="particles"></div>
     <client-only>
       <RevealScript />
     </client-only>

@@ -14,7 +14,7 @@ export default {
         hid: "description",
         name: "description",
         content:
-          "Herramientas para ser un estudiante más productivo sin que nuestra cartera sufra 🧑‍🎓",
+          "Herramientas para ser un estudiante más productivo sin que nuestra cartera sufra ‍🎓",
       },
       { ogHost: "https://aborboll.herokuapp.com/" },
       { twitterCreator: "@dalexhd" },
@@ -52,7 +52,7 @@ export default {
       name: "Evento 42: aborboll",
       short_name: "Evento 42",
       description:
-        "Herramientas para ser un estudiante más productivo sin que nuestra cartera sufra 🧑‍🎓",
+        "Herramientas para ser un estudiante más productivo sin que nuestra cartera sufra ‍🎓",
       lang: "es",
     },
   },
