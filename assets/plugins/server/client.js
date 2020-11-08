@@ -2,7 +2,7 @@
 /* global Reveal */
 import io from "socket.io-client";
 
-(function () {
+const initClient = function (Reveal) {
   // don't emit events from inside the previews themselves
 
   if (window.location.search.match(/receiver/gi)) return;
@@ -11,14 +11,14 @@ import io from "socket.io-client";
     transportOptions: {
       polling: {
         extraHeaders: {
-          Authorization: `Bearer ${server.secret}`,
+          Authorization: server.secret,
         },
       },
     },
   });
-  socket.on("error", (e) => console.log(e));
+  socket.on("error", (e) => console.error(e));
 
-  console.log(`View slide notes at ${window.location.origin}/notes`);
+  console.log(`View presenter notes at ${window.location.origin}/notes`);
 
   let spotifyIframe = null;
   const removeSpotifyÌframe = function () {
@@ -142,7 +142,13 @@ import io from "socket.io-client";
       socket.emit("plyrchanged", messageData);
     }
   });
+};
 
-  // Post the initial state
-  post();
-})();
+export default () => {
+  return {
+    id: "RevealClient",
+    init(Reveal) {
+      initClient(Reveal);
+    },
+  };
+};

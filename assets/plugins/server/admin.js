@@ -6,8 +6,8 @@ import marked from "marked";
   let notesValue;
   let controls;
   let currentState;
-  let currentSlide;
-  let upcomingSlide;
+  const currentSlide = document.getElementById("current-slide");
+  const upcomingSlide = document.getElementById("upcoming-slide");
   let layoutLabel;
   let layoutDropdown;
   let connected = false;
@@ -18,13 +18,12 @@ import marked from "marked";
     alert("Remember to mute your browser before going live!");
     sessionStorage.setItem("volume-noticed", true);
   }
-
   const socket = io.connect("/admin", {
     transportOptions: {
       polling: {
         extraHeaders: {
           // eslint-disable-next-line no-undef
-          Authorization: `Bearer ${authSecret}`,
+          Authorization: localStorage.getItem("auth._token.intra"),
         },
       },
     },
@@ -46,16 +45,16 @@ import marked from "marked";
     currentState = JSON.stringify(data.state);
 
     // No need for updating the notes in case of fragment changes
-    if (data.notes) {
-      notes.classList.remove("hidden");
-      if (data.markdown) {
-        notesValue.innerHTML = marked(data.notes);
-      } else {
-        notesValue.innerHTML = data.notes;
-      }
-    } else {
-      notes.classList.add("hidden");
-    }
+    // if (data.notes) {
+    //   notes.classList.remove("hidden");
+    //   if (data.markdown) {
+    //     notesValue.innerHTML = marked(data.notes);
+    //   } else {
+    //     notesValue.innerHTML = data.notes;
+    //   }
+    // } else {
+    //   notes.classList.add("hidden");
+    // }
 
     // Update the note slides
     currentSlide.contentWindow.postMessage(
@@ -76,19 +75,14 @@ import marked from "marked";
     if (connected === false) {
       connected = true;
       setupKeyboard();
-      setupNotes();
-      setupTimer();
+      // setupNotes();
+      // setupTimer();
     }
     handleStateMessage(data);
   });
 
-  setupLayout();
-
-  // Load our presentation iframes
-  setupIframes();
-
   // Load our presentation controls
-  setupControls();
+  // setupControls();
 
   // Once the iframes have loaded, emit a signal saying there's
   // a new subscriber which will trigger a 'statechanged'
@@ -140,62 +134,34 @@ import marked from "marked";
   }
 
   /**
-   * Creates the preview iframes.
+   * Setup the notes UI.
    */
-  function setupIframes() {
-    const params = [
-      "receiver",
-      "progress=false",
-      "history=false",
-      "transition=none",
-      "backgroundTransition=none",
-    ].join("&");
-
-    const currentURL = `/admin?${params}&postMessageEvents=true`;
-    const upcomingURL = `/admin?${params}&controls=false`;
-
-    currentSlide = document.createElement("iframe");
-    currentSlide.setAttribute("width", 1280);
-    currentSlide.setAttribute("height", 1024);
-    currentSlide.setAttribute("src", currentURL);
-    document.querySelector("#current-slide").appendChild(currentSlide);
-
-    upcomingSlide = document.createElement("iframe");
-    upcomingSlide.setAttribute("width", 640);
-    upcomingSlide.setAttribute("height", 512);
-    upcomingSlide.setAttribute("src", upcomingURL);
-    document.querySelector("#upcoming-slide").appendChild(upcomingSlide);
-  }
+  // function setupNotes() {
+  //   notes = document.querySelector(".speaker-controls-notes");
+  //   notesValue = document.querySelector(".speaker-controls-notes .value");
+  // }
 
   /**
    * Setup the notes UI.
    */
-  function setupNotes() {
-    notes = document.querySelector(".speaker-controls-notes");
-    notesValue = document.querySelector(".speaker-controls-notes .value");
-  }
-
-  /**
-   * Setup the notes UI.
-   */
-  function setupControls() {
-    const sideMenu = document.querySelector(".speaker-controls #side-menu");
-    const slide = currentSlide.contentWindow;
-    slide.addEventListener("menu-ready", function (event) {
-      const open = slide.document.querySelector("div.slide-menu-button a");
-      const close = slide.document.querySelector("li#close");
-      sideMenu.onclick = function () {
-        const active = slide.document
-          .querySelector(".slide-menu")
-          .classList.contains("active");
-        if (!active) {
-          open.click();
-        } else {
-          close.click();
-        }
-      };
-    });
-  }
+  // function setupControls() {
+  //   const sideMenu = document.querySelector(".speaker-controls #side-menu");
+  //   const slide = currentSlide.contentWindow;
+  //   slide.addEventListener("menu-ready", function (event) {
+  //     const open = slide.document.querySelector("div.slide-menu-button a");
+  //     const close = slide.document.querySelector("li#close");
+  //     sideMenu.onclick = function () {
+  //       const active = slide.document
+  //         .querySelector(".slide-menu")
+  //         .classList.contains("active");
+  //       if (!active) {
+  //         open.click();
+  //       } else {
+  //         close.click();
+  //       }
+  //     };
+  //   });
+  // }
 
   /**
    * Create the timer and clock and start updating them
@@ -240,34 +206,6 @@ import marked from "marked";
       _updateTimer();
       return false;
     });
-  }
-
-  /**
-   * Sets up the speaker view layout and layout selector.
-   */
-  function setupLayout() {
-    layoutDropdown = document.querySelector(".speaker-layout-dropdown");
-    layoutLabel = document.querySelector(".speaker-layout-label");
-
-    // Render the list of available layouts
-    for (const id in SPEAKER_LAYOUTS) {
-      const option = document.createElement("option");
-      option.setAttribute("value", id);
-      option.textContent = SPEAKER_LAYOUTS[id];
-      layoutDropdown.appendChild(option);
-    }
-
-    // Monitor the dropdown for changes
-    layoutDropdown.addEventListener(
-      "change",
-      function (event) {
-        setLayout(layoutDropdown.value);
-      },
-      false
-    );
-
-    // Restore any currently persisted layout
-    setLayout(getLayout());
   }
 
   /**

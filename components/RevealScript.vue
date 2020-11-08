@@ -9,8 +9,33 @@ import RevealZoom from "~/assets/plugins/zoom/plugin";
 import RevealSearch from "~/assets/plugins/search/plugin";
 import RevealMarkdown from "~/assets/plugins/markdown/plugin";
 import RevealParticles from "~/assets/plugins/particles.js/plugin";
+import RevealMenu from "~/assets/plugins/menu/plugin";
+import RevealClient from "~/assets/plugins/server/client";
+import RevealGuest from "~/assets/plugins/server/guest";
+Reveal.role = "Admin";
+let adminPlugins = [];
+let guestPlugins = [];
+let adminConfig = {};
+let guestConfig = {};
+
 export default {
   mounted() {
+    if (this.$auth.user) {
+      adminConfig = {
+        menu: {
+          themes: true,
+          themesPath: "/dist/theme",
+          markers: false,
+        },
+        server: {
+          secret: this.$auth.$storage.getLocalStorage("_token.intra"),
+        },
+      };
+      adminPlugins = [RevealMenu, RevealClient];
+    } else {
+      guestPlugins = [RevealGuest];
+      guestConfig = {};
+    }
     Reveal.initialize({
       controls: true,
       progress: true,
@@ -86,6 +111,7 @@ export default {
         retina_detect: true,
       },
       chart: {},
+      ...adminConfig,
       plugins: [
         RevealZoom,
         RevealSearch,
@@ -93,6 +119,8 @@ export default {
         RevealHighlight,
         RevealParticles,
         RevealChart,
+        ...adminPlugins,
+        ...guestPlugins,
       ],
     });
   },

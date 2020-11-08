@@ -1,7 +1,8 @@
+/* global spotifyUrl */
 /* global Reveal */
 import io from "socket.io-client";
 
-(function () {
+const initClient = function (Reveal) {
   const socket = io.connect("/public");
 
   socket.on("statechanged", function (data) {
@@ -32,4 +33,13 @@ import io from "socket.io-client";
       default:
     }
   });
-})();
+};
+
+export default () => {
+  return {
+    id: "RevealClient",
+    init(Reveal) {
+      initClient(Reveal);
+    },
+  };
+};

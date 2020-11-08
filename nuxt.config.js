@@ -1,4 +1,3 @@
-import path from "path";
 import CopyPlugin from "copy-webpack-plugin";
 
 export default {
@@ -23,7 +22,7 @@ export default {
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: ["@/assets/css/main.scss"],
+  css: [],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [],
@@ -39,13 +38,59 @@ export default {
     "@nuxtjs/stylelint-module",
     // https://tailwindcss.nuxtjs.org/setup
     "@nuxtjs/tailwindcss",
+    // https://go.nuxtjs.dev/pwa
+    "@nuxtjs/pwa",
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
-    // https://go.nuxtjs.dev/pwa
-    "@nuxtjs/pwa",
+    // https://dev.auth.nuxtjs.org/guide/setup
+    "@nuxtjs/axios",
+    "@nuxtjs/auth-next",
+    // https://github.com/nuxt-community/vuetify-module
+    "@nuxtjs/vuetify",
+    // Guide from https://github.com/nuxt/nuxt.js/tree/dev/examples/with-sockets
+    "~/io",
   ],
+  vuetify: {
+    theme: { disable: true },
+  },
+  auth: {
+    redirect: {
+      callback: "/callback",
+    },
+    strategies: {
+      intra: {
+        scheme: "oauth2",
+        clientId: process.env.CLIENT_ID,
+        endpoints: {
+          authorization: "https://api.intra.42.fr/oauth/authorize",
+          token: "/auth/intra",
+          userInfo: "https://api.intra.42.fr/v2/me",
+          logout: undefined,
+        },
+        token: {
+          property: "access_token",
+          type: "Bearer",
+          maxAge: 1800,
+        },
+        refreshToken: {
+          property: "refresh_token",
+          maxAge: 60 * 60 * 24 * 30,
+        },
+        responseType: "code",
+        grantType: "authorization_code",
+        scope: ["public"],
+        state: "UNIQUE_AND_NON_GUESSABLE",
+      },
+      github: {
+        clientId: process.env.GITHUB_CLIENT_ID,
+        clientSecret: process.env.GITHUB_SECRET,
+      },
+    },
+  },
+
+  serverMiddleware: [{ path: "/auth", handler: "~/api/auth.js" }],
 
   pwa: {
     manifest: {
@@ -63,9 +108,26 @@ export default {
     host: process.env.PORT ? "0.0.0.0" : "localhost", // This is just a solution for heroku
   },
 
+  // Router configuration (https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-router#extendroutes)
+  router: {
+    extendRoutes(routes, resolve) {
+      routes.push({
+        path: "/admin",
+        component: resolve(__dirname, "pages/index.vue"),
+      });
+    },
+  },
+
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
+    publicPath: "/dist/",
     extractCSS: true,
+    cssSourceMap: process.env.NODE_ENV !== "production",
+    filenames: {
+      app: ({ isDev }) => (isDev ? "js/[name].js" : "js/[contenthash].js"),
+      chunk: ({ isDev }) => (isDev ? "js/[name].js" : "js/[contenthash].js"),
+      css: ({ isDev }) => (isDev ? "css/[name].css" : "css/[contenthash].css"),
+    },
     extend(config, ctx) {
       config.module.rules.push({
         test: /\.vtt$/i,

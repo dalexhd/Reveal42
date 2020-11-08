@@ -1,0 +1,9 @@
+@import "~/assets/fonts/source-sans-pro/source-sans-pro.css";
+@import "~/node_modules/@fortawesome/fontawesome-free/css/all.css";
+
+$mainFont: "Source Sans Pro", helvetica, sans-serif;
+
+* {
+  font-family: $mainFont;
+  font-weight: normal;
+}

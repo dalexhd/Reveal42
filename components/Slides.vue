@@ -13,7 +13,6 @@
           <img
             src="@/assets/img/42logo.png"
             alt="42 Madrid logo"
-            style="margin: 0 auto 4rem auto; background: transparent"
             class="demo-logo"
           />
         </a>
@@ -107,19 +106,23 @@
       </section>
       <section data-auto-animate>
         <h1>Antes de nada...</h1>
-        <video class="r-frame" height="400" loop autoplay muted>
-          <source
-            src="@/assets/video/los-payasos-de-la-tele.mp4"
-            type="video/mp4"
-          />
-        </video>
-        <aside class="notes">Shhh, these are your private notes 📝</aside>
+        <img
+          class="r-frame"
+          height="400"
+          src="@/assets/img/los-payasos-de-la-tele.gif"
+          alt="Payasos de la tele"
+        />
+        <aside v-if="this.$auth.user" class="notes">
+          Shhh, these are your private notes 📝
+        </aside>
       </section>
       <section data-auto-animate>
         <h1>¿Quién soy?</h1>
       </section>
       <section data-auto-animate>
-        <aside class="notes">Nombre, Años, Trabajo</aside>
+        <aside v-if="this.$auth.user" class="notes">
+          Nombre, Años, Trabajo
+        </aside>
         <h1>¿Quién soy?</h1>
         <img src="@/assets/img/avatar.jpeg" alt="Yo" height="150" />
         <p class="fragment fade-in-then-semi-out">Me llamo Alex Borbolla</p>
@@ -129,7 +132,7 @@
         </p>
       </section>
       <section>
-        <aside class="notes">
+        <aside v-if="this.$auth.user" class="notes">
           Autodidacta, reddit, ❤️ Open source, nuevas tecnologías, rata
         </aside>
         <h1>¿Cosas sobre mi?</h1>
@@ -186,12 +189,10 @@
                 />
               </div>
               <div class="fragment fade-in" data-fragment-index="0">
-                <video loop autoplay muted>
-                  <source
-                    src="@/assets/video/persona-cohete.mp4"
-                    type="video/mp4"
-                  />
-                </video>
+                <img
+                  src="@/assets/img/persona-cohete.gif"
+                  alt="Persona en cohete"
+                />
               </div>
             </div>
           </div>
@@ -396,15 +397,19 @@ return {
       <section data-auto-animate data-transition="zoom-in fade-out">
         <h3>Uno de los motores más potentes de búsqueda del mercado.</h3>
         <div class="r-stack">
-          <video width="600" height="390" loop autoplay muted>
-            <source src="@/assets/video/flash.mp4" type="video/mp4" />
-          </video>
-          <video width="500" height="350" class="fragment" loop autoplay muted>
-            <source
-              src="@/assets/video/dentadura-voladora.mp4"
-              type="video/mp4"
-            />
-          </video>
+          <img
+            width="600"
+            height="390"
+            src="@/assets/img/flash.gif"
+            alt="Flash"
+          />
+          <img
+            width="500"
+            height="350"
+            class="fragment"
+            src="@/assets/img/dentadura-voladora.gif"
+            alt="Dentadura voladora"
+          />
         </div>
       </section>
       <section
@@ -577,9 +582,7 @@ return {
           Ahora puedes pescar tus ramas de GIT perdidas de forma interactiva y
           rápida 🎣
         </h3>
-        <video loop autoplay muted>
-          <source src="@/assets/video/homer-pescando.mp4" type="video/mp4" />
-        </video>
+        <img src="@/assets/img/homer-pescando.gif" alt="Homer pescando" />
       </section>
     </section>
     <!-- <section data-transition="zoom-in fade-out">
@@ -662,3 +665,8 @@ return {
     </section>
   </div>
 </template>
+<script>
+export default {
+  comments: true,
+};
+</script>

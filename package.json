@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=13.0.0"
   },
   "scripts": {
     "dev": "nuxt",
@@ -17,6 +17,8 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.1",
+    "@nuxtjs/auth-next": "^5.0.0-1602966760.822bc05",
+    "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/pwa": "^3.0.2",
     "chart.js": "^2.9.4",
     "core-js": "^3.6.5",
@@ -25,6 +27,8 @@
     "nuxt": "^2.14.6",
     "particles.js": "https://github.com/VincentGarreau/particles.js#dev",
     "plyr": "^3.6.2",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "2.3.0",
     "tailwindcss": "^1.9.6"
   },
   "devDependencies": {
@@ -32,6 +36,7 @@
     "@nuxtjs/eslint-module": "^2.0.0",
     "@nuxtjs/stylelint-module": "^4.0.0",
     "@nuxtjs/tailwindcss": "^3.2.0",
+    "@nuxtjs/vuetify": "^1.11.2",
     "babel-eslint": "^10.1.0",
     "copy-webpack-plugin": "^6.3.0",
     "eslint": "^7.10.0",

@@ -77,7 +77,7 @@ adminNamespace.on("connection", (socket) => {
 publicNamespace.on("connection", (socket) => {
   console.log("Client connected!");
   socket.on("disconnect", () => {
-    console.log("Client disconnectd!");
+    console.log("Client disconnected!");
   });
 });
 
