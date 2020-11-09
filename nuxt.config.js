@@ -102,6 +102,9 @@ export default {
         "Herramientas para ser un estudiante más productivo sin que nuestra cartera sufra ‍🎓",
       lang: "es",
     },
+    workbox: {
+      enabled: false, // Videos are not being preloaded. This is why disable this important feature.
+    },
   },
 
   // Server Configuration (https://nuxtjs.org/faq/host-port)
