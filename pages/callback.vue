@@ -19,5 +19,5 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "~/assets/css/callback.scss";
+@import "@/assets/css/pages/callback.scss";
 </style>

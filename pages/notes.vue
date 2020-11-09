@@ -76,5 +76,5 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "~/assets/css/notes";
+@import "~/assets/css/pages/notes";
 </style>

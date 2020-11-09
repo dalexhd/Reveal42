@@ -2,7 +2,7 @@ import http from "http";
 import SocketIO from "socket.io";
 import axios from "axios";
 
-export default function ({ $auth }) {
+export default function () {
   this.nuxt.hook("render:before", (renderer) => {
     const server = http.createServer(this.nuxt.renderer.app);
     const io = SocketIO(server);
@@ -14,8 +14,9 @@ export default function ({ $auth }) {
       new Promise((resolve) =>
         server.listen(port || 3000, host || "localhost", resolve)
       );
+
     // close this server on 'close' event
-    this.nuxt.hook("close", () => new Promise(server.close));
+    this.nuxt.hook("close", () => server.close());
 
     const adminNamespace = io.of("/admin");
     const publicNamespace = io.of("/public");
