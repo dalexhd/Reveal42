@@ -93,6 +93,9 @@ export default class SlideContent {
         let backgroundVideoSubtitles = slide.getAttribute(
           "data-background-video-subtitles"
         );
+        const backgroundVideoPreload = slide.getAttribute(
+          "data-background-video-preload"
+        );
         const backgroundVideoThumbnails = slide.getAttribute(
           "data-background-video-thumbnails"
         );
@@ -130,6 +133,9 @@ export default class SlideContent {
           plyrOptions.autoPlay = false;
           if (backgroundVideoLoop) {
             video.setAttribute("loop", "");
+          }
+          if (backgroundVideoPreload) {
+            video.setAttribute("preload", backgroundVideoPreload);
           }
           if (this.Reveal.role === "admin") {
             plyrOptions.volume = backgroundVideoVolume

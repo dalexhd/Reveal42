@@ -372,6 +372,7 @@ return {
       </section>
       <section
         data-background-video="@/assets/video/algolia/algolia.mp4"
+        data-background-video-preload="auto"
         data-background-video-thumbnails="@/assets/video/algolia/thumbnails.vtt"
         :data-background-video-subtitles="
           JSON.stringify([
@@ -434,6 +435,7 @@ return {
       </section>
       <section
         data-background-video="@/assets/video/hotjar/hotjar.mp4"
+        data-background-video-preload="auto"
         :data-background-video-subtitles="
           JSON.stringify([
             {
@@ -476,6 +478,7 @@ return {
       </section>
       <section
         data-background-video="@/assets/video/sentry/sentry.mp4"
+        data-background-video-preload="auto"
         data-background-video-thumbnails="@/assets/video/sentry/thumbnails.vtt"
         :data-background-video-subtitles="
           JSON.stringify([
@@ -512,6 +515,7 @@ return {
       </section>
       <section
         data-background-video="@/assets/video/datadog/datadog.mp4"
+        data-background-video-preload="auto"
         data-background-video-thumbnails="@/assets/video/datadog/thumbnails.vtt"
         :data-background-video-subtitles="
           JSON.stringify([

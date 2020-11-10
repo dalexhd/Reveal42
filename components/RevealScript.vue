@@ -44,6 +44,7 @@ export default {
       controlsTutorial: false,
       navigationMode: "linear",
       viewDistance: Number.MAX_VALUE,
+      mobileViewDistance: Number.MAX_VALUE,
       particlesJS: {
         particles: {
           number: {

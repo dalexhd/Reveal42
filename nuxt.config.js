@@ -51,11 +51,28 @@ export default {
     "@nuxtjs/auth-next",
     // https://github.com/nuxt-community/vuetify-module
     "@nuxtjs/vuetify",
+    // https://github.com/nuxt-community/sentry-module
+    "@nuxtjs/sentry",
+    // https://github.com/nuxt-community/google-gtag-module
+    "@nuxtjs/gtm",
     // Guide from https://github.com/nuxt/nuxt.js/tree/dev/examples/with-sockets
     "~/io",
   ],
   vuetify: {
     theme: { disable: true },
+  },
+  sentry: {
+    dsn:
+      "https://50eaad48f37c43d8bf8757013f4a7488@o255682.ingest.sentry.io/5511533", // Enter your project's DSN here
+    config: {}, // Additional config
+  },
+  gtm: {
+    id: "G-66TNPHMS7S",
+  },
+  publicRuntimeConfig: {
+    gtm: {
+      id: process.env.GOOGLE_TAG_MANAGER_ID,
+    },
   },
   auth: {
     redirect: {
