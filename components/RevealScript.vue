@@ -43,6 +43,7 @@ export default {
       hash: true,
       controlsTutorial: false,
       navigationMode: "linear",
+      viewDistance: Number.MAX_VALUE,
       particlesJS: {
         particles: {
           number: {

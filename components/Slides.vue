@@ -220,7 +220,7 @@
       data-background-iframe="https://meet.jit.si/testdalexhd#jitsi_meet_external_api_id=0&config.startWithAudioMuted=false&config.startWithVideoMuted=true&config.enableWelcomePage=false&config.prejoinPageEnabled=false&interfaceConfig.TOOLBAR_BUTTONS=%5B%5D&interfaceConfig.HIDE_INVITE_MORE_HEADER=true&interfaceConfig.DISPLAY_WELCOME_PAGE_CONTENT=false&interfaceConfig.SHOW_CHROME_EXTENSION_BANNER=false&interfaceConfig.DISABLE_JOIN_LEAVE_NOTIFICATIONS=true&appData.localStorageContent=null"
     ></section>
     <section
-      :data-background-image="require(`@/assets/img/Pokemon-Rage.gif`)"
+      data-background-image="@/assets/img/Pokemon-Rage.gif"
       data-transition="zoom"
       data-background-size="600px"
       data-background-repeat="repeat"
@@ -371,22 +371,20 @@ return {
         <img src="@/assets/img/algolia.svg" alt="Algolia Logo" height="300" />
       </section>
       <section
-        :data-background-video="require(`@/assets/video/algolia/algolia.mp4`)"
-        :data-background-video-thumbnails="
-          require(`@/assets/video/algolia/thumbnails.vtt`)
-        "
+        data-background-video="@/assets/video/algolia/algolia.mp4"
+        data-background-video-thumbnails="@/assets/video/algolia/thumbnails.vtt"
         :data-background-video-subtitles="
           JSON.stringify([
             {
               label: 'Español',
               srclang: 'es',
-              src: require(`~/assets/video/algolia/es.vtt`),
+              src: require(`@/assets/video/algolia/es.vtt`),
               default: true,
             },
             {
               label: 'English',
               srclang: 'en',
-              src: require(`~/assets/video/algolia/en.vtt`),
+              src: require(`@/assets/video/algolia/en.vtt`),
             },
           ])
         "
@@ -426,7 +424,7 @@ return {
     <section data-transition="zoom-in fade-out">
       <section data-transition="zoom-out">
         <img
-          src="~/assets/img/hotjar-square.svg"
+          src="@/assets/img/hotjar-square.svg"
           alt="Hotjar square Logo"
           height="300"
         />
@@ -435,19 +433,19 @@ return {
         <img src="@/assets/img/hotjar.svg" alt="Hotjar Logo" height="300" />
       </section>
       <section
-        :data-background-video="require(`@/assets/video/hotjar/hotjar.mp4`)"
+        data-background-video="@/assets/video/hotjar/hotjar.mp4"
         :data-background-video-subtitles="
           JSON.stringify([
             {
               label: 'Español',
               srclang: 'es',
-              src: require('~/assets/video/hotjar/es.vtt'),
+              src: require('@/assets/video/hotjar/es.vtt'),
               default: true,
             },
             {
               label: 'English',
               srclang: 'en',
-              src: require('~/assets/video/hotjar/en.vtt'),
+              src: require('@/assets/video/hotjar/en.vtt'),
             },
           ])
         "
@@ -477,22 +475,20 @@ return {
         <img src="@/assets/img/sentry.svg" alt="Sentry Logo" height="300" />
       </section>
       <section
-        :data-background-video="require(`@/assets/video/sentry/sentry.mp4`)"
-        :data-background-video-thumbnails="
-          require(`@/assets/video/sentry/thumbnails.vtt`)
-        "
+        data-background-video="@/assets/video/sentry/sentry.mp4"
+        data-background-video-thumbnails="@/assets/video/sentry/thumbnails.vtt"
         :data-background-video-subtitles="
           JSON.stringify([
             {
               label: 'Español',
               srclang: 'es',
-              src: require(`~/assets/video/sentry/es.vtt`),
+              src: require(`@/assets/video/sentry/es.vtt`),
               default: true,
             },
             {
               label: 'English',
               srclang: 'en',
-              src: require(`~/assets/video/sentry/en.vtt`),
+              src: require(`@/assets/video/sentry/en.vtt`),
             },
           ])
         "
@@ -515,22 +511,20 @@ return {
         <img src="@/assets/img/datadog.svg" alt="DataDog Logo" height="300" />
       </section>
       <section
-        :data-background-video="require(`@/assets/video/datadog/datadog.mp4`)"
-        :data-background-video-thumbnails="
-          require(`@/assets/video/datadog/thumbnails.vtt`)
-        "
+        data-background-video="@/assets/video/datadog/datadog.mp4"
+        data-background-video-thumbnails="@/assets/video/datadog/thumbnails.vtt"
         :data-background-video-subtitles="
           JSON.stringify([
             {
               label: 'Español',
               srclang: 'es',
-              src: require(`~/assets/video/datadog/es.vtt`),
+              src: require(`@/assets/video/datadog/es.vtt`),
               default: true,
             },
             {
               label: 'English',
               srclang: 'en',
-              src: require(`~/assets/video/datadog/en.vtt`),
+              src: require(`@/assets/video/datadog/en.vtt`),
             },
           ])
         "

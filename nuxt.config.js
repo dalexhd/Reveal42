@@ -103,7 +103,27 @@ export default {
       lang: "es",
     },
     workbox: {
-      enabled: false, // Videos are not being preloaded. This is why disable this important feature.
+      enabled: true,
+      runtimeCaching: [
+        {
+          urlPattern: "https://spotify-widget.herokuapp.com/.*",
+          strategyOptions: {
+            cacheName: "spotify-widget-cache",
+          },
+        },
+        {
+          urlPattern: "https://canvaz.scdn.com/.*",
+          strategyOptions: {
+            cacheName: "spotify-widget-cache",
+          },
+        },
+        {
+          urlPattern: "https://i.scdn.co/.*",
+          strategyOptions: {
+            cacheName: "spotify-widget-cache",
+          },
+        },
+      ],
     },
   },
 
@@ -140,6 +160,21 @@ export default {
           name: "vtt/[folder]/[name].[hash:6].[ext]",
         },
       });
+    },
+    loaders: {
+      vue: {
+        transformAssetUrls: {
+          video: "src",
+          source: "src",
+          object: "src",
+          embed: "src",
+          section: [
+            "data-background-video",
+            "data-background-video-thumbnails",
+            "data-background-image",
+          ],
+        },
+      },
     },
     plugins: [
       new CopyPlugin({
