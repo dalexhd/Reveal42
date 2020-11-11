@@ -19,6 +19,17 @@ export default {
       { twitterCreator: "@dalexhd" },
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    __dangerouslyDisableSanitizers: ["script"],
+    script: [
+      {
+        src: `https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_ANALYTICS_ID}`,
+        async: true,
+      },
+      {
+        hid: "gtm-script",
+        innerHTML: `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${process.env.GOOGLE_ANALYTICS_ID}', {'page_path': location.pathname + location.search + location.hash});`,
+      },
+    ],
   },
   // Disable/Enable Server Side rendering
   ssr: true,
@@ -53,8 +64,6 @@ export default {
     "@nuxtjs/vuetify",
     // https://github.com/nuxt-community/sentry-module
     "@nuxtjs/sentry",
-    // https://github.com/nuxt-community/google-gtag-module
-    "@nuxtjs/gtm",
     // Guide from https://github.com/nuxt/nuxt.js/tree/dev/examples/with-sockets
     "~/io",
   ],
@@ -65,14 +74,6 @@ export default {
     dsn:
       "https://50eaad48f37c43d8bf8757013f4a7488@o255682.ingest.sentry.io/5511533", // Enter your project's DSN here
     config: {}, // Additional config
-  },
-  gtm: {
-    id: "G-66TNPHMS7S",
-  },
-  publicRuntimeConfig: {
-    gtm: {
-      id: process.env.GOOGLE_TAG_MANAGER_ID,
-    },
   },
   auth: {
     redirect: {
@@ -151,14 +152,7 @@ export default {
   },
 
   // Router configuration (https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-router#extendroutes)
-  router: {
-    extendRoutes(routes, resolve) {
-      routes.push({
-        path: "/admin",
-        component: resolve(__dirname, "pages/index.vue"),
-      });
-    },
-  },
+  router: {},
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
     publicPath: "/dist/",

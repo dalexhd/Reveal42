@@ -19,7 +19,6 @@
     "@fortawesome/fontawesome-free": "^5.15.1",
     "@nuxtjs/auth-next": "^5.0.0-1602966760.822bc05",
     "@nuxtjs/axios": "^5.12.2",
-    "@nuxtjs/gtm": "^2.4.0",
     "@nuxtjs/pwa": "^3.2.2",
     "@nuxtjs/sentry": "^4.4.0",
     "chart.js": "^2.9.4",

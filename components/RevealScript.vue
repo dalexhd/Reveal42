@@ -3,6 +3,7 @@
 </template>
 <script>
 import Reveal from "~/assets/reveal.js";
+import RevealAnalytics from "~/assets/plugins/analytics/plugin";
 import RevealChart from "~/assets/plugins/chart/plugin";
 import RevealHighlight from "~/assets/plugins/highlight/plugin";
 import RevealZoom from "~/assets/plugins/zoom/plugin";
@@ -33,8 +34,12 @@ export default {
       };
       adminPlugins = [RevealMenu, RevealClient];
     } else {
-      guestPlugins = [RevealGuest];
-      guestConfig = {};
+      guestPlugins = [RevealAnalytics, RevealGuest];
+      guestConfig = {
+        analytics: {
+          enabled: true,
+        },
+      };
     }
     Reveal.initialize({
       controls: true,
@@ -113,6 +118,7 @@ export default {
         retina_detect: true,
       },
       chart: {},
+      ...guestConfig,
       ...adminConfig,
       plugins: [
         RevealZoom,
