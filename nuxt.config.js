@@ -35,7 +35,11 @@ export default {
   ssr: true,
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: ["~/assets/css/reveal.scss", "~/assets/css/layout.scss"],
+  css: [
+    "~/assets/css/reveal.scss",
+    "~/assets/css/layout.scss",
+    "~/node_modules/@fortawesome/fontawesome-free/css/all.css",
+  ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [],
@@ -67,9 +71,7 @@ export default {
     // Guide from https://github.com/nuxt/nuxt.js/tree/dev/examples/with-sockets
     "~/io",
   ],
-  vuetify: {
-    theme: { disable: true },
-  },
+  vuetify: {},
   sentry: {
     dsn:
       "https://50eaad48f37c43d8bf8757013f4a7488@o255682.ingest.sentry.io/5511533", // Enter your project's DSN here
@@ -121,7 +123,6 @@ export default {
       lang: "es",
     },
     workbox: {
-      enabled: true,
       runtimeCaching: [
         {
           urlPattern: "https://spotify-widget.herokuapp.com/.*",
@@ -139,6 +140,12 @@ export default {
           urlPattern: "https://i.scdn.co/.*",
           strategyOptions: {
             cacheName: "spotify-widget-cache",
+          },
+        },
+        {
+          urlPattern: "https://cdn.intra.42.fr/.*",
+          strategyOptions: {
+            cacheName: "intra-cache",
           },
         },
       ],

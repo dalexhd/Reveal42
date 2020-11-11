@@ -112,7 +112,7 @@
           src="@/assets/img/los-payasos-de-la-tele.gif"
           alt="Payasos de la tele"
         />
-        <aside v-if="this.$auth.user" class="notes">
+        <aside v-if="$store.state.auth.loggedIn" class="notes">
           Shhh, these are your private notes 📝
         </aside>
       </section>
@@ -120,7 +120,7 @@
         <h1>¿Quién soy?</h1>
       </section>
       <section data-auto-animate>
-        <aside v-if="this.$auth.user" class="notes">
+        <aside v-if="$store.state.auth.loggedIn" class="notes">
           Nombre, Años, Trabajo
         </aside>
         <h1>¿Quién soy?</h1>
@@ -132,7 +132,7 @@
         </p>
       </section>
       <section>
-        <aside v-if="this.$auth.user" class="notes">
+        <aside v-if="$store.state.auth.loggedIn" class="notes">
           Autodidacta, reddit, ❤️ Open source, nuevas tecnologías, rata
         </aside>
         <h1>¿Cosas sobre mi?</h1>

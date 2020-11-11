@@ -21,7 +21,7 @@ let guestConfig = {};
 
 export default {
   mounted() {
-    if (this.$auth.user) {
+    if (this.$store.state.auth.loggedIn) {
       adminConfig = {
         menu: {
           themes: true,

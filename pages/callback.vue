@@ -8,7 +8,7 @@
         role="alert"
       >
         <i class="fas fa-lock pr-3 pb-4 fa-3x"></i>
-        <h1>Wait... Authentication is processing!</h1>
+        <h1 class="auth-message">Wait... Authentication is processing!</h1>
       </div>
     </div>
   </div>
@@ -18,6 +18,9 @@ export default {
   layout: "admin",
 };
 </script>
-<style lang="scss">
-@import "@/assets/css/pages/callback.scss";
+<style scoped>
+.auth-message {
+  font-family: "Source Sans Pro", helvetica, sans-serif;
+  font-weight: normal;
+}
 </style>

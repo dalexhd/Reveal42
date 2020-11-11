@@ -10,7 +10,7 @@
 export default {
   layout: "admin",
   mounted() {
-    if (this.$auth.user) {
+    if (this.$store.state.auth.loggedIn) {
       this.$router.push("/");
     }
   },

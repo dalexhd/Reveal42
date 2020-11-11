@@ -1,5 +1,3 @@
-@import '/node_modules/@fortawesome/fontawesome-free/css/all.css';
-
 #current-slide,
 #upcoming-slide,
 #speaker-controls {
@@ -196,7 +194,7 @@ body {
   font-family: Helvetica, Arial, sans-serif;
   font-size: 18px;
 
-  &[data-speaker-layout='wide'] {
+  &[data-speaker-layout="wide"] {
     #current-slide,
     #upcoming-slide {
       width: 50%;
@@ -223,7 +221,7 @@ body {
     }
   }
 
-  &[data-speaker-layout='tall'] {
+  &[data-speaker-layout="tall"] {
     #current-slide,
     #upcoming-slide {
       width: 45%;
@@ -251,7 +249,7 @@ body {
     }
   }
 
-  &[data-speaker-layout='notes-only'] {
+  &[data-speaker-layout="notes-only"] {
     #current-slide,
     #upcoming-slide {
       display: none;
