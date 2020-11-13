@@ -48,9 +48,17 @@ const getUserData = async (token) => {
         },
       })
       .then(({ data }) => {
+        if (data.id === parseInt(process.env.PRESENTER_INTRA_ID, 10)) {
+          data.role = "presenter";
+        } else if (data.id === parseInt(process.env.BROADCASTER_INTRA_ID, 10)) {
+          data.role = "broadcaster";
+        } else {
+          data.role = "viewer";
+        }
         resolve({
           id: data.id,
           email: data.email,
+          role: data.role,
           login: data.login,
           first_name: data.first_name,
           last_name: data.last_name,

@@ -15,6 +15,7 @@ module.exports = {
       "nuxt.config.ts",
     ],
   },
+  important: true,
   theme: {
     extend: {},
   },

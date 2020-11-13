@@ -137,7 +137,7 @@ export default class SlideContent {
           if (backgroundVideoPreload) {
             video.setAttribute("preload", backgroundVideoPreload);
           }
-          if (this.Reveal.role === "admin") {
+          if (this.Reveal.role === "broadcaster") {
             plyrOptions.volume = backgroundVideoVolume
               ? parseFloat(backgroundVideoVolume)
               : 1;
@@ -155,7 +155,7 @@ export default class SlideContent {
           // present
           if (isMobile) {
             // video.setAttribute('muted', '');
-            video.setAttribute("autoplay", "");
+            // video.setAttribute("autoplay", "");
             video.setAttribute("playsinline", "");
           }
 

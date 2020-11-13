@@ -1,29 +1,65 @@
 <template>
   <v-app id="inspire">
     <div v-if="$store.state.auth.loggedIn">
-      <span v-if="fab" class="user-info"
-        >Id intra: {{ $store.state.auth.user.id }}</span
-      >
       <v-speed-dial
         v-model="fab"
         top
         right
-        direction="bottom"
-        open-on-hover
-        transition="slide-y-reverse-transition"
+        :direction="$vuetify.breakpoint.mobile ? 'left' : 'bottom'"
+        transition="fab-transition"
       >
         <template v-slot:activator>
-          <v-btn v-model="fab" color="secondary" dark fab>
-            <v-icon v-if="fab"> mdi-close </v-icon>
-            <v-avatar v-else size="60">
-              <img
-                class="object-cover"
-                :src="$store.state.auth.user.image_url"
-                :alt="$store.state.auth.user.displayname"
-              />
-            </v-avatar>
-          </v-btn>
+          <v-hover v-slot="{ hover }">
+            <v-btn v-model="fab" color="secondary" dark fab>
+              <v-icon v-if="fab"> mdi-close </v-icon>
+              <div v-else>
+                <v-avatar
+                  size="60"
+                  class="border-solid border-2 border-white-600"
+                >
+                  <v-icon v-if="hover && !$vuetify.breakpoint.mobile">
+                    mdi-menu
+                  </v-icon>
+                  <img
+                    v-else
+                    class="object-cover"
+                    :src="$store.state.auth.user.image_url"
+                    :alt="$store.state.auth.user.displayname"
+                  />
+                </v-avatar>
+              </div>
+            </v-btn>
+          </v-hover>
         </template>
+        <v-tooltip
+          :left="!$vuetify.breakpoint.mobile"
+          :bottom="$vuetify.breakpoint.mobile"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              fab
+              dark
+              small
+              color="primary"
+              v-bind="attrs"
+              elevation="7"
+              @click.stop="sound = !sound"
+              v-on="on"
+            >
+              <v-icon>{{
+                $store.state.settings.audio
+                  ? "mdi-volume-high"
+                  : "mdi-volume-off"
+              }}</v-icon>
+            </v-btn>
+          </template>
+          <span
+            >{{
+              $store.state.settings.audio ? "Desactivar" : "Activar"
+            }}
+            sonido</span
+          >
+        </v-tooltip>
         <v-tooltip left>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
@@ -33,13 +69,20 @@
               color="primary"
               v-bind="attrs"
               elevation="7"
-              @click="dialog = true"
+              @click.stop="sound = !sound"
               v-on="on"
             >
-              <v-icon>mdi-cog</v-icon>
+              <v-icon>{{
+                $store.state.settings.audio ? "mdi-teach" : "mdi-teach"
+              }}</v-icon>
             </v-btn>
           </template>
-          <span>Ajustes</span>
+          <span
+            >{{
+              $store.state.settings.audio ? "Desactivar" : "Activar"
+            }}
+            seguimiento</span
+          >
         </v-tooltip>
         <v-tooltip left>
           <template v-slot:activator="{ on, attrs }">
@@ -59,77 +102,10 @@
           <span>Cerrar sesión</span>
         </v-tooltip>
       </v-speed-dial>
-      <v-dialog
-        v-model="dialog"
-        fullscreen
-        hide-overlay
-        transition="dialog-bottom-transition"
+      <span v-if="!$vuetify.breakpoint.mobile && fab" class="user-info"
+        >Intra Id: {{ $store.state.auth.user.id }} | Role:
+        {{ $store.state.auth.user.role }}</span
       >
-        <v-card>
-          <v-toolbar dark color="primary">
-            <v-btn icon dark @click="dialog = false">
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-            <v-toolbar-title>Configuración</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items>
-              <v-btn dark text @click="dialog = false">Guardar</v-btn>
-            </v-toolbar-items>
-          </v-toolbar>
-          <v-tabs fixed-tabs>
-            <v-tab>
-              <v-icon left> mdi-cog </v-icon>
-              General
-            </v-tab>
-            <v-tab>
-              <v-icon left> mdi-incognito </v-icon>
-              Privacidad
-            </v-tab>
-            <v-tab-item>
-              <v-list three-line subheader>
-                <v-subheader>Ajustes generales</v-subheader>
-                <v-list-item>
-                  <v-list-item-action>
-                    <v-checkbox v-model="sound"></v-checkbox>
-                  </v-list-item-action>
-                  <v-list-item-content>
-                    <v-list-item-title>Sonido</v-list-item-title>
-                    <v-list-item-subtitle
-                      >Activar el sonido durante la
-                      presentación</v-list-item-subtitle
-                    >
-                  </v-list-item-content>
-                </v-list-item>
-                <v-list-item>
-                  <v-list-item-action>
-                    <v-checkbox v-model="voting"></v-checkbox>
-                  </v-list-item-action>
-                  <v-list-item-content>
-                    <v-list-item-title>Votaciones</v-list-item-title>
-                    <v-list-item-subtitle
-                      >Notificarme cada vez que se realice una
-                      votación</v-list-item-subtitle
-                    >
-                  </v-list-item-content>
-                </v-list-item>
-                <v-list-item>
-                  <v-list-item-action>
-                    <v-checkbox v-model="follow"></v-checkbox>
-                  </v-list-item-action>
-                  <v-list-item-content>
-                    <v-list-item-title>Seguir presentador</v-list-item-title>
-                    <v-list-item-subtitle
-                      >Seguir al presentador de forma
-                      automática</v-list-item-subtitle
-                    >
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
-            </v-tab-item>
-            <v-tab-item> </v-tab-item>
-          </v-tabs>
-        </v-card>
-      </v-dialog>
     </div>
     <div v-else class="text-center">
       <v-bottom-sheet v-model="sheet" persistent>
@@ -146,8 +122,8 @@
         </template>
         <v-toolbar color="primary" dark>
           <v-toolbar-title>
-            Inicia sesión para obtener una experiencia
-            completa.</v-toolbar-title
+            Inicia sesión con cualquira de estos métodos para obtener una
+            experiencia completa.</v-toolbar-title
           >
           <v-spacer></v-spacer>
           <v-btn icon @click="sheet = false">
@@ -174,12 +150,13 @@
 </template>
 
 <script>
+/* eslint-disable object-shorthand */
+import { mapMutations } from "vuex";
 export default {
   name: "Enchanced",
   data: () => ({
     fab: false,
     sheet: false,
-    dialog: false,
     sound: false,
     voting: true,
     follow: true,
@@ -191,6 +168,30 @@ export default {
       },
     ],
   }),
+  watch: {
+    sound: function (enabled) {
+      const self = this;
+      if (enabled) {
+        self.$store.commit("activateAudio");
+      } else {
+        self.$store.commit("muteAudio");
+      }
+    },
+  },
+  mounted() {
+    const audioEnabled = localStorage.getItem("audio-enabled") === "true";
+    if (audioEnabled) {
+      this.sound = true;
+      window.addEventListener("load", () => {
+        this.$store.commit("activateAudio");
+      });
+    } else {
+      this.sound = false;
+      window.addEventListener("load", () => {
+        this.$store.commit("muteAudio");
+      });
+    }
+  },
   methods: {
     logout() {
       this.$auth.logout();
@@ -207,11 +208,15 @@ export default {
 }
 .user-info {
   position: absolute;
-  top: 0;
+  bottom: 0;
   right: 0;
   font-size: 12px;
-  color: white;
-  opacity: 0.3;
+  color: black;
+  opacity: 0.5;
   margin: 4px;
+  padding: 0 4px;
+  text-transform: capitalize;
+  background: white;
+  z-index: 4;
 }
 </style>

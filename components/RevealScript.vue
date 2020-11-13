@@ -13,7 +13,6 @@ import RevealParticles from "~/assets/plugins/particles.js/plugin";
 import RevealMenu from "~/assets/plugins/menu/plugin";
 import RevealClient from "~/assets/plugins/server/client";
 import RevealGuest from "~/assets/plugins/server/guest";
-Reveal.role = "Admin";
 let adminPlugins = [];
 let guestPlugins = [];
 let adminConfig = {};
@@ -21,18 +20,16 @@ let guestConfig = {};
 
 export default {
   mounted() {
-    if (this.$store.state.auth.loggedIn) {
+    Reveal.role = this.$store.state.auth?.user?.role || "guest";
+    if (
+      ["presenter", "broadcaster"].includes(this.$store.state.auth?.user?.role)
+    ) {
       adminConfig = {
-        menu: {
-          themes: true,
-          themesPath: "/dist/theme",
-          markers: false,
-        },
         server: {
           secret: this.$auth.$storage.getLocalStorage("_token.intra"),
         },
       };
-      adminPlugins = [RevealMenu, RevealClient];
+      adminPlugins = [RevealClient, RevealZoom];
     } else {
       guestPlugins = [RevealAnalytics, RevealGuest];
       guestConfig = {
@@ -50,6 +47,11 @@ export default {
       navigationMode: "linear",
       viewDistance: Number.MAX_VALUE,
       mobileViewDistance: Number.MAX_VALUE,
+      menu: {
+        themes: true,
+        themesPath: "/dist/theme",
+        markers: false,
+      },
       particlesJS: {
         particles: {
           number: {
@@ -121,12 +123,12 @@ export default {
       ...guestConfig,
       ...adminConfig,
       plugins: [
-        RevealZoom,
         RevealSearch,
         RevealMarkdown,
         RevealHighlight,
         RevealParticles,
         RevealChart,
+        RevealMenu,
         ...adminPlugins,
         ...guestPlugins,
       ],

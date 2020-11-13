@@ -112,7 +112,7 @@
           src="@/assets/img/los-payasos-de-la-tele.gif"
           alt="Payasos de la tele"
         />
-        <aside v-if="$store.state.auth.loggedIn" class="notes">
+        <aside v-if="hasRole('presenter')" class="notes">
           Shhh, these are your private notes 📝
         </aside>
       </section>
@@ -391,7 +391,7 @@ return {
         "
         data-background-size="contain"
         data-background-interactive="false"
-        data-background-video-muted
+        :data-background-video-muted="$store.state.settings.audio"
       ></section>
       <section data-auto-animate data-transition="zoom-in fade-out">
         <h3>Uno de los motores más potentes de búsqueda del mercado.</h3>
@@ -664,7 +664,17 @@ return {
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 export default {
   comments: true,
+  methods: {
+    // eslint-disable-next-line object-shorthand
+    hasRole: function (role) {
+      return (
+        this.$store.state.auth.loggedIn &&
+        this.$store.state.auth.user.role === role
+      );
+    },
+  },
 };
 </script>

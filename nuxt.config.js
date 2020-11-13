@@ -38,7 +38,7 @@ export default {
   css: [
     "~/assets/css/reveal.scss",
     "~/assets/css/layout.scss",
-    "~/node_modules/@fortawesome/fontawesome-free/css/all.css",
+    "@fortawesome/fontawesome-free/css/all.css",
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
