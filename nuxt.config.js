@@ -32,7 +32,7 @@ export default {
     ],
   },
   // Disable/Enable Server Side rendering
-  ssr: true,
+  ssr: false, // Cookies are not sent if we are in ssr mode. Express uses session, so if we enable it it will not work.
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
@@ -88,7 +88,7 @@ export default {
         endpoints: {
           authorization: "https://api.intra.42.fr/oauth/authorize",
           token: "/auth/intra",
-          userInfo: "https://api.intra.42.fr/v2/me",
+          userInfo: "/auth/me",
           logout: undefined,
         },
         token: {
@@ -103,7 +103,7 @@ export default {
         responseType: "code",
         grantType: "authorization_code",
         scope: ["public"],
-        state: "UNIQUE_AND_NON_GUESSABLE",
+        state: process.env.APP_SECRET,
       },
       github: {
         clientId: process.env.GITHUB_CLIENT_ID,
