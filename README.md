@@ -1,4 +1,4 @@
-# 42presentation-v2
+# Reveal42
 
 ## Build Setup
 

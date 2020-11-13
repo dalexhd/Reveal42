@@ -8,13 +8,20 @@ const app = express();
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(
-  session({
-    secret: process.env.APP_SECRET,
-    resave: true,
-    saveUninitialized: true,
-  })
-);
+// eslint-disable-next-line prefer-const
+let sessionObject = {
+  secret: process.env.APP_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 2 * 60 * 60 * 1000,
+  },
+};
+if (typeof process.env.PORT !== "undefined") {
+  app.set("trust proxy", 1); // trust first proxy
+  sessionObject.cookie.secure = true; // serve secure cookies
+}
+app.use(session(sessionObject));
 
 // Create express router
 const router = express.Router();
@@ -84,7 +91,7 @@ app.get("/me", async (req, res) => {
   if (typeof req.session.user === "undefined") {
     try {
       req.session.user = await getUserData(req.headers.authorization);
-      req.session.cookie.maxAge = req.cookies["auth._token_expiration.intra"];
+      req.session.cookie.maxAge = 2 * 60 * 60 * 1000;
       req.session.save(() => {
         return res.status(200).send(req.session.user);
       });

@@ -4,20 +4,25 @@
     <Slides />
     <Enchanced />
     <div id="particles"></div>
-    <RevealScript />
+    <client-only>
+      <RevealScript />
+    </client-only>
   </div>
 </template>
 <script>
 import Slides from "../components/Slides";
 import Enchanced from "../components/Enchanced";
-import RevealScript from "../components/RevealScript";
 
 export default {
   layout: "presentation",
   components: {
     Slides,
     Enchanced,
-    RevealScript,
+    RevealScript() {
+      if (process.client) {
+        return import("../components/RevealScript");
+      }
+    },
   },
 };
 </script>

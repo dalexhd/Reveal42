@@ -32,7 +32,7 @@ export default {
     ],
   },
   // Disable/Enable Server Side rendering
-  ssr: false, // Cookies are not sent if we are in ssr mode. Express uses session, so if we enable it it will not work.
+  ssr: true, // Cookies are not sent if we are in ssr mode. Express uses session, so if we enable it it will not work.
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
