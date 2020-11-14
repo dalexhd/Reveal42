@@ -32,7 +32,7 @@ export default {
     ],
   },
   // Disable/Enable Server Side rendering
-  ssr: true, // Cookies are not sent if we are in ssr mode. Express uses session, so if we enable it it will not work.
+  ssr: true,
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
@@ -155,7 +155,7 @@ export default {
   // Server Configuration (https://nuxtjs.org/faq/host-port)
   server: {
     port: process.env.PORT || 3000,
-    host: process.env.PORT ? "0.0.0.0" : "localhost", // This is just a solution for heroku
+    host: process.env.NODE_ENV === "production" ? "0.0.0.0" : "localhost", // This is just a solution for heroku
   },
 
   // Router configuration (https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-router#extendroutes)

@@ -5,7 +5,7 @@
     <client-only>
       <Enchanced />
     </client-only>
-    <div id="particles"></div>
+    <Particles />
     <client-only>
       <RevealScript />
     </client-only>
@@ -13,11 +13,13 @@
 </template>
 <script>
 import Slides from "../components/Slides";
+import Particles from "../components/Particles";
 
 export default {
   layout: "presentation",
   components: {
     Slides,
+    Particles,
     RevealScript() {
       if (process.client) {
         return import("../components/RevealScript");

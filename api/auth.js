@@ -17,7 +17,7 @@ let sessionObject = {
     maxAge: 2 * 60 * 60 * 1000,
   },
 };
-if (typeof process.env.PORT !== "undefined") {
+if (process.env.NODE_ENV === "production") {
   app.set("trust proxy", 1); // trust first proxy
   sessionObject.cookie.secure = true; // serve secure cookies
 }
