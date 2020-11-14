@@ -20,7 +20,7 @@
     "@nuxtjs/auth-next": "^5.0.0-1602966760.822bc05",
     "@nuxtjs/axios": "5.12.1",
     "@nuxtjs/pwa": "^3.2.2",
-    "@nuxtjs/sentry": "^4.4.0",
+    "@nuxtjs/sentry": "^4.5.0",
     "@nuxtjs/vuetify": "^1.11.2",
     "chart.js": "^2.9.4",
     "connect-redis": "^5.0.0",
