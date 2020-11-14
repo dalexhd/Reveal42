@@ -36,7 +36,7 @@ router.use((req, res, next) => {
   next();
 });
 
-const getUserData = async (token) => {
+const getUserData = (token) => {
   return new Promise((resolve, reject) => {
     axios
       .request({
