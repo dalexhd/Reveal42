@@ -59,10 +59,10 @@ export default {
   }),
   computed: {
     currentUrl() {
-      return `/admin?${this.params}&postMessageEvents=true`;
+      return `/?${this.params}&postMessageEvents=true`;
     },
     upcomingUrl() {
-      return `/admin?${this.params}&controls=false`;
+      return `/?${this.params}&controls=false`;
     },
   },
   mounted() {

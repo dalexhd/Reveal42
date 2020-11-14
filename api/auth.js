@@ -2,14 +2,19 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import express from "express";
 import session from "express-session";
+import redis from "redis";
+import connectRedis from "connect-redis";
 import axios from "axios";
 
 const app = express();
+const RedisStore = connectRedis(session);
+const RedisClient = redis.createClient();
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 // eslint-disable-next-line prefer-const
 let sessionObject = {
+  store: new RedisStore({ client: RedisClient }),
   secret: process.env.APP_SECRET,
   resave: true,
   saveUninitialized: true,
@@ -87,25 +92,23 @@ app.post("/intra", (req, res) => {
         Accept: "application/json",
       },
     })
-    .then((response) => {
-      res.status(200).send(response.data);
+    .then(async (response) => {
+      req.session.user = await getUserData(
+        `Bearer ${response.data.access_token}`
+      );
+      req.session.cookie.maxAge = 2 * 60 * 60 * 1000;
+      req.session.save(() => {
+        return res.status(200).send(response.data);
+      });
     })
     .catch((error) => {
       res.status(403).send(error);
     });
 });
 
-app.get("/me", async (req, res) => {
+app.get("/me", (req, res) => {
   if (typeof req.session.user === "undefined") {
-    try {
-      req.session.user = await getUserData(req.headers.authorization);
-      req.session.cookie.maxAge = 2 * 60 * 60 * 1000;
-      req.session.save(() => {
-        return res.status(200).send(req.session.user);
-      });
-    } catch (error) {
-      return res.status(401).send(error);
-    }
+    return res.status(401).send("Session not valid!");
   } else {
     return res.status(200).send(req.session.user);
   }

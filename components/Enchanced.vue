@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <div v-if="$store.state.auth.loggedIn">
+    <div>
       <v-speed-dial
         v-model="fab"
         top
@@ -17,7 +17,12 @@
                   size="60"
                   class="border-solid border-2 border-white-600"
                 >
-                  <v-icon v-if="hover && !$vuetify.breakpoint.mobile">
+                  <v-icon
+                    v-if="
+                      !$store.state.auth.loggedIn ||
+                      (hover && !$vuetify.breakpoint.mobile)
+                    "
+                  >
                     mdi-menu
                   </v-icon>
                   <img
@@ -34,62 +39,119 @@
         <v-tooltip
           :left="!$vuetify.breakpoint.mobile"
           :bottom="$vuetify.breakpoint.mobile"
+          :open-delay="500"
         >
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               fab
               dark
-              small
-              color="primary"
+              :small="!$vuetify.breakpoint.mobile"
+              :x-small="$vuetify.breakpoint.mobile"
+              :color="!settings.muted ? 'primary' : 'gray'"
               v-bind="attrs"
               elevation="7"
-              @click.stop="sound = !sound"
+              @click.stop="toggleAudio(!settings.muted)"
               v-on="on"
             >
               <v-icon>{{
-                $store.state.settings.audio
-                  ? "mdi-volume-high"
-                  : "mdi-volume-off"
+                settings.muted ? "mdi-volume-off" : "mdi-volume-high"
+              }}</v-icon>
+            </v-btn>
+          </template>
+          <span>{{ settings.muted ? "Activar" : "Desactivar" }} sonido</span>
+        </v-tooltip>
+        <v-tooltip
+          :left="!$vuetify.breakpoint.mobile"
+          :bottom="$vuetify.breakpoint.mobile"
+          :open-delay="500"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              fab
+              dark
+              :small="!$vuetify.breakpoint.mobile"
+              :x-small="$vuetify.breakpoint.mobile"
+              :color="settings.subtitles ? 'primary' : 'gray'"
+              v-bind="attrs"
+              elevation="7"
+              @click.stop="toggleSubtitles(!settings.subtitles)"
+              v-on="on"
+            >
+              <v-icon>{{
+                settings.subtitles ? "mdi-subtitles" : "mdi-subtitles"
               }}</v-icon>
             </v-btn>
           </template>
           <span
             >{{
-              $store.state.settings.audio ? "Desactivar" : "Activar"
+              settings.subtitles ? "Desactivar" : "Activar"
             }}
-            sonido</span
+            subtítulos</span
           >
         </v-tooltip>
-        <v-tooltip left>
+        <v-tooltip
+          :left="!$vuetify.breakpoint.mobile"
+          :bottom="$vuetify.breakpoint.mobile"
+          :open-delay="500"
+        >
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               fab
               dark
-              small
-              color="primary"
+              :small="!$vuetify.breakpoint.mobile"
+              :x-small="$vuetify.breakpoint.mobile"
+              :color="settings.follow ? 'primary' : 'gray'"
               v-bind="attrs"
               elevation="7"
-              @click.stop="sound = !sound"
+              @click.stop="toggleFollow(!settings.follow)"
               v-on="on"
             >
-              <v-icon>{{
-                $store.state.settings.audio ? "mdi-teach" : "mdi-teach"
-              }}</v-icon>
+              <v-icon>mdi-teach</v-icon>
+            </v-btn>
+          </template>
+          <span
+            >{{ settings.muted ? "Desactivar" : "Activar" }} seguimiento</span
+          >
+        </v-tooltip>
+        <v-tooltip
+          :left="!$vuetify.breakpoint.mobile"
+          :bottom="$vuetify.breakpoint.mobile"
+          :open-delay="500"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              fab
+              dark
+              :small="!$vuetify.breakpoint.mobile"
+              :x-small="$vuetify.breakpoint.mobile"
+              :color="settings.particles ? 'primary' : 'gray'"
+              v-bind="attrs"
+              elevation="7"
+              @click.stop="toggleParticles(!settings.particles)"
+              v-on="on"
+            >
+              <v-icon>mdi-transition</v-icon>
             </v-btn>
           </template>
           <span
             >{{
-              $store.state.settings.audio ? "Desactivar" : "Activar"
+              settings.particles ? "Desactivar" : "Activar"
             }}
-            seguimiento</span
+            partículas</span
           >
         </v-tooltip>
-        <v-tooltip left>
+        <v-tooltip
+          v-if="$store.state.auth.loggedIn"
+          :left="!$vuetify.breakpoint.mobile"
+          :bottom="$vuetify.breakpoint.mobile"
+          :open-delay="500"
+        >
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               fab
               dark
-              small
+              :small="!$vuetify.breakpoint.mobile"
+              :x-small="$vuetify.breakpoint.mobile"
               color="red"
               v-bind="attrs"
               elevation="7"
@@ -102,12 +164,14 @@
           <span>Cerrar sesión</span>
         </v-tooltip>
       </v-speed-dial>
-      <span v-if="!$vuetify.breakpoint.mobile && fab" class="user-info"
+      <span
+        v-if="$store.state.auth.loggedIn && !$vuetify.breakpoint.mobile && fab"
+        class="user-info"
         >Intra Id: {{ $store.state.auth.user.id }} | Role:
         {{ $store.state.auth.user.role }}</span
       >
     </div>
-    <div v-else class="text-center">
+    <div class="text-center">
       <v-bottom-sheet v-model="sheet" persistent>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
@@ -151,13 +215,12 @@
 
 <script>
 /* eslint-disable object-shorthand */
-import { mapMutations } from "vuex";
+import { mapState } from "vuex";
 export default {
   name: "Enchanced",
   data: () => ({
     fab: false,
     sheet: false,
-    sound: false,
     voting: true,
     follow: true,
     tiles: [
@@ -168,33 +231,24 @@ export default {
       },
     ],
   }),
-  watch: {
-    sound: function (enabled) {
-      const self = this;
-      if (enabled) {
-        self.$store.commit("activateAudio");
-      } else {
-        self.$store.commit("muteAudio");
-      }
-    },
-  },
-  mounted() {
-    const audioEnabled = localStorage.getItem("audio-enabled") === "true";
-    if (audioEnabled) {
-      this.sound = true;
-      window.addEventListener("load", () => {
-        this.$store.commit("activateAudio");
-      });
-    } else {
-      this.sound = false;
-      window.addEventListener("load", () => {
-        this.$store.commit("muteAudio");
-      });
-    }
+  computed: {
+    ...mapState(["settings"]),
   },
   methods: {
     logout() {
       this.$auth.logout();
+    },
+    toggleAudio(v) {
+      this.$store.commit("toggleAudio", v);
+    },
+    toggleSubtitles(v) {
+      this.$store.commit("toggleSubtitles", v);
+    },
+    toggleParticles(v) {
+      this.$store.commit("toggleParticles", v);
+    },
+    toggleFollow(v) {
+      this.$store.commit("toggleFollow", v);
     },
   },
 };

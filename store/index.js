@@ -1,29 +1,40 @@
 export const state = () => ({
   settings: {
-    audio: process.client && localStorage.getItem("audio-enabled") === "true",
+    muted: false,
+    subtitles: true,
+    particles: true,
+    follow: true,
   },
 });
 
+export const getters = {
+  settings: (state) => {
+    return state.settings;
+  },
+};
+
 export const mutations = {
-  muteAudio(state) {
-    state.settings.audio = false;
+  toggleAudio(state, enabled) {
+    state.settings.muted = enabled;
     if (process.client) {
       document.querySelectorAll("video").forEach(function (element) {
-        element.plyr.muted = true;
-        element.setAttribute("muted", "muted");
+        element.plyr.muted = enabled;
+        element.setAttribute("muted", enabled);
       });
-      localStorage.setItem("audio-enabled", false);
     }
   },
-  activateAudio(state) {
-    state.settings.audio = true;
+  toggleSubtitles(state, enabled) {
+    state.settings.subtitles = enabled;
     if (process.client) {
-      document.querySelectorAll("video[muted]").forEach(function (element) {
-        element.plyr.muted = false;
-        element.setAttribute("muted", false);
-        element.setAttribute("controls", "controls");
+      document.querySelectorAll("video").forEach(function (element) {
+        element.plyr.currentTrack = enabled ? 0 : -1;
       });
-      localStorage.setItem("audio-enabled", true);
     }
+  },
+  toggleParticles(state, enabled) {
+    state.settings.particles = enabled;
+  },
+  toggleFollow(state, enabled) {
+    state.settings.follow = enabled;
   },
 };

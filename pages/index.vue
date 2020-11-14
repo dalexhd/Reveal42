@@ -3,9 +3,10 @@
     <!-- Any section element inside of this container is displayed as a slide -->
     <Slides />
     <client-only>
-      <Enchanced />
+      <Enchanced v-if="!isSpeakerNotesWindow()" />
     </client-only>
-    <Particles />
+    <!-- We dont need this -->
+    <Particles v-if="$store.state.settings.particles" />
     <client-only>
       <RevealScript />
     </client-only>
@@ -29,6 +30,11 @@ export default {
       if (process.client) {
         return import("../components/Enchanced");
       }
+    },
+  },
+  methods: {
+    isSpeakerNotesWindow() {
+      return process.client && !!window.location.search.match(/receiver/gi);
     },
   },
 };

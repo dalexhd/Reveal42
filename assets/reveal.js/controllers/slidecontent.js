@@ -93,6 +93,9 @@ export default class SlideContent {
         let backgroundVideoSubtitles = slide.getAttribute(
           "data-background-video-subtitles"
         );
+        let backgroundVideoSubtitlesEnabled = slide.getAttribute(
+          "data-background-video-subtitles-enabled"
+        );
         const backgroundVideoPreload = slide.getAttribute(
           "data-background-video-preload"
         );
@@ -173,9 +176,16 @@ export default class SlideContent {
                 subtitle.src
               }" ${subtitle.default ? "default" : ""} />`;
             });
+            if (typeof backgroundVideoSubtitlesEnabled === "undefined") {
+              backgroundVideoSubtitlesEnabled = true;
+            }
             plyrOptions = {
               ...plyrOptions,
-              captions: { active: true, language: "es", update: false },
+              captions: {
+                active: backgroundVideoSubtitlesEnabled,
+                language: "es",
+                update: false,
+              },
             };
           }
           if (backgroundVideoThumbnails) {

@@ -1,4 +1,5 @@
 import CopyPlugin from "copy-webpack-plugin";
+import minifyTheme from "minify-css-string";
 
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
@@ -30,6 +31,7 @@ export default {
         innerHTML: `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${process.env.GOOGLE_ANALYTICS_ID}', {'page_path': location.pathname + location.search + location.hash});`,
       },
     ],
+    noscript: [{ innerHTML: "This website requires JavaScript." }],
   },
   // Disable/Enable Server Side rendering
   ssr: true,
@@ -42,7 +44,10 @@ export default {
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [],
+  plugins: [
+    { src: "~/plugins/vuex-persist", ssr: true },
+    { src: "~/plugins/environment", ssr: false },
+  ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: false,
@@ -71,7 +76,11 @@ export default {
     // Guide from https://github.com/nuxt/nuxt.js/tree/dev/examples/with-sockets
     "~/io",
   ],
-  vuetify: {},
+  vuetify: {
+    theme: {
+      options: { minifyTheme },
+    },
+  },
   sentry: {
     dsn:
       "https://50eaad48f37c43d8bf8757013f4a7488@o255682.ingest.sentry.io/5511533", // Enter your project's DSN here

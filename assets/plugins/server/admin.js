@@ -29,13 +29,6 @@ import marked from "marked";
     },
   });
 
-  const SPEAKER_LAYOUTS = {
-    default: "Por defecto",
-    wide: "Amplio",
-    tall: "  Ancho",
-    "notes-only": "Solo notas",
-  };
-
   /**
    * Called when the main window sends an updated state.
    */
@@ -206,42 +199,6 @@ import marked from "marked";
       _updateTimer();
       return false;
     });
-  }
-
-  /**
-   * Sets a new speaker view layout. The layout is persisted
-   * in local storage.
-   */
-  function setLayout(value) {
-    const title = SPEAKER_LAYOUTS[value];
-
-    layoutLabel.innerHTML = `Layout${title ? `: ${title}` : ""}`;
-    layoutDropdown.value = value;
-
-    document.body.setAttribute("data-speaker-layout", value);
-
-    // Persist locally
-    if (window.localStorage) {
-      window.localStorage.setItem("reveal-speaker-layout", value);
-    }
-  }
-
-  /**
-   * Returns the ID of the most recently set speaker layout
-   * or our default layout if none has been set.
-   */
-  function getLayout() {
-    if (window.localStorage) {
-      const layout = window.localStorage.getItem("reveal-speaker-layout");
-      if (layout) {
-        return layout;
-      }
-    }
-
-    // Default to the first record in the layouts hash
-    for (const id in SPEAKER_LAYOUTS) {
-      return id;
-    }
   }
 
   function zeroPadInteger(num) {
