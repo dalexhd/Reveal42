@@ -121,3 +121,11 @@ img.silhouette {
   margin: 0 auto 4rem auto;
   background: transparent;
 }
+div.slide-background-content > [data-placeholder-container^="@metomic"] {
+  width: 100% !important;
+  height: 100% !important;
+  > iframe[type="text/x-metomic"] {
+    max-width: 100% !important;
+    max-height: 100% !important;
+  }
+}

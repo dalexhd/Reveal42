@@ -83,6 +83,12 @@ export default class SlideContent {
 
       const backgroundContent = slide.slideBackgroundContentElement;
       const backgroundIframe = slide.getAttribute("data-background-iframe");
+      const metomicPlaceholder = slide.getAttribute("data-metomic-placeholder");
+      const metomicMicropolicy = slide.getAttribute("data-metomic-micropolicy");
+      const metomicPlaceholderParams = slide.getAttribute(
+        "data-metomic-placeholder-params"
+      );
+
       let backgroundIframes = slide.getAttribute("data-background-iframes");
       // If the background contains media, load it
       if (background.hasAttribute("data-loaded") === false) {
@@ -317,7 +323,7 @@ export default class SlideContent {
         }
         // Iframe
         else if (backgroundIframe && options.excludeIframes !== true) {
-          const iframe = document.createElement("iframe");
+          let iframe = document.createElement("iframe");
           iframe.setAttribute("allowfullscreen", "");
           iframe.setAttribute("mozallowfullscreen", "");
           iframe.setAttribute("webkitallowfullscreen", "");
@@ -328,7 +334,18 @@ export default class SlideContent {
           iframe.style.height = "100%";
           iframe.style.maxHeight = "100%";
           iframe.style.maxWidth = "100%";
-
+          if (metomicPlaceholder) {
+            const script = document.createElement("script");
+            script.setAttribute("type", "text/x-metomic");
+            script.setAttribute("data-micropolicy", metomicMicropolicy);
+            script.setAttribute("data-placeholder", metomicPlaceholder);
+            script.setAttribute(
+              "data-placeholder-params",
+              metomicPlaceholderParams
+            );
+            script.appendChild(iframe);
+            iframe = script;
+          }
           backgroundContent.appendChild(iframe);
         }
         // Iframes
@@ -349,7 +366,6 @@ export default class SlideContent {
             if (index === 0) {
               iframe.style.position = "fixed";
             }
-
             backgroundContent.appendChild(iframe);
           });
         }
