@@ -8,7 +8,9 @@ import axios from "axios";
 
 const app = express();
 const RedisStore = connectRedis(session);
-const RedisClient = redis.createClient();
+const RedisClient = redis.createClient({
+  url: process.env.REDIS_URL || null,
+});
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
