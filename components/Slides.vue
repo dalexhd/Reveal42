@@ -467,7 +467,7 @@ return {
       data-background-iframe="https://insights.hotjar.com/h?site=1807485&heatmap=5914349&token=c3971ad9abbcc5774213e71b69553ce7"
       data-background-interactive="true"
       data-metomic-placeholder="@metomic/generic"
-      data-metomic-micropolicy="hotjar-iframes"
+      data-metomic-micropolicy="embed-content"
       data-metomic-placeholder-params="
         title = Este contenido está bloqueado
         text = Las cookies son necesarias para mostrarle este contenido
@@ -478,7 +478,7 @@ return {
       data-background-iframe="https://insights.hotjar.com/r?site=1807485&recording=3536145500&token=dab1ce0b2b320c0518a82b78bb6b9563"
       data-background-interactive="true"
       data-metomic-placeholder="@metomic/generic"
-      data-metomic-micropolicy="hotjar-iframes"
+      data-metomic-micropolicy="embed-content"
       data-metomic-placeholder-params="
         title = Este contenido está bloqueado
         text = Las cookies son necesarias para mostrarle este contenido
@@ -567,7 +567,7 @@ return {
       data-background-iframe="https://p.datadoghq.com/sb/7svjk4jalcnlifw5-45b3a2a8bc3616303909036435520f53?from_ts=1597338189730&live=true&theme=dark&to_ts=1597424589730"
       data-background-interactive="true"
       data-metomic-placeholder="@metomic/generic"
-      data-metomic-micropolicy="datadog-iframes"
+      data-metomic-micropolicy="embed-content"
       data-metomic-placeholder-params="
         title = Este contenido está bloqueado
         text = Las cookies son necesarias para mostrarle este contenido
