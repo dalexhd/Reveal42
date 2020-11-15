@@ -1,8 +1,24 @@
-/* global gtag */
+/* global gtag amplitude */
 /**
  * Reveal Plugin
  * https://revealjs.com/creating-plugins/
  */
+
+let amplitudeLoaded = false;
+
+const initAmplitude = function () {
+  amplitude.init(
+    process.env.AMPLITUDE_KEY,
+    undefined,
+    {
+      includeReferrer: true,
+      includeUtm: true,
+    },
+    () => {
+      amplitudeLoaded = true;
+    }
+  );
+};
 
 const addEvent = function (action, attributes) {
   if (typeof gtag !== "undefined") {
@@ -19,6 +35,24 @@ const addEvent = function (action, attributes) {
     eventObj = Object.assign(eventObj, attributes);
 
     gtag("event", action, eventObj);
+  }
+  if (typeof amplitude !== "undefined") {
+    if (!amplitudeLoaded) initAmplitude();
+    else {
+      let eventObj = {
+        category: "reveal-js",
+        label: "",
+      };
+
+      attributes = attributes || {};
+      // Make sure eventValue is an integer, or GA won't register the event
+      if ("eventValue" in attributes) {
+        attributes.eventValue = parseInt(attributes.eventValue);
+      }
+      eventObj = Object.assign(eventObj, attributes);
+
+      amplitude.logEvent(action, eventObj);
+    }
   }
 };
 
