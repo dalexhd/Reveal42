@@ -5,19 +5,21 @@
  */
 
 const addEvent = function (action, attributes) {
-  let eventObj = {
-    category: "reveal-js",
-    label: "",
-  };
+  if (typeof gtag !== "undefined") {
+    let eventObj = {
+      category: "reveal-js",
+      label: "",
+    };
 
-  attributes = attributes || {};
-  // Make sure eventValue is an integer, or GA won't register the event
-  if ("eventValue" in attributes) {
-    attributes.eventValue = parseInt(attributes.eventValue);
+    attributes = attributes || {};
+    // Make sure eventValue is an integer, or GA won't register the event
+    if ("eventValue" in attributes) {
+      attributes.eventValue = parseInt(attributes.eventValue);
+    }
+    eventObj = Object.assign(eventObj, attributes);
+
+    gtag("event", action, eventObj);
   }
-  eventObj = Object.assign(eventObj, attributes);
-
-  gtag("event", action, eventObj);
 };
 
 const getSlideLabel = function ({ indexh, indexv }) {

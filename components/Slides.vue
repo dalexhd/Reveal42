@@ -415,6 +415,7 @@ return {
         </div>
       </section>
       <section
+        data-backgrond-name="netlify-e-commerce-demo"
         data-background-iframe="https://react-instantsearch.netlify.app/examples/e-commerce/"
         data-background-interactive="true"
       ></section>

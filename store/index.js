@@ -37,4 +37,10 @@ export const mutations = {
   toggleFollow(state, enabled) {
     state.settings.follow = enabled;
   },
+  manageCookies(state, enabled) {
+    if (process.client) {
+      // eslint-disable-next-line no-undef
+      klaro.show();
+    }
+  },
 };

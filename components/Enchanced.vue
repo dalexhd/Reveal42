@@ -192,10 +192,22 @@ export default {
         icon: ["mdi-transition", "mdi-transition"],
         tooltip: ["Desactivar partículas", "Activar partículas"],
       },
+      {
+        property: "cookies",
+        toggle: "manageCookies",
+        color: ["primary", "primary"],
+        icon: ["mdi-cookie", "mdi-cookie"],
+        tooltip: ["Administrar cookies", "Administrar cookies"],
+      },
     ],
   }),
   computed: {
     ...mapState(["settings"]),
+  },
+  methods: {
+    logout() {
+      this.$auth.logout();
+    },
   },
 };
 </script>

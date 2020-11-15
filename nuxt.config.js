@@ -25,10 +25,23 @@ export default {
       {
         src: `https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_ANALYTICS_ID}`,
         async: true,
+        type: "opt-in",
+        "data-type": "application/javascript",
+        "data-name": "googleAnalytics",
       },
       {
         hid: "gtm-script",
+        type: "opt-in",
+        "data-type": "application/javascript",
+        "data-name": "googleAnalytics",
         innerHTML: `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${process.env.GOOGLE_ANALYTICS_ID}', {'page_path': location.pathname + location.search + location.hash});`,
+      },
+      {
+        hid: "hotjar-script",
+        type: "opt-in",
+        "data-type": "application/javascript",
+        "data-name": "hotjar",
+        innerHTML: `(function(h,o,t,j,a,r){h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};h._hjSettings={hjid:${process.env.HOTJAR_SITE_ID},hjsv:6};a=o.getElementsByTagName('head')[0];r=o.createElement('script');r.async=1;r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;a.appendChild(r);})(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');`,
       },
     ],
     noscript: [{ innerHTML: "This website requires JavaScript." }],
@@ -39,6 +52,7 @@ export default {
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
     "~/assets/css/reveal.scss",
+    "~/assets/css/cookies.scss",
     "~/assets/css/layout.scss",
     "@fortawesome/fontawesome-free/css/all.css",
   ],
@@ -47,6 +61,7 @@ export default {
   plugins: [
     { src: "~/plugins/vuex-persist", ssr: true },
     { src: "~/plugins/environment", ssr: false },
+    { src: "~/plugins/cookies", ssr: false },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)

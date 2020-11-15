@@ -83,6 +83,7 @@ export default class SlideContent {
 
       const backgroundContent = slide.slideBackgroundContentElement;
       const backgroundIframe = slide.getAttribute("data-background-iframe");
+      const backgroundName = slide.getAttribute("data-background-name");
       let backgroundIframes = slide.getAttribute("data-background-iframes");
       // If the background contains media, load it
       if (background.hasAttribute("data-loaded") === false) {
@@ -323,6 +324,10 @@ export default class SlideContent {
           iframe.setAttribute("webkitallowfullscreen", "");
 
           iframe.setAttribute("data-src", backgroundIframe);
+
+          if (backgroundName) {
+            iframe.setAttribute("data-name", backgroundName);
+          }
 
           iframe.style.width = "100%";
           iframe.style.height = "100%";
