@@ -25,13 +25,13 @@ export default {
       {
         src: `https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_ANALYTICS_ID}`,
         type: "text/x-metomic",
-        "data-micropolicy": "pol:67754a78-980c-49ea-a5e8-3034c77bfc32",
+        "data-micropolicy": "statistics",
         async: true,
       },
       {
         hid: "gtm-script",
         type: "text/x-metomic",
-        "data-micropolicy": "pol:67754a78-980c-49ea-a5e8-3034c77bfc32",
+        "data-micropolicy": "statistics",
         innerHTML: `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${process.env.GOOGLE_ANALYTICS_ID}', {'page_path': location.pathname + location.search + location.hash});`,
       },
       {
