@@ -10,6 +10,9 @@
     <client-only>
       <RevealScript />
     </client-only>
+    <client-only>
+      <Metomic />
+    </client-only>
   </div>
 </template>
 <script>
@@ -31,6 +34,11 @@ export default {
     Enchanced() {
       if (process.client) {
         return import("../components/Enchanced");
+      }
+    },
+    Metomic() {
+      if (process.client) {
+        return import("../components/Metomic");
       }
     },
   },

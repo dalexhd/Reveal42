@@ -29,7 +29,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["snackbar"]),
+    ...mapGetters(["snackbar/snackbar"]),
   },
   watch: {
     snackbar(newValue, oldValue) {
