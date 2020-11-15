@@ -8,7 +8,7 @@ let amplitudeLoaded = false;
 
 const initAmplitude = function () {
   amplitude.init(
-    process.env.AMPLITUDE_KEY,
+    "9d398f1472cdb68138c3d0202f72b2d4",
     undefined,
     {
       includeReferrer: true,
