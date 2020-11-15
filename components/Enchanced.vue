@@ -10,36 +10,38 @@
       >
         <template v-slot:activator>
           <v-hover v-slot="{ hover }">
-            <v-btn v-model="fab" color="secondary" dark fab>
+            <v-btn
+              v-model="fab"
+              class="border-solid border-2 border-white-600"
+              dark
+              fab
+            >
               <v-icon v-if="fab"> mdi-close </v-icon>
-              <div v-else>
-                <v-avatar
-                  size="60"
-                  class="border-solid border-2 border-white-600"
+              <template v-else>
+                <v-icon
+                  v-if="
+                    !$store.state.auth.loggedIn ||
+                    (hover && !$vuetify.breakpoint.mobile)
+                  "
                 >
-                  <v-icon
-                    v-if="
-                      !$store.state.auth.loggedIn ||
-                      (hover && !$vuetify.breakpoint.mobile)
-                    "
-                  >
-                    mdi-menu
-                  </v-icon>
+                  mdi-menu
+                </v-icon>
+                <v-avatar v-else size="55">
                   <img
-                    v-else
                     class="object-cover"
                     :src="$store.state.auth.user.image_url"
                     :alt="$store.state.auth.user.displayname"
                   />
                 </v-avatar>
-              </div>
+              </template>
             </v-btn>
           </v-hover>
         </template>
         <v-tooltip
+          v-for="(menuItem, index) in menu"
+          :key="index"
           :left="!$vuetify.breakpoint.mobile"
           :bottom="$vuetify.breakpoint.mobile"
-          :open-delay="500"
         >
           <template v-slot:activator="{ on, attrs }">
             <v-btn
@@ -47,98 +49,30 @@
               dark
               :small="!$vuetify.breakpoint.mobile"
               :x-small="$vuetify.breakpoint.mobile"
-              :color="!settings.muted ? 'primary' : 'gray'"
+              :color="
+                settings[menuItem.property]
+                  ? menuItem.color[0]
+                  : menuItem.color[1]
+              "
               v-bind="attrs"
               elevation="7"
-              @click.stop="toggleAudio(!settings.muted)"
+              @click.stop="
+                $store.commit(menuItem.toggle, !settings[menuItem.property])
+              "
               v-on="on"
             >
               <v-icon>{{
-                settings.muted ? "mdi-volume-off" : "mdi-volume-high"
+                settings[menuItem.property]
+                  ? menuItem.icon[0]
+                  : menuItem.icon[1]
               }}</v-icon>
             </v-btn>
           </template>
-          <span>{{ settings.muted ? "Activar" : "Desactivar" }} sonido</span>
-        </v-tooltip>
-        <v-tooltip
-          :left="!$vuetify.breakpoint.mobile"
-          :bottom="$vuetify.breakpoint.mobile"
-          :open-delay="500"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              fab
-              dark
-              :small="!$vuetify.breakpoint.mobile"
-              :x-small="$vuetify.breakpoint.mobile"
-              :color="settings.subtitles ? 'primary' : 'gray'"
-              v-bind="attrs"
-              elevation="7"
-              @click.stop="toggleSubtitles(!settings.subtitles)"
-              v-on="on"
-            >
-              <v-icon>{{
-                settings.subtitles ? "mdi-subtitles" : "mdi-subtitles"
-              }}</v-icon>
-            </v-btn>
-          </template>
-          <span
-            >{{
-              settings.subtitles ? "Desactivar" : "Activar"
-            }}
-            subtítulos</span
-          >
-        </v-tooltip>
-        <v-tooltip
-          :left="!$vuetify.breakpoint.mobile"
-          :bottom="$vuetify.breakpoint.mobile"
-          :open-delay="500"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              fab
-              dark
-              :small="!$vuetify.breakpoint.mobile"
-              :x-small="$vuetify.breakpoint.mobile"
-              :color="settings.follow ? 'primary' : 'gray'"
-              v-bind="attrs"
-              elevation="7"
-              @click.stop="toggleFollow(!settings.follow)"
-              v-on="on"
-            >
-              <v-icon>mdi-teach</v-icon>
-            </v-btn>
-          </template>
-          <span
-            >{{ settings.muted ? "Desactivar" : "Activar" }} seguimiento</span
-          >
-        </v-tooltip>
-        <v-tooltip
-          :left="!$vuetify.breakpoint.mobile"
-          :bottom="$vuetify.breakpoint.mobile"
-          :open-delay="500"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              fab
-              dark
-              :small="!$vuetify.breakpoint.mobile"
-              :x-small="$vuetify.breakpoint.mobile"
-              :color="settings.particles ? 'primary' : 'gray'"
-              v-bind="attrs"
-              elevation="7"
-              @click.stop="toggleParticles(!settings.particles)"
-              v-on="on"
-            >
-              <v-icon>mdi-transition</v-icon>
-            </v-btn>
-          </template>
-          <span
-            >{{
-              settings.particles ? "Desactivar" : "Activar"
-            }}
-            partículas</span
-          >
+          <span>{{
+            settings[menuItem.property]
+              ? menuItem.tooltip[0]
+              : menuItem.tooltip[1]
+          }}</span>
         </v-tooltip>
         <v-tooltip
           v-if="$store.state.auth.loggedIn"
@@ -171,7 +105,7 @@
         {{ $store.state.auth.user.role }}</span
       >
     </div>
-    <div class="text-center">
+    <div v-if="!$store.state.auth.loggedIn" class="text-center">
       <v-bottom-sheet v-model="sheet" persistent>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
@@ -222,7 +156,6 @@ export default {
     fab: false,
     sheet: false,
     voting: true,
-    follow: true,
     tiles: [
       {
         img: require("@/static/icon.png"),
@@ -230,26 +163,39 @@ export default {
         with: "intra",
       },
     ],
+    menu: [
+      {
+        property: "muted",
+        toggle: "toggleAudio",
+        color: ["gray", "primary"],
+        icon: ["mdi-volume-off", "mdi-volume-high"],
+        tooltip: ["Activar sonido", "Desactivar sonido"],
+      },
+      {
+        property: "subtitles",
+        toggle: "toggleSubtitles",
+        color: ["primary", "gray"],
+        icon: ["mdi-subtitles", "mdi-subtitles"],
+        tooltip: ["Desactivar subtítulos", "Activar subtítulos"],
+      },
+      {
+        property: "follow",
+        toggle: "toggleFollow",
+        color: ["primary", "gray"],
+        icon: ["mdi-teach", "mdi-teach"],
+        tooltip: ["Desactivar seguimiento", "Activar seguimiento"],
+      },
+      {
+        property: "particles",
+        toggle: "toggleParticles",
+        color: ["primary", "gray"],
+        icon: ["mdi-transition", "mdi-transition"],
+        tooltip: ["Desactivar partículas", "Activar partículas"],
+      },
+    ],
   }),
   computed: {
     ...mapState(["settings"]),
-  },
-  methods: {
-    logout() {
-      this.$auth.logout();
-    },
-    toggleAudio(v) {
-      this.$store.commit("toggleAudio", v);
-    },
-    toggleSubtitles(v) {
-      this.$store.commit("toggleSubtitles", v);
-    },
-    toggleParticles(v) {
-      this.$store.commit("toggleParticles", v);
-    },
-    toggleFollow(v) {
-      this.$store.commit("toggleFollow", v);
-    },
   },
 };
 </script>

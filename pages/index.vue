@@ -5,8 +5,8 @@
     <client-only>
       <Enchanced v-if="!isSpeakerNotesWindow()" />
     </client-only>
-    <!-- We dont need this -->
     <Particles v-if="$store.state.settings.particles" />
+    <Snackbar />
     <client-only>
       <RevealScript />
     </client-only>
@@ -15,12 +15,14 @@
 <script>
 import Slides from "../components/Slides";
 import Particles from "../components/Particles";
+import Snackbar from "../components/Snackbar";
 
 export default {
   layout: "presentation",
   components: {
     Slides,
     Particles,
+    Snackbar,
     RevealScript() {
       if (process.client) {
         return import("../components/RevealScript");
