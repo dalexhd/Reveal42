@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-app-bar color="deep-dark accent-4" dense dark app>
+    <v-app-bar app color="deep-dark accent-4" dark dense>
       <v-toolbar-title>Panel de control</v-toolbar-title>
 
       <v-spacer></v-spacer>
@@ -24,19 +24,21 @@
           <v-col cols="12" lg="8" md="12">
             <iframe
               id="current-slide"
-              :src="currentUrl"
               frameborder="0"
+              :src="currentUrl"
+              title="Current slide"
             ></iframe>
           </v-col>
           <v-row>
-            <v-col cols="12" xs="12" class="w-full">
+            <v-col class="w-full" cols="12" xs="12">
               <iframe
                 id="upcoming-slide"
-                :src="upcomingUrl"
                 frameborder="0"
+                :src="upcomingUrl"
+                title="Upcoming slide"
               ></iframe>
             </v-col>
-            <v-col cols="12"> <v-card outlined tile> Hola3 </v-card></v-col>
+            <v-col cols="12"><v-card outlined tile>Hola3</v-card></v-col>
           </v-row>
         </v-row>
       </v-container>

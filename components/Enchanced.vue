@@ -8,7 +8,7 @@
         :direction="$vuetify.breakpoint.mobile ? 'left' : 'bottom'"
         transition="fab-transition"
       >
-        <template v-slot:activator>
+        <template #activator>
           <v-hover v-slot="{ hover }">
             <v-btn
               v-model="fab"
@@ -16,7 +16,7 @@
               dark
               fab
             >
-              <v-icon v-if="fab"> mdi-close </v-icon>
+              <v-icon v-if="fab">mdi-close</v-icon>
               <template v-else>
                 <v-icon
                   v-if="
@@ -43,7 +43,7 @@
           :left="!$vuetify.breakpoint.mobile"
           :bottom="$vuetify.breakpoint.mobile"
         >
-          <template v-slot:activator="{ on, attrs }">
+          <template #activator="{ on, attrs }">
             <v-btn
               fab
               dark
@@ -61,18 +61,22 @@
               "
               v-on="on"
             >
-              <v-icon>{{
-                settings[menuItem.property]
-                  ? menuItem.icon[0]
-                  : menuItem.icon[1]
-              }}</v-icon>
+              <v-icon>
+                {{
+                  settings[menuItem.property]
+                    ? menuItem.icon[0]
+                    : menuItem.icon[1]
+                }}
+              </v-icon>
             </v-btn>
           </template>
-          <span>{{
-            settings[menuItem.property]
-              ? menuItem.tooltip[0]
-              : menuItem.tooltip[1]
-          }}</span>
+          <span>
+            {{
+              settings[menuItem.property]
+                ? menuItem.tooltip[0]
+                : menuItem.tooltip[1]
+            }}
+          </span>
         </v-tooltip>
         <v-tooltip
           v-if="$store.state.auth.loggedIn"
@@ -80,7 +84,7 @@
           :bottom="$vuetify.breakpoint.mobile"
           :open-delay="500"
         >
-          <template v-slot:activator="{ on, attrs }">
+          <template #activator="{ on, attrs }">
             <v-btn
               fab
               dark
@@ -101,13 +105,14 @@
       <span
         v-if="$store.state.auth.loggedIn && !$vuetify.breakpoint.mobile && fab"
         class="user-info"
-        >Intra Id: {{ $store.state.auth.user.id }} | Role:
-        {{ $store.state.auth.user.role }}</span
       >
+        Intra Id: {{ $store.state.auth.user.id }} | Role:
+        {{ $store.state.auth.user.role }}
+      </span>
     </div>
     <div v-if="!$store.state.auth.loggedIn" class="text-center">
       <v-bottom-sheet v-model="sheet" persistent>
-        <template v-slot:activator="{ on, attrs }">
+        <template #activator="{ on, attrs }">
           <v-btn
             color="purple"
             dark
@@ -121,8 +126,8 @@
         <v-toolbar color="primary" dark>
           <v-toolbar-title>
             Inicia sesión con cualquira de estos métodos para obtener una
-            experiencia completa.</v-toolbar-title
-          >
+            experiencia completa.
+          </v-toolbar-title>
           <v-spacer></v-spacer>
           <v-btn icon @click="sheet = false">
             <v-icon>mdi-close</v-icon>

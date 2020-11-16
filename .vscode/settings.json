@@ -1,6 +1,11 @@
 {
-    "files.insertFinalNewline": true,
-    "search.exclude": {
-        "**/node_modules": false,
-    },
+  "files.insertFinalNewline": true,
+  "search.exclude": {
+    "**/node_modules": false
+  },
+  "editor.formatOnSave": false,
+  "vetur.validation.template": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }

@@ -11,7 +11,7 @@
           rel="noopener noreferrer"
         >
           <img
-            src="@/assets/img/42logo.png"
+            data-src="@/assets/img/42logo.png"
             alt="42 Madrid logo"
             class="demo-logo"
           />
@@ -22,15 +22,15 @@
         cartera sufra ‍🎓
       </h3>
       <div class="r-hstack justify-center">
-        <div data-id="box-music-widget-1"></div>
+        <div data-id="box-music-widget-1" />
       </div>
       <p>
-        <small
-          >Presentación creada por
+        <small>
+          Presentación creada por
           <a href="https://www.linkedin.com/in/alex-borbolla">aborboll</a>
           gracias a la tecnología
-          <a href="https://revealjs.com/">reveal.js</a></small
-        >
+          <a href="https://revealjs.com/">reveal.js</a>
+        </small>
       </p>
     </section>
     <section
@@ -47,7 +47,7 @@
           rel="noopener noreferrer"
         >
           <img
-            src="@/assets/img/42logo.png"
+            data-src="@/assets/img/42logo.png"
             alt="42 Madrid logo"
             height="80"
             style="margin: 0 auto 4rem auto; background: transparent"
@@ -62,27 +62,30 @@
       <div data-id="box-music-widget-1">
         <iframe
           data-src="https://spotify-widget.herokuapp.com/widget"
+          title="Spotify widget"
           data-preload
           style="width: 100%"
-        ></iframe>
+        />
       </div>
       <p style="margin: 0">
-        <small
-          >Presentación creada por
+        <small>
+          Presentación creada por
           <a
             href="https://www.linkedin.com/in/alex-borbolla"
             target="_blank"
             rel="noopener noreferrer"
-            >aborboll</a
           >
+            aborboll
+          </a>
           gracias a la tecnología
           <a
             href="https://revealjs.com/"
             target="_blank"
             rel="noopener noreferrer"
-            >reveal.js</a
-          ></small
-        >
+          >
+            reveal.js
+          </a>
+        </small>
       </p>
       <a
         href="https://www.heroku.com/"
@@ -90,7 +93,7 @@
         rel="noopener noreferrer"
       >
         <img
-          src="@/assets/img/built-on-heroku-light.svg"
+          data-src="@/assets/img/built-on-heroku-light.svg"
           height="80"
           alt="Hecho en heroku"
           style="margin: 0"
@@ -109,7 +112,7 @@
         <img
           class="r-frame"
           height="400"
-          src="@/assets/img/los-payasos-de-la-tele.gif"
+          data-src="@/assets/img/los-payasos-de-la-tele.gif"
           alt="Payasos de la tele"
         />
         <aside v-if="hasRole('presenter')" class="notes">
@@ -124,7 +127,7 @@
           Nombre, Años, Trabajo
         </aside>
         <h1>¿Quién soy?</h1>
-        <img src="@/assets/img/avatar.jpeg" alt="Yo" height="150" />
+        <img data-src="@/assets/img/avatar.jpeg" alt="Yo" height="150" />
         <p class="fragment fade-in-then-semi-out">Me llamo Alex Borbolla</p>
         <p class="fragment fade-in-then-semi-out">Tengo 21 años</p>
         <p class="fragment fade-in-then-semi-out">
@@ -151,19 +154,19 @@
         data-auto-animate
       >
         <img
-          src="@/assets/img/student-developer-pack-logo.png"
+          data-src="@/assets/img/student-developer-pack-logo.png"
           height="400"
           alt="GitHub developer pack"
         />
       </section>
       <section data-background-color="rgba(3, 223, 252, 0.5)" data-auto-animate>
         <img
-          src="@/assets/img/student-developer-pack-logo.png"
+          data-src="@/assets/img/student-developer-pack-logo.png"
           height="150"
           alt="GitHub developer pack"
         />
         <img
-          src="@/assets/img/github_dev_pack_partners.png"
+          data-src="@/assets/img/github_dev_pack_partners.png"
           height="400"
           alt="GitHub developer pack partners"
         />
@@ -183,14 +186,14 @@
             <div class="r-stack">
               <div class="fragment fade-out" data-fragment-index="0">
                 <img
-                  src="@/assets/img/github_dev_pack_partners.png"
+                  data-src="@/assets/img/github_dev_pack_partners.png"
                   height="250"
                   alt="GitHub developer partners"
                 />
               </div>
               <div class="fragment fade-in" data-fragment-index="0">
                 <img
-                  src="@/assets/img/persona-cohete.gif"
+                  data-src="@/assets/img/persona-cohete.gif"
                   alt="Persona en cohete"
                 />
               </div>
@@ -199,17 +202,16 @@
           <div class="w-1/2">
             <div class="r-stack">
               <div class="fragment fade-out" data-fragment-index="0">
-                <span class="text-6xl text-white animate-pulse">
-                  🤑 $45000
-                </span>
+                <span class="text-6xl text-white animate-pulse">🤑 $45000</span>
               </div>
               <div class="fragment fade-in" data-fragment-index="0">
                 <a
                   href="https://github-portal.42.fr"
                   target="_blank"
                   rel="noopener noreferrer"
-                  >github-portal.42.fr</a
                 >
+                  github-portal.42.fr
+                </a>
               </div>
             </div>
           </div>
@@ -218,17 +220,17 @@
     </section>
     <section
       data-background-iframe="https://meet.jit.si/testdalexhd#jitsi_meet_external_api_id=0&config.startWithAudioMuted=false&config.startWithVideoMuted=true&config.enableWelcomePage=false&config.prejoinPageEnabled=false&interfaceConfig.TOOLBAR_BUTTONS=%5B%5D&interfaceConfig.HIDE_INVITE_MORE_HEADER=true&interfaceConfig.DISPLAY_WELCOME_PAGE_CONTENT=false&interfaceConfig.SHOW_CHROME_EXTENSION_BANNER=false&interfaceConfig.DISABLE_JOIN_LEAVE_NOTIFICATIONS=true&appData.localStorageContent=null"
-    ></section>
+    />
     <section
       data-background-image="@/assets/img/Pokemon-Rage.gif"
       data-transition="zoom"
       data-background-size="600px"
       data-background-repeat="repeat"
-    ></section>
+    />
     <section data-transition="zoom-in fade-out">
       <section data-auto-animate>
         <img
-          src="@/assets/img/Raspberry_Pi_Logo.svg"
+          data-src="@/assets/img/Raspberry_Pi_Logo.svg"
           class="silhouette"
           alt="Raspberry Pi Logo"
           height="300"
@@ -236,7 +238,7 @@
       </section>
       <section data-auto-animate>
         <img
-          src="@/assets/img/Raspberry_Pi_Logo.svg"
+          data-src="@/assets/img/Raspberry_Pi_Logo.svg"
           alt="Raspberry Pi Logo"
           height="300"
           class="fade-out"
@@ -246,14 +248,14 @@
       </section>
       <section data-auto-animate>
         <img
-          src="@/assets/img/Raspberry_Pi_Logo.svg"
+          data-src="@/assets/img/Raspberry_Pi_Logo.svg"
           alt="Raspberry Pi Logo"
           height="300"
           class="fade-out"
           data-fragment-index="0"
         />
         <img
-          src="@/assets/img/Raspberry_Pi.png"
+          data-src="@/assets/img/Raspberry_Pi.png"
           alt="Raspberry Pi"
           height="300"
           class="current-visible"
@@ -263,18 +265,18 @@
       </section>
       <section data-auto-animate>
         <img
-          src="@/assets/img/Raspberry_Pi.png"
+          data-src="@/assets/img/Raspberry_Pi.png"
           alt="Raspberry Pi"
           height="300"
         />
         <h2>Raspberry PI</h2>
         <div class="r-stack">
-          <span class="fragment fade-out" data-fragment-index="0"
-            >Buen rendimiento</span
-          >
-          <span class="fragment current-visible" data-fragment-index="0"
-            >Bajo Consumo</span
-          >
+          <span class="fragment fade-out" data-fragment-index="0">
+            Buen rendimiento
+          </span>
+          <span class="fragment current-visible" data-fragment-index="0">
+            Bajo Consumo
+          </span>
           <span class="fragment">Muy compacto</span>
         </div>
       </section>
@@ -282,7 +284,7 @@
         <div class="flex items-center">
           <div class="w-1/2">
             <img
-              src="@/assets/img/Raspberry_Pi.png"
+              data-src="@/assets/img/Raspberry_Pi.png"
               alt="Raspberry Pi"
               height="300"
             />
@@ -302,14 +304,23 @@
           <div class="w-1/2">
             <div class="r-stack">
               <div class="fragment fade-out" data-fragment-index="0">
-                <img src="@/assets/img/iot.png" height="400" />
+                <img
+                  data-src="@/assets/img/iot.png"
+                  alt="Internet de las cosas"
+                  height="400"
+                />
               </div>
               <div class="fragment current-visible" data-fragment-index="0">
-                <img src="@/assets/img/server.png" height="400" />
+                <img
+                  data-src="@/assets/img/server.png"
+                  alt="Servidor"
+                  height="400"
+                />
               </div>
               <div class="fragment" data-fragment-index="2">
                 <img
-                  src="@/assets/img/press+start+retro+gaming.gif"
+                  data-src="@/assets/img/press+start+retro+gaming.gif"
+                  alt="Consola retro gaming"
                   height="320"
                 />
               </div>
@@ -319,7 +330,7 @@
       </section>
       <section data-auto-animate>
         <h3>Precios</h3>
-        <i class="fab fa-aws"></i>
+        <i class="fab fa-aws" />
         <canvas data-chart="horizontalBar">
           <!--
 return {
@@ -360,7 +371,7 @@ return {
     <section data-transition="zoom-in fade-out">
       <section data-auto-animate>
         <img
-          src="@/assets/img/algolia.svg"
+          data-src="@/assets/img/algolia.svg"
           alt="Algolia Logo"
           height="300"
           style="object-fit: cover; width: 305px; object-position: 0% 0"
@@ -368,7 +379,11 @@ return {
         />
       </section>
       <section data-transition="zoom-in">
-        <img src="@/assets/img/algolia.svg" alt="Algolia Logo" height="300" />
+        <img
+          data-src="@/assets/img/algolia.svg"
+          alt="Algolia Logo"
+          height="300"
+        />
       </section>
       <section
         data-background-video="@/assets/video/algolia/algolia.mp4"
@@ -395,21 +410,21 @@ return {
         data-background-size="contain"
         data-background-interactive="false"
         :data-background-video-muted="$store.state.settings.muted"
-      ></section>
+      />
       <section data-auto-animate data-transition="zoom-in fade-out">
         <h3>Uno de los motores más potentes de búsqueda del mercado.</h3>
         <div class="r-stack">
           <img
             width="600"
             height="390"
-            src="@/assets/img/flash.gif"
+            data-src="@/assets/img/flash.gif"
             alt="Flash"
           />
           <img
             width="500"
             height="350"
             class="fragment"
-            src="@/assets/img/dentadura-voladora.gif"
+            data-src="@/assets/img/dentadura-voladora.gif"
             alt="Dentadura voladora"
           />
         </div>
@@ -417,7 +432,7 @@ return {
       <section
         data-background-iframe="https://react-instantsearch.netlify.app/examples/e-commerce/"
         data-background-interactive="true"
-      ></section>
+      />
       <section>
         <h3 class="justify">
           Indexa tu html para ofrecerte una experiencía de búsqueda mucho mas
@@ -428,13 +443,17 @@ return {
     <section data-transition="zoom-in fade-out">
       <section data-transition="zoom-out">
         <img
-          src="@/assets/img/hotjar-square.svg"
+          data-src="@/assets/img/hotjar-square.svg"
           alt="Hotjar square Logo"
           height="300"
         />
       </section>
       <section data-transition="zoom-in">
-        <img src="@/assets/img/hotjar.svg" alt="Hotjar Logo" height="300" />
+        <img
+          data-src="@/assets/img/hotjar.svg"
+          alt="Hotjar Logo"
+          height="300"
+        />
       </section>
       <section
         data-background-video="@/assets/video/hotjar/hotjar.mp4"
@@ -461,7 +480,7 @@ return {
         data-background-interactive="false"
         data-background-video-volume="0.3"
         :data-background-video-muted="$store.state.settings.muted"
-      ></section>
+      />
     </section>
     <section
       data-background-iframe="https://insights.hotjar.com/h?site=1807485&heatmap=5914349&token=c3971ad9abbcc5774213e71b69553ce7"
@@ -473,7 +492,7 @@ return {
         text = Las cookies son necesarias para mostrarle este contenido
         buttonText = Activar
 		  "
-    ></section>
+    />
     <section
       data-background-iframe="https://insights.hotjar.com/r?site=1807485&recording=3536145500&token=dab1ce0b2b320c0518a82b78bb6b9563"
       data-background-interactive="true"
@@ -484,17 +503,21 @@ return {
         text = Las cookies son necesarias para mostrarle este contenido
         buttonText = Activar
 		  "
-    ></section>
+    />
     <section data-transition="zoom-in fade-out">
       <section data-transition="zoom-out">
         <img
-          src="@/assets/img/sentry-square.svg"
+          data-src="@/assets/img/sentry-square.svg"
           alt="Sentry square Logo"
           height="300"
         />
       </section>
       <section data-transition="zoom-in">
-        <img src="@/assets/img/sentry.svg" alt="Sentry Logo" height="300" />
+        <img
+          data-src="@/assets/img/sentry.svg"
+          alt="Sentry Logo"
+          height="300"
+        />
       </section>
       <section
         data-background-video="@/assets/video/sentry/sentry.mp4"
@@ -522,19 +545,23 @@ return {
         data-background-interactive="false"
         data-background-video-volume="0.8"
         :data-background-video-muted="$store.state.settings.muted"
-      ></section>
+      />
     </section>
     <section data-transition="zoom-in fade-out">
       <section data-transition="zoom-out">
         <img
-          src="@/assets/img/datadog.svg"
+          data-src="@/assets/img/datadog.svg"
           style="object-fit: cover; width: 305px; object-position: 0% 0"
           alt="DataDog square Logo"
           height="300"
         />
       </section>
       <section data-transition="zoom-in">
-        <img src="@/assets/img/datadog.svg" alt="DataDog Logo" height="300" />
+        <img
+          data-src="@/assets/img/datadog.svg"
+          alt="DataDog Logo"
+          height="300"
+        />
       </section>
       <section
         data-background-video="@/assets/video/datadog/datadog.mp4"
@@ -561,7 +588,7 @@ return {
         data-background-size="contain"
         data-background-interactive="false"
         :data-background-video-muted="$store.state.settings.muted"
-      ></section>
+      />
     </section>
     <section
       data-background-iframe="https://p.datadoghq.com/sb/7svjk4jalcnlifw5-45b3a2a8bc3616303909036435520f53?from_ts=1597338189730&live=true&theme=dark&to_ts=1597424589730"
@@ -573,11 +600,11 @@ return {
         text = Las cookies son necesarias para mostrarle este contenido
         buttonText = Activar
 		  "
-    ></section>
+    />
     <section data-transition="zoom-in fade-out">
       <section>
         <img
-          src="@/assets/img/jetbrains.svg"
+          data-src="@/assets/img/jetbrains.svg"
           alt="Jetbrains Logo"
           height="300"
         />
@@ -603,7 +630,7 @@ return {
     <section data-transition="zoom-in fade-out">
       <section>
         <img
-          src="@/assets/img/gitkraken-logo-light-hz.svg"
+          data-src="@/assets/img/gitkraken-logo-light-hz.svg"
           alt="Gitkraken Logo"
           height="300"
         />
@@ -613,7 +640,7 @@ return {
           Ahora puedes pescar tus ramas de GIT perdidas de forma interactiva y
           rápida 🎣
         </h3>
-        <img src="@/assets/img/homer-pescando.gif" alt="Homer pescando" />
+        <img data-src="@/assets/img/homer-pescando.gif" alt="Homer pescando" />
       </section>
     </section>
     <!-- <section data-transition="zoom-in fade-out">
@@ -632,7 +659,11 @@ return {
         </section> -->
     <section data-transition="zoom-in fade-out">
       <section>
-        <img src="@/assets/img/Gitpod.svg" alt="Gitpod Logo" height="300" />
+        <img
+          data-src="@/assets/img/Gitpod.svg"
+          alt="Gitpod Logo"
+          height="300"
+        />
       </section>
       <section>
         <h3>Texto 1</h3>
@@ -647,7 +678,7 @@ return {
     <section data-transition="zoom-in fade-out">
       <section>
         <img
-          src="@/assets/img/GitHub_Logo_White.png"
+          data-src="@/assets/img/GitHub_Logo_White.png"
           alt="Github Logo"
           height="300"
         />
@@ -665,7 +696,7 @@ return {
     <section data-transition="zoom-in fade-out">
       <section>
         <img
-          src="@/assets/img/heroku-logotype-horizontal-white.svg"
+          data-src="@/assets/img/heroku-logotype-horizontal-white.svg"
           alt="Heroku Logo"
           height="300"
         />
@@ -682,7 +713,7 @@ return {
     </section>
     <section data-transition="zoom-in fade-out">
       <section>
-        <img src="@/assets/img/aws.svg" alt="AWS Logo" height="300" />
+        <img data-src="@/assets/img/aws.svg" alt="AWS Logo" height="300" />
       </section>
       <section>
         <h3>Texto 1</h3>

@@ -11,7 +11,7 @@
       <RevealScript />
     </client-only>
     <client-only>
-      <Metomic />
+      <Metomic v-if="!isSpeakerNotesWindow()" />
     </client-only>
   </div>
 </template>
@@ -21,7 +21,6 @@ import Particles from "../components/Particles";
 import Snackbar from "../components/Snackbar";
 
 export default {
-  layout: "presentation",
   components: {
     Slides,
     Particles,
@@ -42,6 +41,7 @@ export default {
       }
     },
   },
+  layout: "presentation",
   methods: {
     isSpeakerNotesWindow() {
       return process.client && !!window.location.search.match(/receiver/gi);

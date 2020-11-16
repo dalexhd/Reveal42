@@ -239,6 +239,8 @@
 
 .reveal img {
   margin: $blockMargin 0;
+  // Aspect ratio fix
+  object-fit: contain;
 }
 
 /*********************************************

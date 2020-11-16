@@ -7,18 +7,10 @@ export default {
   head: {
     title: "Evento 42: aborboll",
     meta: [
-      { charset: "utf-8" },
-      { lang: "es" },
-      { author: "Alex Borbolla, https://github.com/dalexhd" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
       {
-        hid: "description",
-        name: "description",
-        content:
-          "Herramientas para ser un estudiante más productivo sin que nuestra cartera sufra ‍🎓",
+        "norton-safeweb-site-verification":
+          "f8i9qptz313nywps4khtxepjznoqgy7-79yi0faw4jm9l0dt5gg2424tp4b3euk-40g8lodby08veflx9uyxvvo65581y0m2au492asr9onnerpbwb22imkayclc6l80",
       },
-      { ogHost: "https://aborboll.herokuapp.com/" },
-      { twitterCreator: "@dalexhd" },
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
     __dangerouslyDisableSanitizers: ["script"],
@@ -81,6 +73,11 @@ export default {
   // Disable/Enable Server Side rendering
   ssr: true,
 
+  // HTTP2 (https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-render#http2)
+  http2: {
+    push: true,
+  },
+
   // Modern (https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-modern)
   modern: true,
 
@@ -92,10 +89,6 @@ export default {
     "@mdi/font/scss/materialdesignicons.scss",
     "@fortawesome/fontawesome-free/css/all.css",
   ],
-
-  render: {
-    crossorigin: "anonymous",
-  },
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
@@ -194,6 +187,18 @@ export default {
         "Herramientas para ser un estudiante más productivo sin que nuestra cartera sufra ‍🎓",
       lang: "es",
     },
+    meta: {
+      charset: "utf-8",
+      viewport: "width=device-width, initial-scale=1",
+      author: "Alex Borbolla, https://github.com/dalexhd",
+      description:
+        "Herramientas para ser un estudiante más productivo sin que nuestra cartera sufra ‍🎓",
+      theme_color: "#191919",
+      lang: "es",
+      ogHost: "https://aborboll.herokuapp.com",
+      twitterCard: "summary_large_image",
+      twitterCreator: "@dalexhd",
+    },
     workbox: {
       runtimeCaching: [
         {
@@ -265,6 +270,7 @@ export default {
           source: "src",
           object: "src",
           embed: "src",
+          img: ["src", "data-src"],
           section: [
             "data-background-video",
             "data-background-video-thumbnails",

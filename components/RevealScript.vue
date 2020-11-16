@@ -44,8 +44,8 @@ export default {
       hash: true,
       controlsTutorial: false,
       navigationMode: "linear",
-      viewDistance: Number.MAX_VALUE,
-      mobileViewDistance: Number.MAX_VALUE,
+      // viewDistance: Number.MAX_VALUE,
+      // mobileViewDistance: Number.MAX_VALUE,
       menu: {
         themes: true,
         themesPath: "/dist/theme",
