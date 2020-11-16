@@ -6,7 +6,7 @@
  * Copyright (C) Hakim El Hattab, https://hakim.se
  */
 
-@import 'layout';
+@import "layout";
 
 /*********************************************
  * GLOBAL STYLES
@@ -220,7 +220,7 @@ html.reveal-full-page {
 
 /* Fixes issue in Chrome where italic fonts did not appear when printing to PDF */
 .reveal::after {
-  content: '';
+  content: "";
   font-style: italic;
 }
 
@@ -340,7 +340,7 @@ $controlsArrowAngleActive: 36deg;
 
   .controls-arrow::before,
   .controls-arrow::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -421,7 +421,7 @@ $controlsArrowAngleActive: 36deg;
   // Back arrow style: "faded":
   // Deemphasize backwards navigation arrows in favor of drawing
   // attention to forwards navigation
-  &[data-controls-back-arrows='faded'] .navigate-up.enabled {
+  &[data-controls-back-arrows="faded"] .navigate-up.enabled {
     opacity: 0.3;
 
     &:hover {
@@ -431,7 +431,7 @@ $controlsArrowAngleActive: 36deg;
 
   // Back arrow style: "hidden":
   // Never show arrows for backwards navigation
-  &[data-controls-back-arrows='hidden'] .navigate-up.enabled {
+  &[data-controls-back-arrows="hidden"] .navigate-up.enabled {
     opacity: 0;
     visibility: hidden;
   }
@@ -459,7 +459,7 @@ $controlsArrowAngleActive: 36deg;
 .reveal:not(.rtl) .controls {
   // Back arrow style: "faded":
   // Deemphasize left arrow
-  &[data-controls-back-arrows='faded'] .navigate-left.enabled {
+  &[data-controls-back-arrows="faded"] .navigate-left.enabled {
     opacity: 0.3;
 
     &:hover {
@@ -469,7 +469,7 @@ $controlsArrowAngleActive: 36deg;
 
   // Back arrow style: "hidden":
   // Never show left arrow
-  &[data-controls-back-arrows='hidden'] .navigate-left.enabled {
+  &[data-controls-back-arrows="hidden"] .navigate-left.enabled {
     opacity: 0;
     visibility: hidden;
   }
@@ -478,7 +478,7 @@ $controlsArrowAngleActive: 36deg;
 .reveal.rtl .controls {
   // Back arrow style: "faded":
   // Deemphasize right arrow in RTL mode
-  &[data-controls-back-arrows='faded'] .navigate-right.enabled {
+  &[data-controls-back-arrows="faded"] .navigate-right.enabled {
     opacity: 0.3;
 
     &:hover {
@@ -488,25 +488,25 @@ $controlsArrowAngleActive: 36deg;
 
   // Back arrow style: "hidden":
   // Never show right arrow in RTL mode
-  &[data-controls-back-arrows='hidden'] .navigate-right.enabled {
+  &[data-controls-back-arrows="hidden"] .navigate-right.enabled {
     opacity: 0;
     visibility: hidden;
   }
 }
 
-.reveal[data-navigation-mode='linear'].has-horizontal-slides .navigate-up,
-.reveal[data-navigation-mode='linear'].has-horizontal-slides .navigate-down {
+.reveal[data-navigation-mode="linear"].has-horizontal-slides .navigate-up,
+.reveal[data-navigation-mode="linear"].has-horizontal-slides .navigate-down {
   display: none;
 }
 
 // Adjust the layout when there are no vertical slides
-.reveal[data-navigation-mode='linear'].has-horizontal-slides .navigate-left,
+.reveal[data-navigation-mode="linear"].has-horizontal-slides .navigate-left,
 .reveal:not(.has-vertical-slides) .controls .navigate-left {
   bottom: $controlArrowSpacing;
   right: 0.5em + $controlArrowSpacing + $controlArrowSize;
 }
 
-.reveal[data-navigation-mode='linear'].has-horizontal-slides .navigate-right,
+.reveal[data-navigation-mode="linear"].has-horizontal-slides .navigate-right,
 .reveal:not(.has-vertical-slides) .controls .navigate-right {
   bottom: $controlArrowSpacing;
   right: 0.5em;
@@ -542,7 +542,7 @@ $controlsArrowAngleActive: 36deg;
 @media screen and (min-width: 500px) {
   $spacing: 0.8em;
 
-  .reveal .controls[data-controls-layout='edges'] {
+  .reveal .controls[data-controls-layout="edges"] {
     & {
       top: 0;
       right: 0;
@@ -601,7 +601,7 @@ $controlsArrowAngleActive: 36deg;
 }
 
 .reveal .progress::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   height: 10px;
@@ -699,20 +699,20 @@ $controlsArrowAngleActive: 36deg;
 }
 
 /* Global transition speed settings */
-.reveal[data-transition-speed='fast'] .slides section {
+.reveal[data-transition-speed="fast"] .slides section {
   transition-duration: 400ms;
 }
 
-.reveal[data-transition-speed='slow'] .slides section {
+.reveal[data-transition-speed="slow"] .slides section {
   transition-duration: 1200ms;
 }
 
 /* Slide-specific transition speed overrides */
-.reveal .slides section[data-transition-speed='fast'] {
+.reveal .slides section[data-transition-speed="fast"] {
   transition-duration: 400ms;
 }
 
-.reveal .slides section[data-transition-speed='slow'] {
+.reveal .slides section[data-transition-speed="slow"] {
   transition-duration: 1200ms;
 }
 
@@ -766,46 +766,46 @@ $controlsArrowAngleActive: 36deg;
  *********************************************/
 
 @mixin transition-global($style) {
-  .reveal .slides section[data-transition='#{$style}'],
+  .reveal .slides section[data-transition="#{$style}"],
   .reveal.#{$style} .slides section:not([data-transition]) {
     @content;
   }
 }
 
 @mixin transition-stack($style) {
-  .reveal .slides section[data-transition='#{$style}'].stack,
+  .reveal .slides section[data-transition="#{$style}"].stack,
   .reveal.#{$style} .slides section.stack {
     @content;
   }
 }
 
 @mixin transition-horizontal-past($style) {
-  .reveal .slides > section[data-transition='#{$style}'].past,
-  .reveal .slides > section[data-transition~='#{$style}-out'].past,
+  .reveal .slides > section[data-transition="#{$style}"].past,
+  .reveal .slides > section[data-transition~="#{$style}-out"].past,
   .reveal.#{$style} .slides > section:not([data-transition]).past {
     @content;
   }
 }
 
 @mixin transition-horizontal-future($style) {
-  .reveal .slides > section[data-transition='#{$style}'].future,
-  .reveal .slides > section[data-transition~='#{$style}-in'].future,
+  .reveal .slides > section[data-transition="#{$style}"].future,
+  .reveal .slides > section[data-transition~="#{$style}-in"].future,
   .reveal.#{$style} .slides > section:not([data-transition]).future {
     @content;
   }
 }
 
 @mixin transition-vertical-past($style) {
-  .reveal .slides > section > section[data-transition='#{$style}'].past,
-  .reveal .slides > section > section[data-transition~='#{$style}-out'].past,
+  .reveal .slides > section > section[data-transition="#{$style}"].past,
+  .reveal .slides > section > section[data-transition~="#{$style}-out"].past,
   .reveal.#{$style} .slides > section > section:not([data-transition]).past {
     @content;
   }
 }
 
 @mixin transition-vertical-future($style) {
-  .reveal .slides > section > section[data-transition='#{$style}'].future,
-  .reveal .slides > section > section[data-transition~='#{$style}-in'].future,
+  .reveal .slides > section > section[data-transition="#{$style}"].future,
+  .reveal .slides > section > section[data-transition~="#{$style}-in"].future,
   .reveal.#{$style} .slides > section > section:not([data-transition]).future {
     @content;
   }
@@ -941,7 +941,7 @@ $controlsArrowAngleActive: 36deg;
 }
 
 .reveal.cube .slides section:not(.stack)::before {
-  content: '';
+  content: "";
   position: absolute;
   display: block;
   width: 100%;
@@ -954,7 +954,7 @@ $controlsArrowAngleActive: 36deg;
 }
 
 .reveal.cube .slides section:not(.stack)::after {
-  content: '';
+  content: "";
   position: absolute;
   display: block;
   width: 90%;
@@ -1018,7 +1018,7 @@ $controlsArrowAngleActive: 36deg;
 }
 
 .reveal.page .slides section:not(.stack)::before {
-  content: '';
+  content: "";
   position: absolute;
   display: block;
   width: 100%;
@@ -1030,7 +1030,7 @@ $controlsArrowAngleActive: 36deg;
 }
 
 .reveal.page .slides section:not(.stack)::after {
-  content: '';
+  content: "";
   position: absolute;
   display: block;
   width: 90%;
@@ -1073,7 +1073,7 @@ $controlsArrowAngleActive: 36deg;
  * FADE TRANSITION
  *********************************************/
 
-.reveal .slides section[data-transition='fade'],
+.reveal .slides section[data-transition="fade"],
 .reveal.fade .slides section:not([data-transition]),
 .reveal.fade .slides > section > section:not([data-transition]) {
   transform: none;
@@ -1209,213 +1209,213 @@ $controlsArrowAngleActive: 36deg;
   object-fit: cover;
 }
 
-.reveal .slide-background[data-background-size='contain'] video {
+.reveal .slide-background[data-background-size="contain"] video {
   object-fit: contain;
 }
 
 /* Immediate transition style */
-.reveal[data-background-transition='none'] > .backgrounds .slide-background,
-.reveal > .backgrounds .slide-background[data-background-transition='none'] {
+.reveal[data-background-transition="none"] > .backgrounds .slide-background,
+.reveal > .backgrounds .slide-background[data-background-transition="none"] {
   transition: none;
 }
 
 /* Slide */
-.reveal[data-background-transition='slide'] > .backgrounds .slide-background,
-.reveal > .backgrounds .slide-background[data-background-transition='slide'] {
+.reveal[data-background-transition="slide"] > .backgrounds .slide-background,
+.reveal > .backgrounds .slide-background[data-background-transition="slide"] {
   opacity: 1;
   backface-visibility: hidden;
 }
 
-.reveal[data-background-transition='slide']
+.reveal[data-background-transition="slide"]
   > .backgrounds
   .slide-background.past,
 .reveal
   > .backgrounds
-  .slide-background.past[data-background-transition='slide'] {
+  .slide-background.past[data-background-transition="slide"] {
   transform: translate(-100%, 0);
 }
 
-.reveal[data-background-transition='slide']
+.reveal[data-background-transition="slide"]
   > .backgrounds
   .slide-background.future,
 .reveal
   > .backgrounds
-  .slide-background.future[data-background-transition='slide'] {
+  .slide-background.future[data-background-transition="slide"] {
   transform: translate(100%, 0);
 }
 
-.reveal[data-background-transition='slide']
+.reveal[data-background-transition="slide"]
   > .backgrounds
   .slide-background
   > .slide-background.past,
 .reveal
   > .backgrounds
   .slide-background
-  > .slide-background.past[data-background-transition='slide'] {
+  > .slide-background.past[data-background-transition="slide"] {
   transform: translate(0, -100%);
 }
 
-.reveal[data-background-transition='slide']
+.reveal[data-background-transition="slide"]
   > .backgrounds
   .slide-background
   > .slide-background.future,
 .reveal
   > .backgrounds
   .slide-background
-  > .slide-background.future[data-background-transition='slide'] {
+  > .slide-background.future[data-background-transition="slide"] {
   transform: translate(0, 100%);
 }
 
 /* Convex */
-.reveal[data-background-transition='convex']
+.reveal[data-background-transition="convex"]
   > .backgrounds
   .slide-background.past,
 .reveal
   > .backgrounds
-  .slide-background.past[data-background-transition='convex'] {
+  .slide-background.past[data-background-transition="convex"] {
   opacity: 0;
   transform: translate3d(-100%, 0, 0) rotateY(-90deg) translate3d(-100%, 0, 0);
 }
 
-.reveal[data-background-transition='convex']
+.reveal[data-background-transition="convex"]
   > .backgrounds
   .slide-background.future,
 .reveal
   > .backgrounds
-  .slide-background.future[data-background-transition='convex'] {
+  .slide-background.future[data-background-transition="convex"] {
   opacity: 0;
   transform: translate3d(100%, 0, 0) rotateY(90deg) translate3d(100%, 0, 0);
 }
 
-.reveal[data-background-transition='convex']
+.reveal[data-background-transition="convex"]
   > .backgrounds
   .slide-background
   > .slide-background.past,
 .reveal
   > .backgrounds
   .slide-background
-  > .slide-background.past[data-background-transition='convex'] {
+  > .slide-background.past[data-background-transition="convex"] {
   opacity: 0;
   transform: translate3d(0, -100%, 0) rotateX(90deg) translate3d(0, -100%, 0);
 }
 
-.reveal[data-background-transition='convex']
+.reveal[data-background-transition="convex"]
   > .backgrounds
   .slide-background
   > .slide-background.future,
 .reveal
   > .backgrounds
   .slide-background
-  > .slide-background.future[data-background-transition='convex'] {
+  > .slide-background.future[data-background-transition="convex"] {
   opacity: 0;
   transform: translate3d(0, 100%, 0) rotateX(-90deg) translate3d(0, 100%, 0);
 }
 
 /* Concave */
-.reveal[data-background-transition='concave']
+.reveal[data-background-transition="concave"]
   > .backgrounds
   .slide-background.past,
 .reveal
   > .backgrounds
-  .slide-background.past[data-background-transition='concave'] {
+  .slide-background.past[data-background-transition="concave"] {
   opacity: 0;
   transform: translate3d(-100%, 0, 0) rotateY(90deg) translate3d(-100%, 0, 0);
 }
 
-.reveal[data-background-transition='concave']
+.reveal[data-background-transition="concave"]
   > .backgrounds
   .slide-background.future,
 .reveal
   > .backgrounds
-  .slide-background.future[data-background-transition='concave'] {
+  .slide-background.future[data-background-transition="concave"] {
   opacity: 0;
   transform: translate3d(100%, 0, 0) rotateY(-90deg) translate3d(100%, 0, 0);
 }
 
-.reveal[data-background-transition='concave']
+.reveal[data-background-transition="concave"]
   > .backgrounds
   .slide-background
   > .slide-background.past,
 .reveal
   > .backgrounds
   .slide-background
-  > .slide-background.past[data-background-transition='concave'] {
+  > .slide-background.past[data-background-transition="concave"] {
   opacity: 0;
   transform: translate3d(0, -100%, 0) rotateX(-90deg) translate3d(0, -100%, 0);
 }
 
-.reveal[data-background-transition='concave']
+.reveal[data-background-transition="concave"]
   > .backgrounds
   .slide-background
   > .slide-background.future,
 .reveal
   > .backgrounds
   .slide-background
-  > .slide-background.future[data-background-transition='concave'] {
+  > .slide-background.future[data-background-transition="concave"] {
   opacity: 0;
   transform: translate3d(0, 100%, 0) rotateX(90deg) translate3d(0, 100%, 0);
 }
 
 /* Zoom */
-.reveal[data-background-transition='zoom'] > .backgrounds .slide-background,
-.reveal > .backgrounds .slide-background[data-background-transition='zoom'] {
+.reveal[data-background-transition="zoom"] > .backgrounds .slide-background,
+.reveal > .backgrounds .slide-background[data-background-transition="zoom"] {
   transition-timing-function: ease;
 }
 
-.reveal[data-background-transition='zoom']
+.reveal[data-background-transition="zoom"]
   > .backgrounds
   .slide-background.past,
 .reveal
   > .backgrounds
-  .slide-background.past[data-background-transition='zoom'] {
+  .slide-background.past[data-background-transition="zoom"] {
   opacity: 0;
   visibility: hidden;
   transform: scale(16);
 }
 
-.reveal[data-background-transition='zoom']
+.reveal[data-background-transition="zoom"]
   > .backgrounds
   .slide-background.future,
 .reveal
   > .backgrounds
-  .slide-background.future[data-background-transition='zoom'] {
+  .slide-background.future[data-background-transition="zoom"] {
   opacity: 0;
   visibility: hidden;
   transform: scale(0.2);
 }
 
-.reveal[data-background-transition='zoom']
+.reveal[data-background-transition="zoom"]
   > .backgrounds
   .slide-background
   > .slide-background.past,
 .reveal
   > .backgrounds
   .slide-background
-  > .slide-background.past[data-background-transition='zoom'] {
+  > .slide-background.past[data-background-transition="zoom"] {
   opacity: 0;
   visibility: hidden;
   transform: scale(16);
 }
 
-.reveal[data-background-transition='zoom']
+.reveal[data-background-transition="zoom"]
   > .backgrounds
   .slide-background
   > .slide-background.future,
 .reveal
   > .backgrounds
   .slide-background
-  > .slide-background.future[data-background-transition='zoom'] {
+  > .slide-background.future[data-background-transition="zoom"] {
   opacity: 0;
   visibility: hidden;
   transform: scale(0.2);
 }
 
 /* Global transition speed settings */
-.reveal[data-transition-speed='fast'] > .backgrounds .slide-background {
+.reveal[data-transition-speed="fast"] > .backgrounds .slide-background {
   transition-duration: 400ms;
 }
 
-.reveal[data-transition-speed='slow'] > .backgrounds .slide-background {
+.reveal[data-transition-speed="slow"] > .backgrounds .slide-background {
   transition-duration: 1200ms;
 }
 
@@ -1423,13 +1423,13 @@ $controlsArrowAngleActive: 36deg;
  * AUTO ANIMATE
  *********************************************/
 
-.reveal [data-auto-animate-target^='unmatched'] {
+.reveal [data-auto-animate-target^="unmatched"] {
   will-change: opacity;
 }
 
 .reveal
-  section[data-auto-animate]:not(.stack):not([data-auto-animate='running'])
-  [data-auto-animate-target^='unmatched'] {
+  section[data-auto-animate]:not(.stack):not([data-auto-animate="running"])
+  [data-auto-animate-target^="unmatched"] {
   opacity: 0;
 }
 
@@ -1553,11 +1553,11 @@ $controlsArrowAngleActive: 36deg;
 }
 
 /* Global transition speed settings */
-.reveal.has-parallax-background[data-transition-speed='fast'] .backgrounds {
+.reveal.has-parallax-background[data-transition-speed="fast"] .backgrounds {
   transition-duration: 400ms;
 }
 
-.reveal.has-parallax-background[data-transition-speed='slow'] .backgrounds {
+.reveal.has-parallax-background[data-transition-speed="slow"] .backgrounds {
   transition-duration: 1200ms;
 }
 
@@ -1875,7 +1875,7 @@ $notesWidthPercent: 25%;
   }
 
   &::before {
-    content: 'Speaker notes';
+    content: "Speaker notes";
     display: block;
     margin-bottom: 10px;
     opacity: 0.5;
@@ -1960,5 +1960,5 @@ $notesWidthPercent: 25%;
  * PRINT STYLES
  *********************************************/
 
-@import 'print/pdf.scss';
-@import 'print/paper.scss';
+@import "print/pdf.scss";
+@import "print/paper.scss";

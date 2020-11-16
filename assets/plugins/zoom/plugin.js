@@ -1,7 +1,4 @@
 /*!
- * reveal.js Zoom plugin
- */
-/*!
  * zoom.js 0.3 (modified for use with reveal.js)
  * http://lab.hakim.se/zoom-js
  * MIT licensed

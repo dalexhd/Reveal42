@@ -9,9 +9,6 @@
 @import "../template/settings";
 // ---------------------------------------------
 
-// Include theme-specific fonts
-@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro);
-
 // Override theme settings (see ../template/settings.scss)
 $backgroundColor: #fff;
 
@@ -19,8 +16,8 @@ $mainColor: #222;
 $headingColor: #222;
 
 $mainFontSize: 42px;
-$mainFont: 'Source Sans Pro', helvetica, sans-serif;
-$headingFont: 'Source Sans Pro', helvetica, sans-serif;
+$mainFont: "Source Sans Pro", helvetica, sans-serif;
+$headingFont: "Source Sans Pro", helvetica, sans-serif;
 $headingTextShadow: none;
 $headingLetterSpacing: normal;
 $headingTextTransform: uppercase;

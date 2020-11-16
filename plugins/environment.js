@@ -150,7 +150,7 @@ export default () => {
   };
   const environment = environments[process.env.NODE_ENV];
   console.log(
-    `%c Entorno detectado %c ${environment} %c  %c Panel creado por: %c Alex Borbolla %c https://github.com/dalexhd`,
+    `%c Entorno detectado %c ${environment} %c  %c Presentación creada por: %c Alex Borbolla %c https://github.com/dalexhd`,
     "background: #35495e; padding: 1px; border-radius: 3px 0 0 3px; color: #fff;",
     "background: #1972F5; padding: 1px; border-radius: 0 3px 3px 0; color: #fff;",
     "background:transparent",

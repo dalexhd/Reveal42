@@ -11,10 +11,6 @@
 @import "../template/settings";
 // ---------------------------------------------
 
-// Include theme-specific fonts
-@import url(~/assets/fonts/league-gothic/league-gothic.css);
-@import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
-
 // Override theme settings (see ../template/settings.scss)
 $headingTextShadow: 0 0 6px rgba(0, 0, 0, 0.2);
 $heading1TextShadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb,

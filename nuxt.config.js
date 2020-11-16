@@ -1,5 +1,6 @@
 import CopyPlugin from "copy-webpack-plugin";
 import minifyTheme from "minify-css-string";
+import redirectSSL from "redirect-ssl";
 
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
@@ -69,22 +70,37 @@ export default {
           }
         : {},
     ],
+    bodyAttrs: {
+      class: "reveal-viewport",
+    },
+    htmlAttrs: {
+      class: "reveal-full-page",
+    },
     noscript: [{ innerHTML: "This website requires JavaScript." }],
   },
   // Disable/Enable Server Side rendering
   ssr: true,
 
+  // Modern (https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-modern)
+  modern: true,
+
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
+    "~/assets/css/fonts.scss",
     "~/assets/css/reveal.scss",
     "~/assets/css/layout.scss",
+    "@mdi/font/scss/materialdesignicons.scss",
     "@fortawesome/fontawesome-free/css/all.css",
   ],
 
+  render: {
+    crossorigin: "anonymous",
+  },
+
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    { src: "~/plugins/vuex-persist", ssr: true },
-    { src: "~/plugins/environment", ssr: false },
+    { src: "~/plugins/vuex-persist", mode: "server" },
+    { src: "~/plugins/environment", mode: "client" },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -116,8 +132,11 @@ export default {
   ],
   vuetify: {
     theme: {
-      options: { minifyTheme },
+      options: {
+        minifyTheme,
+      },
     },
+    defaultAssets: false,
   },
   sentry: {
     dsn:
@@ -159,7 +178,13 @@ export default {
     },
   },
 
-  serverMiddleware: [{ path: "/auth", handler: "~/api/auth.js" }],
+  serverMiddleware: [
+    // Will register redirect-ssl npm package (Only for heroku)
+    redirectSSL.create({
+      enabled: process.env.NODE_ENV === "production" && process.env.DYNO,
+    }),
+    { path: "/auth", handler: "~/api/auth.js" },
+  ],
 
   pwa: {
     manifest: {
@@ -218,6 +243,13 @@ export default {
       css: ({ isDev }) => (isDev ? "css/[name].css" : "css/[contenthash].css"),
     },
     extend(config, ctx) {
+      const rule = config.module.rules.find(
+        (r) => r.test.toString() === "/\\.(png|jpe?g|gif|svg|webp|avif)$/i"
+      );
+      const loaderIndex = rule.use.findIndex(
+        (option) => option.loader === "url-loader"
+      );
+      rule.use[loaderIndex].options.limit = false;
       config.module.rules.push({
         test: /\.vtt$/i,
         loader: "file-loader",

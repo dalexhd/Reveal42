@@ -9,14 +9,10 @@
 @import "../template/settings";
 // ---------------------------------------------
 
-// Include theme-specific fonts
-@import url(https://fonts.googleapis.com/css?family=Quicksand:400,700,400italic,700italic);
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
-
 // Override theme settings (see ../template/settings.scss)
-$mainFont: 'Open Sans', sans-serif;
+$mainFont: "Open Sans", sans-serif;
 $mainColor: #333;
-$headingFont: 'Quicksand', sans-serif;
+$headingFont: "Quicksand", sans-serif;
 $headingColor: #333;
 $headingLetterSpacing: -0.08em;
 $headingTextShadow: none;
@@ -32,7 +28,7 @@ $selectionBackgroundColor: #134674;
 
 // Background generator
 @mixin bodyBackground() {
-  @include radial-gradient( #add9e4, #f7fbfc );
+  @include radial-gradient(#add9e4, #f7fbfc);
 }
 
 // Theme template ------------------------------
