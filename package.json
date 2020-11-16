@@ -62,6 +62,7 @@
     "eslint-plugin-nuxt": "^1.0.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-vue": "^7.1.0",
+    "eslint-plugin-vue-a11y": "0.0.31",
     "fibers": "^5.0.0",
     "prettier": "^2.1.2",
     "sass": "^1.29.0",
