@@ -142,13 +142,9 @@ const DomAnimator = function () {
   });
 };
 
-export default () => {
+export default ({ store, isDev }) => {
   const domAnimator = new DomAnimator();
-  const environments = {
-    development: "Desarrollo",
-    production: "Producción",
-  };
-  const environment = environments[process.env.NODE_ENV];
+  const environment = isDev ? "Desarrollo" : "Producción";
   console.log(
     `%c Entorno detectado %c ${environment} %c  %c Presentación creada por: %c Alex Borbolla %c https://github.com/dalexhd`,
     "background: #35495e; padding: 1px; border-radius: 3px 0 0 3px; color: #fff;",
@@ -158,7 +154,7 @@ export default () => {
     "background: #1972F5; padding: 1px; border-radius: 0 3px 3px 0; color: #fff;",
     "background:transparent"
   );
-  if (process.env.NODE_ENV === "production") {
+  if (!isDev && store.$auth.loggedIn) {
     const frame1 = [
       `       .-"-.       𝙀𝙉𝙏𝙊𝙍𝙉𝙊 𝘿𝙀𝙏𝙀𝘾𝙏𝘼𝘿𝙊: ${environment}`,
       `     _/.-.-.\\_`,

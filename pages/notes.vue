@@ -9,8 +9,8 @@
         <v-avatar size="40">
           <img
             class="object-cover"
-            :src="this.$store.state.auth.user.image_url"
-            :alt="this.$store.state.auth.user.displayname"
+            :src="this.$store.state.auth.user.image_url_small"
+            :alt="this.$store.state.auth.user.display_name"
           />
         </v-avatar>
         <v-btn class="ml-4" icon @click="$auth.logout()">

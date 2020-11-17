@@ -29,8 +29,8 @@
                 <v-avatar v-else size="55">
                   <img
                     class="object-cover"
-                    :src="$store.state.auth.user.image_url"
-                    :alt="$store.state.auth.user.displayname"
+                    :src="$store.state.auth.user.image_url_small"
+                    :alt="$store.state.auth.user.display_name"
                   />
                 </v-avatar>
               </template>

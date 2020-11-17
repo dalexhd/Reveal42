@@ -30,19 +30,6 @@ if (process.env.NODE_ENV === "production") {
 }
 app.use(session(sessionObject));
 
-// Create express router
-const router = express.Router();
-
-// Transform req & res to have the same API as express
-// So we can use res.status() & res.json()
-router.use((req, res, next) => {
-  Object.setPrototypeOf(req, app.request);
-  Object.setPrototypeOf(res, app.response);
-  req.res = res;
-  res.req = req;
-  next();
-});
-
 const getUserData = (token) => {
   return new Promise((resolve, reject) => {
     axios
@@ -70,8 +57,12 @@ const getUserData = (token) => {
           first_name: data.first_name,
           last_name: data.last_name,
           url: data.url,
-          displayname: data.displayname,
+          display_name: data.display_name,
           image_url: data.image_url,
+          image_url_small: data.image_url.replace(
+            data.login,
+            `small_${data.login}`
+          ),
           staff: data.staff,
         });
       })

@@ -10,9 +10,6 @@
     <client-only>
       <RevealScript />
     </client-only>
-    <client-only>
-      <Metomic v-if="!isSpeakerNotesWindow()" />
-    </client-only>
   </div>
 </template>
 <script>
@@ -35,13 +32,13 @@ export default {
         return import("../components/Enchanced");
       }
     },
-    Metomic() {
-      if (process.client) {
-        return import("../components/Metomic");
-      }
-    },
   },
   layout: "presentation",
+  mounted() {
+    if (!this.isSpeakerNotesWindow()) {
+      window.Metomic("ConsentManager:show");
+    }
+  },
   methods: {
     isSpeakerNotesWindow() {
       return process.client && !!window.location.search.match(/receiver/gi);
