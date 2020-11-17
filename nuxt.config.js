@@ -52,7 +52,7 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    { src: "~/plugins/vuex-persist", mode: "server" },
+    { src: "~/plugins/vuex-persist" },
     { src: "~/plugins/environment", mode: "client" },
   ],
 
