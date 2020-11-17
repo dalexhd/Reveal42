@@ -202,6 +202,11 @@ export default {
   computed: {
     ...mapState(["settings"]),
   },
+  methods: {
+    logout() {
+      this.$auth.logout();
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
