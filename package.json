@@ -13,7 +13,8 @@
     "generate": "nuxt generate",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint:style": "stylelint **/*.{vue,css} --ignore-path .gitignore",
-    "lint": "npm run lint:js && npm run lint:style"
+    "lint": "npm run lint:js && npm run lint:style",
+    "build:themes": "node-sass -o static/themes assets/css/theme/source --output-style compressed"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.1",

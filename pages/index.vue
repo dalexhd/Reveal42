@@ -34,6 +34,18 @@ export default {
     },
   },
   layout: "presentation",
+  head() {
+    return {
+      link: [
+        {
+          rel: "stylesheet",
+          href: "/themes/black.css",
+          id: "theme",
+          pbody: true,
+        },
+      ],
+    };
+  },
   mounted() {
     if (!this.isSpeakerNotesWindow()) {
       window.Metomic("ConsentManager:show");

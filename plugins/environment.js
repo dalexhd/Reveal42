@@ -154,7 +154,7 @@ export default ({ store, isDev }) => {
     "background: #1972F5; padding: 1px; border-radius: 0 3px 3px 0; color: #fff;",
     "background:transparent"
   );
-  if (!isDev && store.$auth.loggedIn) {
+  if (!isDev && store.state.auth.loggedIn) {
     const frame1 = [
       `       .-"-.       𝙀𝙉𝙏𝙊𝙍𝙉𝙊 𝘿𝙀𝙏𝙀𝘾𝙏𝘼𝘿𝙊: ${environment}`,
       `     _/.-.-.\\_`,

@@ -17,286 +17,300 @@
   font-size: $mainFontSize;
   font-weight: normal;
   color: $mainColor;
-}
 
-.reveal ::selection {
-  color: $selectionColor;
-  background: $selectionBackgroundColor;
-  text-shadow: none;
-}
+  ::selection,
+  ::-moz-selection {
+    color: $selectionColor;
+    background: $selectionBackgroundColor;
+    text-shadow: none;
+  }
 
-.reveal ::-moz-selection {
-  color: $selectionColor;
-  background: $selectionBackgroundColor;
-  text-shadow: none;
-}
+  .slides section {
+    line-height: 1.3;
+    font-weight: inherit;
 
-.reveal .slides section,
-.reveal .slides section > section {
-  line-height: 1.3;
-  font-weight: inherit;
-}
+    > section {
+      line-height: 1.3;
+      font-weight: inherit;
+    }
+  }
 
-/*********************************************
+  /*********************************************
  * HEADERS
  *********************************************/
 
-.reveal h1,
-.reveal h2,
-.reveal h3,
-.reveal h4,
-.reveal h5,
-.reveal h6 {
-  margin: $headingMargin;
-  color: $headingColor;
-  font-family: $headingFont;
-  font-weight: $headingFontWeight;
-  line-height: $headingLineHeight;
-  letter-spacing: $headingLetterSpacing;
-  text-transform: $headingTextTransform;
-  text-shadow: $headingTextShadow;
-  word-wrap: break-word;
-}
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: $headingMargin;
+    color: $headingColor;
+    font-family: $headingFont;
+    font-weight: $headingFontWeight;
+    line-height: $headingLineHeight;
+    letter-spacing: $headingLetterSpacing;
+    text-transform: $headingTextTransform;
+    text-shadow: $headingTextShadow;
+    word-wrap: break-word;
+  }
 
-.reveal h1 {
-  font-size: $heading1Size;
-  text-shadow: $heading1TextShadow;
-}
-.reveal h2 {
-  font-size: $heading2Size;
-}
-.reveal h3 {
-  font-size: $heading3Size;
-}
-.reveal h4 {
-  font-size: $heading4Size;
-}
+  h1 {
+    font-size: $heading1Size;
+    text-shadow: $heading1TextShadow;
+  }
+  h2 {
+    font-size: $heading2Size;
+  }
+  h3 {
+    font-size: $heading3Size;
+  }
+  h4 {
+    font-size: $heading4Size;
+  }
 
-/*********************************************
+  /*********************************************
  * OTHER
  *********************************************/
 
-.reveal p {
-  margin: $blockMargin 0;
-  line-height: 1.3;
-}
+  p {
+    margin: $blockMargin 0;
+    line-height: 1.3;
+  }
 
-/* Ensure certain elements are never larger than the slide itself */
-.reveal img,
-.reveal video,
-.reveal iframe {
-  max-width: 95%;
-  max-height: 95%;
-}
+  /* Ensure certain elements are never larger than the slide itself */
+  img,
+  video,
+  iframe {
+    max-width: 95%;
+    max-height: 95%;
+  }
 
-.reveal strong,
-.reveal b {
-  font-weight: bold;
-}
+  strong,
+  b {
+    font-weight: bold;
+  }
 
-.reveal em {
-  font-style: italic;
-}
+  em {
+    font-style: italic;
+  }
 
-.reveal ol,
-.reveal dl,
-.reveal ul {
-  display: inline-block;
-  text-align: left;
-  margin: 0 0 0 1em;
-}
+  ol,
+  dl,
+  ul {
+    display: inline-block;
+    text-align: left;
+    margin: 0 0 0 1em;
+  }
 
-.reveal ol {
-  list-style-type: decimal;
-}
+  ol {
+    list-style-type: decimal;
+  }
 
-.reveal ul {
-  list-style-type: disc;
-}
+  ul {
+    list-style-type: disc;
 
-.reveal ul ul {
-  list-style-type: square;
-}
+    ul {
+      list-style-type: square;
 
-.reveal ul ul ul {
-  list-style-type: circle;
-}
+      ul {
+        list-style-type: circle;
+      }
 
-.reveal ul ul,
-.reveal ul ol,
-.reveal ol ol,
-.reveal ol ul {
-  display: block;
-  margin-left: 40px;
-}
+      display: block;
+      margin-left: 40px;
+    }
 
-.reveal dt {
-  font-weight: bold;
-}
+    ol {
+      display: block;
+      margin-left: 40px;
+    }
+  }
+  ol {
+    ol,
+    ul {
+      display: block;
+      margin-left: 40px;
+    }
+  }
 
-.reveal dd {
-  margin-left: 40px;
-}
+  dt {
+    font-weight: bold;
+  }
 
-.reveal blockquote {
-  display: block;
-  position: relative;
-  width: 70%;
-  margin: $blockMargin auto;
-  padding: 5px;
-  font-style: italic;
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
-}
+  dd {
+    margin-left: 40px;
+  }
 
-.reveal blockquote p:first-child,
-.reveal blockquote p:last-child {
-  display: inline-block;
-}
+  blockquote {
+    display: block;
+    position: relative;
+    width: 70%;
+    margin: $blockMargin auto;
+    padding: 5px;
+    font-style: italic;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
 
-.reveal q {
-  font-style: italic;
-}
+    p {
+      &:first-child,
+      &:last-child {
+        display: inline-block;
+      }
+    }
+  }
 
-.reveal pre {
-  display: block;
-  position: relative;
-  width: 90%;
-  margin: $blockMargin auto;
-  text-align: left;
-  font-size: 0.55em;
-  font-family: $codeFont;
-  line-height: 1.2em;
-  word-wrap: break-word;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-}
+  q {
+    font-style: italic;
+  }
 
-.reveal code {
-  font-family: $codeFont;
-  text-transform: none;
-}
+  pre {
+    display: block;
+    position: relative;
+    width: 90%;
+    margin: $blockMargin auto;
+    text-align: left;
+    font-size: 0.55em;
+    font-family: monospace;
+    line-height: 1.2em;
+    word-wrap: break-word;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  }
 
-.reveal pre code {
-  display: block;
-  padding: 5px;
-  overflow: auto;
-  max-height: 400px;
-  word-wrap: normal;
-}
+  code {
+    font-family: $codeFont;
+    text-transform: none;
+  }
 
-.reveal table {
-  margin: auto;
-  border-collapse: collapse;
-  border-spacing: 0;
-}
+  pre code {
+    display: block;
+    padding: 5px;
+    overflow: auto;
+    max-height: 400px;
+    word-wrap: normal;
+  }
 
-.reveal table th {
-  font-weight: bold;
-}
+  table {
+    margin: auto;
+    border-collapse: collapse;
+    border-spacing: 0;
 
-.reveal table th,
-.reveal table td {
-  text-align: left;
-  padding: 0.2em 0.5em 0.2em 0.5em;
-  border-bottom: 1px solid;
-}
+    th {
+      font-weight: bold;
+      text-align: left;
+      padding: 0.2em 0.5em 0.2em 0.5em;
+      border-bottom: 1px solid;
+    }
 
-.reveal table th[align="center"],
-.reveal table td[align="center"] {
-  text-align: center;
-}
+    td {
+      text-align: left;
+      padding: 0.2em 0.5em 0.2em 0.5em;
+      border-bottom: 1px solid;
+    }
 
-.reveal table th[align="right"],
-.reveal table td[align="right"] {
-  text-align: right;
-}
+    th[align="center"],
+    td[align="center"] {
+      text-align: center;
+    }
 
-.reveal table tbody tr:last-child th,
-.reveal table tbody tr:last-child td {
-  border-bottom: none;
-}
+    th[align="right"],
+    td[align="right"] {
+      text-align: right;
+    }
 
-.reveal sup {
-  vertical-align: super;
-  font-size: smaller;
-}
+    tbody tr:last-child {
+      th,
+      td {
+        border-bottom: none;
+      }
+    }
+  }
 
-.reveal sub {
-  vertical-align: sub;
-  font-size: smaller;
-}
+  sup {
+    vertical-align: super;
+    font-size: smaller;
+  }
 
-.reveal small {
-  display: inline-block;
-  font-size: 0.6em;
-  line-height: 1.2em;
-  vertical-align: top;
-}
+  sub {
+    vertical-align: sub;
+    font-size: smaller;
+  }
+  small {
+    display: inline-block;
+    font-size: 0.6em;
+    line-height: 1.2em;
+    vertical-align: top;
 
-.reveal small * {
-  vertical-align: top;
-}
+    * {
+      vertical-align: top;
+    }
+  }
 
-.reveal img {
-  margin: $blockMargin 0;
-  // Aspect ratio fix
-  object-fit: contain;
-}
+  img {
+    margin: 20px 0;
+    // Aspect ratio fix
 
-/*********************************************
+    object-fit: contain;
+  }
+
+  /*********************************************
  * LINKS
  *********************************************/
 
-.reveal a {
-  color: $linkColor;
-  text-decoration: none;
-  transition: color 0.15s ease;
-}
+  a {
+    color: $linkColor;
+    text-decoration: none;
+    transition: color 0.15s ease;
 
-.reveal a:hover {
-  color: $linkColorHover;
-  text-shadow: none;
-  border: none;
-}
+    &:hover {
+      color: $linkColorHover;
+      text-shadow: none;
+      border: none;
+    }
+  }
 
-.reveal .roll span::after {
-  color: #fff;
-  background: darken($linkColor, 15%);
-}
+  .roll span::after {
+    color: #fff;
+    background: darken($linkColor, 15%);
+  }
 
-/*********************************************
+  /*********************************************
  * Frame helper
  *********************************************/
 
-.reveal .r-frame {
-  border: 4px solid $mainColor;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-}
+  .r-frame {
+    border: 4px solid $mainColor;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  }
 
-.reveal a .r-frame {
-  transition: all 0.15s linear;
-}
+  a {
+    .r-frame {
+      transition: all 0.15s linear;
+    }
 
-.reveal a:hover .r-frame {
-  border-color: $linkColor;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.55);
-}
+    &:hover .r-frame {
+      border-color: $linkColor;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.55);
+    }
+  }
 
-/*********************************************
+  /*********************************************
  * NAVIGATION CONTROLS
  *********************************************/
 
-.reveal .controls {
-  color: $linkColor;
-}
+  .controls {
+    color: $linkColor;
+  }
 
-/*********************************************
+  /*********************************************
  * PROGRESS BAR
  *********************************************/
 
-.reveal .progress {
-  background: rgba(0, 0, 0, 0.2);
-  color: $linkColor;
+  .progress {
+    background: rgba(0, 0, 0, 0.2);
+    color: $linkColor;
+  }
 }
 
 /*********************************************

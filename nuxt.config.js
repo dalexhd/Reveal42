@@ -86,6 +86,7 @@ export default {
     "~/assets/css/fonts.scss",
     "~/assets/css/reveal.scss",
     "~/assets/css/layout.scss",
+    "plyr/src/sass/plyr.scss",
     "@mdi/font/scss/materialdesignicons.scss",
     "@fortawesome/fontawesome-free/css/all.css",
   ],
@@ -240,7 +241,9 @@ export default {
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
     publicPath: "/dist/",
-    extractCSS: true,
+    extractCSS: {
+      splitChunks: true,
+    },
     cssSourceMap: process.env.NODE_ENV !== "production",
     filenames: {
       app: ({ isDev }) => (isDev ? "js/[name].js" : "js/[contenthash].js"),

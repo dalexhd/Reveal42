@@ -7,21 +7,17 @@
   --plyr-font-size-xlarge: 45px;
 }
 
-div {
-  &.slide-background.present[data-background-hash*="youtube"] {
-    > .slide-background-content {
-      pointer-events: none;
-      filter: blur(20px);
-      opacity: 0.4;
-    }
+div.slide-background.present {
+  &[data-background-hash*="youtube"] > .slide-background-content {
+    pointer-events: none;
+    filter: blur(20px);
+    opacity: 0.4;
   }
 
-  &.slide-background.present[data-background-hash*="background"] {
-    > .slide-background-content {
-      pointer-events: none;
-      filter: blur(30px);
-      opacity: 0.4;
-    }
+  &[data-background-hash*="background"] > .slide-background-content {
+    pointer-events: none;
+    filter: blur(30px);
+    opacity: 0.4;
   }
 }
 
@@ -43,66 +39,66 @@ img.silhouette {
   top: 0;
 }
 
-.stream-pointer.has-position.visible {
-  visibility: visible;
-  opacity: 1;
-}
-
-.stream-pointer svg {
-  position: relative;
-  left: -28%;
-  top: -9%;
-}
-
-.stream-pointer svg path {
-  fill: #000;
-  stroke: #fff;
-  stroke-width: 1px;
-}
-
-.stream-pointer::before,
-.stream-pointer::after {
-  content: "";
-  position: absolute;
-  width: 1em;
-  height: 1em;
-  left: -0.5em;
-  top: -0.5em;
-  border-radius: 1em;
-  background-color: rgba(27, 174, 225, 0.5);
-  z-index: -1;
-  opacity: 0;
-}
-
-.stream-pointer::before {
-  -webkit-transform: scale(1);
-  transform: scale(1);
-  -webkit-transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.stream-pointer.is-down::before {
-  opacity: 1;
-  -webkit-transform: scale(0.3);
-  transform: scale(0.3);
-}
-
-.stream-pointer::after {
-  -webkit-transform: scale(2);
-  transform: scale(2);
-  -webkit-transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.stream-pointer.is-down::after {
-  opacity: 1;
-  -webkit-transform: scale(0);
-  transform: scale(0);
-  -webkit-transition: none;
-  transition: none;
-}
-
 .stream-pointer {
+  &.has-position.visible {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  svg {
+    position: relative;
+    left: -28%;
+    top: -9%;
+
+    path {
+      fill: #000;
+      stroke: #fff;
+      stroke-width: 1px;
+    }
+  }
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    width: 1em;
+    height: 1em;
+    left: -0.5em;
+    top: -0.5em;
+    border-radius: 1em;
+    background-color: rgba(27, 174, 225, 0.5);
+    z-index: -1;
+    opacity: 0;
+  }
+
+  &::before {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  &.is-down::before {
+    opacity: 1;
+    -webkit-transform: scale(0.3);
+    transform: scale(0.3);
+  }
+
+  &::after {
+    -webkit-transform: scale(2);
+    transform: scale(2);
+    -webkit-transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  &.is-down::after {
+    opacity: 1;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+    -webkit-transition: none;
+    transition: none;
+  }
+
   position: absolute;
   top: 0;
   left: 0;
@@ -117,13 +113,16 @@ img.silhouette {
   -webkit-transition: visibility 0.2s ease, opacity 0.2s ease;
   transition: visibility 0.2s ease, opacity 0.2s ease;
 }
+
 .demo-logo {
   margin: 0 auto 4rem auto;
   background: transparent;
 }
+
 div.slide-background-content > [data-placeholder-container^="@metomic"] {
   width: 100% !important;
   height: 100% !important;
+
   > iframe[type="text/x-metomic"] {
     max-width: 100% !important;
     max-height: 100% !important;

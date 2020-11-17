@@ -47,8 +47,8 @@ export default {
       // viewDistance: Number.MAX_VALUE,
       // mobileViewDistance: Number.MAX_VALUE,
       menu: {
-        themes: true,
-        themesPath: "/dist/theme",
+        themes: Reveal.role === "presenter",
+        themesPath: "/themes",
         markers: false,
       },
       chart: {},
