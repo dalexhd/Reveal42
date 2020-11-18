@@ -14,7 +14,7 @@
           />
         </v-avatar>
         <v-btn class="ml-4" icon @click="$auth.logout()">
-          <v-icon>mdi-logout</v-icon>
+          <v-icon>{{ icons.mdiLogout }}</v-icon>
         </v-btn>
       </div>
     </v-app-bar>
@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import { mdiLogout } from "@mdi/js";
 export default {
   middleware: "auth",
   data: () => ({
@@ -58,6 +59,9 @@ export default {
       "transition=none",
       "backgroundTransition=none",
     ].join("&"),
+    icons: {
+      mdiLogout,
+    },
   }),
   computed: {
     currentUrl() {

@@ -123,9 +123,7 @@
         <h1>¿Quién soy?</h1>
       </section>
       <section data-auto-animate>
-        <aside v-if="$store.state.auth.loggedIn" class="notes">
-          Nombre, Años, Trabajo
-        </aside>
+        <aside v-if="$auth.loggedIn" class="notes">Nombre, Años, Trabajo</aside>
         <h1>¿Quién soy?</h1>
         <img data-src="@/assets/img/avatar.jpeg" alt="Yo" height="150" />
         <p class="fragment fade-in-then-semi-out">Me llamo Alex Borbolla</p>

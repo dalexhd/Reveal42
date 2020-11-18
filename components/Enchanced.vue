@@ -1,12 +1,13 @@
 <template>
   <v-app id="inspire">
-    <div>
+    <div @keydown.esc="checkSpeedDial">
       <v-speed-dial
         v-model="fab"
         top
         right
         :direction="$vuetify.breakpoint.mobile ? 'left' : 'bottom'"
         transition="fab-transition"
+        class="absolute"
       >
         <template #activator>
           <v-hover v-slot="{ hover }">
@@ -16,7 +17,7 @@
               dark
               fab
             >
-              <v-icon v-if="fab">mdi-close</v-icon>
+              <v-icon v-if="fab">{{ icons.mdiClose }}</v-icon>
               <template v-else>
                 <v-icon
                   v-if="
@@ -24,7 +25,7 @@
                     (hover && !$vuetify.breakpoint.mobile)
                   "
                 >
-                  mdi-menu
+                  {{ icons.mdiMenu }}
                 </v-icon>
                 <v-avatar v-else size="55">
                   <img
@@ -96,10 +97,33 @@
               @click.prevent="logout"
               v-on="on"
             >
-              <v-icon>mdi-logout</v-icon>
+              <v-icon>{{ icons.mdiLogout }}</v-icon>
             </v-btn>
           </template>
           <span>Cerrar sesión</span>
+        </v-tooltip>
+        <v-tooltip
+          v-else
+          :left="!$vuetify.breakpoint.mobile"
+          :bottom="$vuetify.breakpoint.mobile"
+          :open-delay="500"
+        >
+          <template #activator="{ on, attrs }">
+            <v-btn
+              fab
+              dark
+              :small="!$vuetify.breakpoint.mobile"
+              :x-small="$vuetify.breakpoint.mobile"
+              color="warning"
+              v-bind="attrs"
+              elevation="7"
+              @click.prevent="sheet = true"
+              v-on="on"
+            >
+              <v-icon>{{ icons.mdiLoginVariant }}</v-icon>
+            </v-btn>
+          </template>
+          <span>Iniciar sesión</span>
         </v-tooltip>
       </v-speed-dial>
       <span
@@ -110,19 +134,8 @@
         {{ $store.state.auth.user.role }}
       </span>
     </div>
-    <div v-if="!$store.state.auth.loggedIn" class="text-center">
+    <div v-if="!$store.state.auth.loggedIn">
       <v-bottom-sheet v-model="sheet" persistent>
-        <template #activator="{ on, attrs }">
-          <v-btn
-            color="purple"
-            dark
-            v-bind="attrs"
-            style="z-index: 99999"
-            v-on="on"
-          >
-            Iniciar sesión
-          </v-btn>
-        </template>
         <v-toolbar color="primary" dark>
           <v-toolbar-title>
             Inicia sesión con cualquira de estos métodos para obtener una
@@ -130,7 +143,7 @@
           </v-toolbar-title>
           <v-spacer></v-spacer>
           <v-btn icon @click="sheet = false">
-            <v-icon>mdi-close</v-icon>
+            <v-icon>{{ icons.mdiClose }}</v-icon>
           </v-btn>
         </v-toolbar>
         <v-list>
@@ -155,9 +168,28 @@
 <script>
 /* eslint-disable object-shorthand */
 import { mapState } from "vuex";
+import {
+  mdiLoginVariant,
+  mdiAccount,
+  mdiClose,
+  mdiLogout,
+  mdiVolumeOff,
+  mdiVolumeHigh,
+  mdiSubtitles,
+  mdiTeach,
+  mdiTransition,
+  mdiMenu,
+} from "@mdi/js";
 export default {
   name: "Enchanced",
   data: () => ({
+    icons: {
+      mdiLoginVariant,
+      mdiAccount,
+      mdiClose,
+      mdiLogout,
+      mdiMenu,
+    },
     fab: false,
     sheet: false,
     voting: true,
@@ -173,28 +205,28 @@ export default {
         property: "muted",
         toggle: "toggleAudio",
         color: ["gray", "primary"],
-        icon: ["mdi-volume-off", "mdi-volume-high"],
+        icon: [mdiVolumeOff, mdiVolumeHigh],
         tooltip: ["Activar sonido", "Desactivar sonido"],
       },
       {
         property: "subtitles",
         toggle: "toggleSubtitles",
         color: ["primary", "gray"],
-        icon: ["mdi-subtitles", "mdi-subtitles"],
+        icon: [mdiSubtitles, mdiSubtitles],
         tooltip: ["Desactivar subtítulos", "Activar subtítulos"],
       },
       {
         property: "follow",
         toggle: "toggleFollow",
         color: ["primary", "gray"],
-        icon: ["mdi-teach", "mdi-teach"],
+        icon: [mdiTeach, mdiTeach],
         tooltip: ["Desactivar seguimiento", "Activar seguimiento"],
       },
       {
         property: "particles",
         toggle: "toggleParticles",
         color: ["primary", "gray"],
-        icon: ["mdi-transition", "mdi-transition"],
+        icon: [mdiTransition, mdiTransition],
         tooltip: ["Desactivar partículas", "Activar partículas"],
       },
     ],
@@ -206,15 +238,19 @@ export default {
     logout() {
       this.$auth.logout();
     },
+    checkSpeedDial(event) {
+      console.log(event);
+      if (this.fab) {
+        event.stopPropagation();
+        this.fab = false;
+      }
+    },
   },
 };
 </script>
 <style lang="scss" scoped>
 .v-application {
   background: none !important;
-}
-.v-speed-dial {
-  position: absolute;
 }
 .user-info {
   position: absolute;
@@ -228,5 +264,8 @@ export default {
   text-transform: capitalize;
   background: white;
   z-index: 4;
+}
+.login-btn {
+  z-index: 1;
 }
 </style>
