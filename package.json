@@ -46,7 +46,7 @@
     "plyr": "^3.6.2",
     "redirect-ssl": "^2.0.0",
     "redis": "^3.0.2",
-    "socket.io": "^2.3.0",
+    "socket.io": "^3.0.2",
     "socket.io-client": "2.3.0",
     "tailwindcss": "^1.9.6",
     "tsparticles": "^1.18.11",
