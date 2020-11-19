@@ -239,7 +239,6 @@ export default {
       this.$auth.logout();
     },
     checkSpeedDial(event) {
-      console.log(event);
       if (this.fab) {
         event.stopPropagation();
         this.fab = false;

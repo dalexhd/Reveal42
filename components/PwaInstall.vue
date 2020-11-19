@@ -29,11 +29,13 @@ export default {
       },
     };
   },
-  mounted() {
+  beforeMount() {
     window.addEventListener("beforeinstallprompt", (e) => {
       e.preventDefault();
       this.deferredPrompt = e;
-      this.snackbar = true;
+      setTimeout(() => {
+        this.snackbar = true;
+      }, 1500);
     });
     window.addEventListener("appinstalled", () => {
       this.deferredPrompt = null;
