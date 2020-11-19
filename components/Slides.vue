@@ -11,7 +11,7 @@
           rel="noopener noreferrer"
         >
           <img
-            data-src="@/assets/img/42logo.png"
+            src="@/assets/img/42logo.png"
             alt="42 Madrid logo"
             class="demo-logo"
           />

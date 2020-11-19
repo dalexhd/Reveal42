@@ -567,7 +567,16 @@ export default class SlideContent {
 
     if (isAttachedToDOM && isVisible) {
       event.target.currentTime = 0;
-      event.target.play();
+      const promise = event.target.play();
+      if (promise !== undefined) {
+        promise
+          .then(() => {
+            console.log("Autoplay started");
+          })
+          .catch((error) => {
+            console.log(`Autoplay error: ${error}`);
+          });
+      }
     }
 
     event.target.removeEventListener("loadeddata", this.startEmbeddedMedia);

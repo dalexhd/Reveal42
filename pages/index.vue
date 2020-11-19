@@ -1,20 +1,24 @@
 <template>
-  <div id="app" class="reveal">
+  <v-app class="bg-transparent">
     <!-- Any section element inside of this container is displayed as a slide -->
+    <PwaInstall />
     <Enchanced />
-    <Slides />
+    <div id="app" class="reveal">
+      <Slides />
+      <client-only>
+        <RevealScript />
+      </client-only>
+    </div>
     <Particles v-if="$store.state.settings.particles" />
     <Snackbar />
-    <client-only>
-      <RevealScript />
-    </client-only>
-  </div>
+  </v-app>
 </template>
 <script>
 import Slides from "../components/Slides";
 import Particles from "../components/Particles";
 import Snackbar from "../components/Snackbar";
 import Enchanced from "../components/Enchanced";
+import PwaInstall from "../components/PwaInstall";
 
 export default {
   components: {
@@ -22,6 +26,7 @@ export default {
     Particles,
     Enchanced,
     Snackbar,
+    PwaInstall,
     RevealScript() {
       if (process.client) {
         return import("../components/RevealScript");

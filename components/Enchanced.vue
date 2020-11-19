@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire">
+  <div>
     <div @keydown.esc="checkSpeedDial">
       <v-speed-dial
         v-model="fab"
@@ -162,7 +162,7 @@
         </v-list>
       </v-bottom-sheet>
     </div>
-  </v-app>
+  </div>
 </template>
 
 <script>
@@ -249,9 +249,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.v-application {
-  background: none !important;
-}
 .user-info {
   position: absolute;
   bottom: 0;
