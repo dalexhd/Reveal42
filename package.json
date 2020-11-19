@@ -40,7 +40,7 @@
     "fontsource-roboto": "^3.0.3",
     "fontsource-source-sans-pro": "^3.0.9",
     "fontsource-ubuntu": "^3.0.9",
-    "highlight.js": "^10.3.2",
+    "highlight.js": "^10.4.0",
     "marked": "^1.2.4",
     "minify-css-string": "^1.0.0",
     "nuxt": "^2.14.7",
