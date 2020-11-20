@@ -41,7 +41,7 @@
     "fontsource-source-sans-pro": "^3.0.9",
     "fontsource-ubuntu": "^3.0.9",
     "highlight.js": "^10.3.2",
-    "marked": "^1.2.4",
+    "marked": "^1.2.5",
     "minify-css-string": "^1.0.0",
     "nuxt": "^2.14.7",
     "plyr": "3.6.2",
