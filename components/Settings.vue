@@ -17,7 +17,7 @@
               dark
               fab
             >
-              <v-icon v-if="fab">{{ icons.mdiClose }}</v-icon>
+              <v-icon v-if="fab">$mdiClose</v-icon>
               <template v-else>
                 <v-icon
                   v-if="
@@ -25,7 +25,7 @@
                     (hover && !$vuetify.breakpoint.mobile)
                   "
                 >
-                  {{ icons.mdiMenu }}
+                  $mdiMenu
                 </v-icon>
                 <v-avatar v-else size="55">
                   <img
@@ -97,7 +97,7 @@
               @click.prevent="logout"
               v-on="on"
             >
-              <v-icon>{{ icons.mdiLogout }}</v-icon>
+              <v-icon>$mdiLogout</v-icon>
             </v-btn>
           </template>
           <span>Cerrar sesión</span>
@@ -120,7 +120,7 @@
               @click.prevent="sheet = true"
               v-on="on"
             >
-              <v-icon>{{ icons.mdiLoginVariant }}</v-icon>
+              <v-icon>$mdiLoginVariant</v-icon>
             </v-btn>
           </template>
           <span>Iniciar sesión</span>
@@ -143,7 +143,7 @@
           </v-toolbar-title>
           <v-spacer></v-spacer>
           <v-btn icon @click="sheet = false">
-            <v-icon>{{ icons.mdiClose }}</v-icon>
+            <v-icon>$mdiClose</v-icon>
           </v-btn>
         </v-toolbar>
         <v-list>
@@ -168,28 +168,9 @@
 <script>
 /* eslint-disable object-shorthand */
 import { mapState } from "vuex";
-import {
-  mdiLoginVariant,
-  mdiAccount,
-  mdiClose,
-  mdiLogout,
-  mdiVolumeOff,
-  mdiVolumeHigh,
-  mdiSubtitles,
-  mdiTeach,
-  mdiTransition,
-  mdiMenu,
-} from "@mdi/js";
 export default {
-  name: "Enchanced",
+  name: "Settings",
   data: () => ({
-    icons: {
-      mdiLoginVariant,
-      mdiAccount,
-      mdiClose,
-      mdiLogout,
-      mdiMenu,
-    },
     fab: false,
     sheet: false,
     voting: true,
@@ -205,28 +186,28 @@ export default {
         property: "muted",
         toggle: "toggleAudio",
         color: ["gray", "primary"],
-        icon: [mdiVolumeOff, mdiVolumeHigh],
+        icon: ["$mdiVolumeOff", "$mdiVolumeHigh"],
         tooltip: ["Activar sonido", "Desactivar sonido"],
       },
       {
         property: "subtitles",
         toggle: "toggleSubtitles",
         color: ["primary", "gray"],
-        icon: [mdiSubtitles, mdiSubtitles],
+        icon: ["$mdiSubtitles", "$mdiSubtitles"],
         tooltip: ["Desactivar subtítulos", "Activar subtítulos"],
       },
       {
         property: "follow",
         toggle: "toggleFollow",
         color: ["primary", "gray"],
-        icon: [mdiTeach, mdiTeach],
+        icon: ["$mdiTeach", "$mdiTeach"],
         tooltip: ["Desactivar seguimiento", "Activar seguimiento"],
       },
       {
         property: "particles",
         toggle: "toggleParticles",
         color: ["primary", "gray"],
-        icon: [mdiTransition, mdiTransition],
+        icon: ["$mdiTransition", "$mdiTransition"],
         tooltip: ["Desactivar partículas", "Activar partículas"],
       },
     ],

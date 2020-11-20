@@ -1,6 +1,7 @@
 import CopyPlugin from "copy-webpack-plugin";
 import minifyTheme from "minify-css-string";
 import redirectSSL from "redirect-ssl";
+import icons from "./icons";
 
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
@@ -46,7 +47,6 @@ export default {
     "~/assets/css/reveal.scss",
     "~/assets/css/layout.scss",
     "plyr/src/sass/plyr.scss",
-    "@mdi/font/scss/materialdesignicons.scss",
     "@fortawesome/fontawesome-free/css/all.css",
   ],
 
@@ -54,6 +54,7 @@ export default {
   plugins: [
     { src: "~/plugins/vuex-persist" },
     { src: "~/plugins/environment", mode: "client" },
+    { src: "~/plugins/pwa", mode: "client" },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -87,6 +88,12 @@ export default {
     theme: {
       options: {
         minifyTheme,
+      },
+    },
+    icons: {
+      iconfont: "mdiSvg",
+      values: {
+        ...icons,
       },
     },
     defaultAssets: false,

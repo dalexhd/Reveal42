@@ -1,8 +1,12 @@
 <template>
-  <v-snackbar v-model="snackbar" multi-line :timeout="8000" light top>
-    <v-icon>
-      {{ icons.mdiArrowDownBoldHexagonOutline }}
-    </v-icon>
+  <v-snackbar
+    v-model="$store.state.pwa.prompt"
+    multi-line
+    :timeout="8000"
+    light
+    top
+  >
+    <v-icon>$mdiArrowDownBoldHexagonOutline</v-icon>
     Instalar presentación (recomendado)
     <template #action>
       <v-btn
@@ -17,37 +21,15 @@
   </v-snackbar>
 </template>
 <script>
-import { mdiArrowDownBoldHexagonOutline } from "@mdi/js";
 export default {
   name: "App",
-  data() {
-    return {
-      snackbar: false,
-      deferredPrompt: null,
-      icons: {
-        mdiArrowDownBoldHexagonOutline,
-      },
-    };
-  },
-  beforeMount() {
-    window.addEventListener("beforeinstallprompt", (e) => {
-      e.preventDefault();
-      this.deferredPrompt = e;
-      setTimeout(() => {
-        this.snackbar = true;
-      }, 1500);
-    });
-    window.addEventListener("appinstalled", () => {
-      this.deferredPrompt = null;
-    });
-  },
   methods: {
     dismiss() {
-      this.snackbar = false;
+      this.$store.state.pwa.prompt = false;
     },
     install() {
-      this.snackbar = false;
-      this.deferredPrompt.prompt();
+      this.$store.state.pwa.prompt = false;
+      this.$store.state.pwa.event.prompt();
     },
   },
 };

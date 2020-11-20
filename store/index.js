@@ -5,6 +5,10 @@ export const state = () => ({
     particles: true,
     follow: true,
   },
+  pwa: {
+    prompt: false,
+    event: null,
+  },
 });
 
 export const getters = {
@@ -36,5 +40,10 @@ export const mutations = {
   },
   toggleFollow(state, enabled) {
     state.settings.follow = enabled;
+  },
+  showPwaInstallationMessage(state, data) {
+    console.log(state, data);
+    state.pwa.prompt = true;
+    state.pwa.event = data;
   },
 };
