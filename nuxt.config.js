@@ -54,7 +54,6 @@ export default {
   plugins: [
     { src: "~/plugins/vuex-persist" },
     { src: "~/plugins/environment", mode: "client" },
-    { src: "~/plugins/pwa", mode: "client" },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -107,6 +106,14 @@ export default {
     redirect: {
       callback: "/callback",
     },
+    cookie: {
+      prefix: "auth.",
+      options: {
+        path: "/",
+        maxAge: 30 * 24 * 60 * 60, // days * hours * minutes * second => 30 days
+        secure: process.env.NODE_ENV === "production" && process.env.DYNO,
+      },
+    },
     strategies: {
       intra: {
         scheme: "oauth2",
@@ -124,7 +131,7 @@ export default {
         },
         refreshToken: {
           property: "refresh_token",
-          maxAge: 60 * 60 * 24 * 30,
+          maxAge: 30 * 24 * 60 * 60, // days * hours * minutes * second => 30 days
         },
         responseType: "code",
         grantType: "authorization_code",
@@ -153,6 +160,15 @@ export default {
       description:
         "Herramientas para ser un estudiante más productivo sin que nuestra cartera sufra ‍🎓",
       lang: "es",
+      fileName: "manifest.[ext]",
+      related_applications: [
+        {
+          platform: "webapp",
+          url: process.env.DYNO
+            ? "https://intra.dalexhd.dev/dist/manifest.json"
+            : "localhost" + process.env.PORT || 3000 + "/dist/manifest.json",
+        },
+      ],
     },
     meta: {
       charset: "utf-8",

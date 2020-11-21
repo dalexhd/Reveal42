@@ -44,6 +44,7 @@ export default {
       hash: true,
       controlsTutorial: false,
       navigationMode: "linear",
+      touch: false,
       // viewDistance: Number.MAX_VALUE,
       // mobileViewDistance: Number.MAX_VALUE,
       menu: {

@@ -1,179 +1,326 @@
 <template>
   <div>
-    <div @keydown.esc="checkSpeedDial">
-      <v-speed-dial
+    <v-hover v-slot="{ hover }">
+      <v-btn
         v-model="fab"
+        class="border-solid border-2 border-white-600"
         top
         right
-        :direction="$vuetify.breakpoint.mobile ? 'left' : 'bottom'"
-        transition="fab-transition"
-        class="absolute"
+        fab
+        fixed
+        @click.stop="menu = !menu"
       >
-        <template #activator>
-          <v-hover v-slot="{ hover }">
-            <v-btn
-              v-model="fab"
-              class="border-solid border-2 border-white-600"
-              dark
-              fab
-            >
-              <v-icon v-if="fab">$mdiClose</v-icon>
-              <template v-else>
-                <v-icon
-                  v-if="
-                    !$store.state.auth.loggedIn ||
-                    (hover && !$vuetify.breakpoint.mobile)
-                  "
-                >
-                  $mdiMenu
-                </v-icon>
-                <v-avatar v-else size="55">
-                  <img
-                    class="object-cover"
-                    :src="$store.state.auth.user.image_url_small"
-                    :alt="$store.state.auth.user.display_name"
-                  />
-                </v-avatar>
-              </template>
-            </v-btn>
-          </v-hover>
-        </template>
-        <v-tooltip
-          v-for="(menuItem, index) in menu"
-          :key="index"
-          :left="!$vuetify.breakpoint.mobile"
-          :bottom="$vuetify.breakpoint.mobile"
-        >
-          <template #activator="{ on, attrs }">
-            <v-btn
-              fab
-              dark
-              :small="!$vuetify.breakpoint.mobile"
-              :x-small="$vuetify.breakpoint.mobile"
-              :color="
-                settings[menuItem.property]
-                  ? menuItem.color[0]
-                  : menuItem.color[1]
-              "
-              v-bind="attrs"
-              elevation="7"
-              @click.stop="
-                $store.commit(menuItem.toggle, !settings[menuItem.property])
-              "
-              v-on="on"
-            >
-              <v-icon>
-                {{
-                  settings[menuItem.property]
-                    ? menuItem.icon[0]
-                    : menuItem.icon[1]
-                }}
-              </v-icon>
-            </v-btn>
-          </template>
-          <span>
-            {{
-              settings[menuItem.property]
-                ? menuItem.tooltip[0]
-                : menuItem.tooltip[1]
-            }}
-          </span>
-        </v-tooltip>
-        <v-tooltip
-          v-if="$store.state.auth.loggedIn"
-          :left="!$vuetify.breakpoint.mobile"
-          :bottom="$vuetify.breakpoint.mobile"
-          :open-delay="500"
-        >
-          <template #activator="{ on, attrs }">
-            <v-btn
-              fab
-              dark
-              :small="!$vuetify.breakpoint.mobile"
-              :x-small="$vuetify.breakpoint.mobile"
-              color="red"
-              v-bind="attrs"
-              elevation="7"
-              @click.prevent="logout"
-              v-on="on"
-            >
-              <v-icon>$mdiLogout</v-icon>
-            </v-btn>
-          </template>
-          <span>Cerrar sesión</span>
-        </v-tooltip>
-        <v-tooltip
-          v-else
-          :left="!$vuetify.breakpoint.mobile"
-          :bottom="$vuetify.breakpoint.mobile"
-          :open-delay="500"
-        >
-          <template #activator="{ on, attrs }">
-            <v-btn
-              fab
-              dark
-              :small="!$vuetify.breakpoint.mobile"
-              :x-small="$vuetify.breakpoint.mobile"
-              color="warning"
-              v-bind="attrs"
-              elevation="7"
-              @click.prevent="sheet = true"
-              v-on="on"
-            >
-              <v-icon>$mdiLoginVariant</v-icon>
-            </v-btn>
-          </template>
-          <span>Iniciar sesión</span>
-        </v-tooltip>
-      </v-speed-dial>
-      <span
-        v-if="$store.state.auth.loggedIn && !$vuetify.breakpoint.mobile && fab"
-        class="user-info"
-      >
-        Intra Id: {{ $store.state.auth.user.id }} | Role:
-        {{ $store.state.auth.user.role }}
-      </span>
-    </div>
-    <div v-if="!$store.state.auth.loggedIn">
-      <v-bottom-sheet v-model="sheet" persistent>
-        <v-toolbar color="primary" dark>
-          <v-toolbar-title>
-            Inicia sesión con cualquira de estos métodos para obtener una
-            experiencia completa.
-          </v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-btn icon @click="sheet = false">
-            <v-icon>$mdiClose</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-list>
-          <v-list-item
-            v-for="tile in tiles"
-            :key="tile.title"
-            @click.prevent="$auth.loginWith(tile.with)"
+        <v-icon v-if="fab">$mdiClose</v-icon>
+        <template v-else>
+          <v-icon
+            v-if="
+              !$store.state.auth.loggedIn ||
+              (hover && !$vuetify.breakpoint.mobile)
+            "
           >
-            <v-list-item-avatar>
-              <v-avatar size="32px" tile>
-                <img :src="tile.img" :alt="tile.title" />
-              </v-avatar>
-            </v-list-item-avatar>
-            <v-list-item-title>{{ tile.title }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-bottom-sheet>
-    </div>
+            $mdiMenu
+          </v-icon>
+          <v-avatar v-else size="55">
+            <img
+              class="object-cover"
+              :src="$store.state.auth.user.image_url_small"
+              :alt="$store.state.auth.user.display_name"
+            />
+          </v-avatar>
+        </template>
+      </v-btn>
+    </v-hover>
+    <v-navigation-drawer v-model="menu" fixed temporary right width="300">
+      <v-toolbar class="v-bar--underline" flat>
+        <div class="text-h6 font-weight-medium text--primary">Ajustes</div>
+        <v-spacer />
+        <v-btn icon @click="menu = !menu">
+          <v-icon>$mdiClose</v-icon>
+        </v-btn>
+      </v-toolbar>
+      <v-container>
+        <div>
+          <div class="mb-0 pl-1 text-subtitle-2">Aplicación (PWA)</div>
+          <v-item-group class="mx-auto row row--dense" mandatory>
+            <v-btn
+              v-if="!installed"
+              :text="false"
+              block
+              :color="`grey ${$vuetify.theme.dark ? 'darken-4' : 'lighten-3'}`"
+              depressed
+              :loading="installing"
+              :disabled="installing"
+              @click.stop="install"
+            >
+              <span>
+                Instalar aplicación
+                <v-icon right size="20">$mdiPlusCircle</v-icon>
+              </span>
+            </v-btn>
+            <v-btn
+              v-else
+              :text="false"
+              block
+              color="error"
+              class="mt-1"
+              depressed
+            >
+              <span>
+                Desinstalar
+                <v-icon right size="20">$mdiDelete</v-icon>
+              </span>
+            </v-btn>
+          </v-item-group>
+        </div>
+        <div class="mt-2 mb-3 mx-n3">
+          <v-divider />
+        </div>
+        <div>
+          <div class="mb-0 pl-1 pt-1 text-subtitle-2">Integraciones</div>
+          <v-sheet
+            :color="`grey ${$vuetify.theme.dark ? 'darken' : 'lighten'}-3`"
+            class="mt-1"
+          >
+            <v-item-group class="mx-auto row row--dense" mandatory>
+              <div class="flex justify-around">
+                <v-col cols="6">
+                  <v-hover v-slot="{ hover }">
+                    <v-btn
+                      depressed
+                      color="#292D39"
+                      :dark="!$vuetify.theme.dark"
+                      class="py-5"
+                      small
+                      rounded
+                      @click.stop="
+                        $store.state.auth.loggedIn
+                          ? $auth.logout()
+                          : $auth.loginWith('intra')
+                      "
+                    >
+                      Intranet
+                      <v-icon v-if="hover">{{
+                        $store.state.auth.loggedIn ? "$mdiLogout" : "$mdiLogin"
+                      }}</v-icon>
+                      <v-icon v-else>$mdi42</v-icon>
+                    </v-btn>
+                  </v-hover>
+                </v-col>
+                <v-col cols="6">
+                  <v-hover v-slot="{ hover }">
+                    <v-btn
+                      depressed
+                      color="#1ED760"
+                      :dark="!$vuetify.theme.dark"
+                      class="py-5"
+                      small
+                      rounded
+                    >
+                      Spotify
+                      <v-icon v-if="hover">$mdiLogin</v-icon>
+                      <v-icon v-else>$mdiSpotify</v-icon>
+                    </v-btn>
+                  </v-hover>
+                </v-col>
+              </div>
+            </v-item-group>
+          </v-sheet>
+        </div>
+        <div class="mt-2 mb-3 mx-n3">
+          <v-divider />
+        </div>
+        <div>
+          <div class="mb-0 pl-1 text-subtitle-2">Sonido</div>
+          <v-item-group
+            v-model="audio"
+            class="mx-auto row row--dense"
+            mandatory
+          >
+            <v-col :cols="audio ? 9 : 3">
+              <v-item :value="true">
+                <template #default="{ active, toggle }">
+                  <v-card
+                    :color="
+                      active
+                        ? 'primary'
+                        : `grey ${$vuetify.theme.dark ? 'darken' : 'lighten'}-3`
+                    "
+                    :dark="!$vuetify.theme.dark && active"
+                    class="v-card--group py-3 px-4 text-center position-relative cursor-pointer d-flex align-center justify-space-between"
+                    rounded
+                    flat
+                    @click="toggle"
+                  >
+                    <span v-if="audio">Desactivado</span>
+                    <v-icon>$mdiVolumeOff</v-icon>
+                  </v-card>
+                </template>
+              </v-item>
+            </v-col>
+            <v-col :cols="!audio ? 9 : 3">
+              <v-item :value="false">
+                <template #default="{ active, toggle }">
+                  <v-card
+                    :color="
+                      active
+                        ? 'primary'
+                        : `grey ${$vuetify.theme.dark ? 'darken' : 'lighten'}-3`
+                    "
+                    :dark="!$vuetify.theme.dark && active"
+                    class="v-card--group py-3 px-4 text-center position-relative cursor-pointer d-flex align-center justify-space-between"
+                    rounded
+                    flat
+                    @click="toggle"
+                  >
+                    <span v-if="!audio">Activado</span>
+                    <v-icon>$mdiVolumeHigh</v-icon>
+                  </v-card>
+                </template>
+              </v-item>
+            </v-col>
+          </v-item-group>
+        </div>
+        <div class="mt-2 mb-3 mx-n3">
+          <v-divider />
+        </div>
+        <div>
+          <div class="mb-0 pl-1 text-subtitle-2">Ajustes generales</div>
+          <v-list subheader three-line flat>
+            <v-list-item>
+              <template #default>
+                <v-list-item-content>
+                  <v-list-item-title>Subtítulos</v-list-item-title>
+                  <v-list-item-subtitle
+                    >Mostrar los subtítulos en los vídeos.</v-list-item-subtitle
+                  >
+                </v-list-item-content>
+                <v-list-item-action>
+                  <v-switch v-model="subtitles" inset></v-switch>
+                </v-list-item-action>
+              </template>
+            </v-list-item>
+            <v-divider inset></v-divider>
+            <v-list-item>
+              <template #default>
+                <v-list-item-content>
+                  <v-list-item-title>Partículas</v-list-item-title>
+                  <v-list-item-subtitle
+                    >Activar el efecto de partíclas en el
+                    fondo.</v-list-item-subtitle
+                  >
+                </v-list-item-content>
+                <v-list-item-action>
+                  <v-switch v-model="particles" inset></v-switch>
+                </v-list-item-action>
+              </template>
+            </v-list-item>
+            <v-divider inset></v-divider>
+
+            <v-list-item>
+              <template #default>
+                <v-list-item-content>
+                  <v-list-item-title>Seguimiento</v-list-item-title>
+                  <v-list-item-subtitle
+                    >Activar seguimiento junto al
+                    presentador.</v-list-item-subtitle
+                  >
+                </v-list-item-content>
+                <v-list-item-action>
+                  <v-switch v-model="follow" inset></v-switch>
+                </v-list-item-action>
+              </template>
+            </v-list-item>
+          </v-list>
+        </div>
+        <div class="mt-2 mb-3 mx-n3">
+          <v-divider />
+        </div>
+        <div>
+          <div class="mb-0 pl-1 text-subtitle-2">Tema</div>
+          <v-item-group
+            v-model="theme"
+            class="mx-auto row row--dense"
+            mandatory
+          >
+            <v-col cols="6">
+              <v-item value="light">
+                <template #default="{ active, toggle }">
+                  <v-card
+                    :color="
+                      active
+                        ? 'primary'
+                        : `grey ${$vuetify.theme.dark ? 'darken' : 'lighten'}-3`
+                    "
+                    :dark="!$vuetify.theme.dark && active"
+                    class="v-card--group py-3 px-4 text-center position-relative cursor-pointer d-flex align-center justify-space-between"
+                    rounded
+                    flat
+                    @click="toggle"
+                  >
+                    <span>Claro</span>
+                    <v-icon>$mdiWhiteBalanceSunny</v-icon>
+                  </v-card>
+                </template>
+              </v-item>
+            </v-col>
+            <v-col cols="6">
+              <v-item value="dark">
+                <template #default="{ active, toggle }">
+                  <v-card
+                    :color="
+                      active
+                        ? 'primary'
+                        : `grey ${$vuetify.theme.dark ? 'darken' : 'lighten'}-3`
+                    "
+                    :dark="!$vuetify.theme.dark && active"
+                    class="v-card--group py-3 px-4 text-center position-relative cursor-pointer d-flex align-center justify-space-between"
+                    rounded
+                    flat
+                    @click="toggle"
+                  >
+                    <span>Oscuro</span>
+                    <v-icon>$mdiWeatherNight</v-icon>
+                  </v-card>
+                </template>
+              </v-item>
+            </v-col>
+            <v-col cols="12">
+              <v-item value="system">
+                <template #default="{ active, toggle }">
+                  <v-card
+                    :color="
+                      active
+                        ? 'primary'
+                        : `grey ${$vuetify.theme.dark ? 'darken' : 'lighten'}-3`
+                    "
+                    :dark="!$vuetify.theme.dark && active"
+                    class="v-card--group py-3 px-4 text-center position-relative cursor-pointer d-flex align-center justify-space-between"
+                    rounded
+                    flat
+                    @click="toggle"
+                  >
+                    <span>Sistema</span>
+                    <v-icon>$mdiDesktopTowerMonitor</v-icon>
+                  </v-card>
+                </template>
+              </v-item>
+            </v-col>
+          </v-item-group>
+        </div>
+        <div class="mt-2 mb-3 mx-n3">
+          <v-divider />
+        </div>
+      </v-container>
+    </v-navigation-drawer>
   </div>
 </template>
 
 <script>
-/* eslint-disable object-shorthand */
 import { mapState } from "vuex";
 export default {
   name: "Settings",
   data: () => ({
     fab: false,
-    sheet: false,
-    voting: true,
     tiles: [
       {
         img: require("@/static/icon.png"),
@@ -181,39 +328,94 @@ export default {
         with: "intra",
       },
     ],
-    menu: [
-      {
-        property: "muted",
-        toggle: "toggleAudio",
-        color: ["gray", "primary"],
-        icon: ["$mdiVolumeOff", "$mdiVolumeHigh"],
-        tooltip: ["Activar sonido", "Desactivar sonido"],
-      },
-      {
-        property: "subtitles",
-        toggle: "toggleSubtitles",
-        color: ["primary", "gray"],
-        icon: ["$mdiSubtitles", "$mdiSubtitles"],
-        tooltip: ["Desactivar subtítulos", "Activar subtítulos"],
-      },
-      {
-        property: "follow",
-        toggle: "toggleFollow",
-        color: ["primary", "gray"],
-        icon: ["$mdiTeach", "$mdiTeach"],
-        tooltip: ["Desactivar seguimiento", "Activar seguimiento"],
-      },
-      {
-        property: "particles",
-        toggle: "toggleParticles",
-        color: ["primary", "gray"],
-        icon: ["$mdiTransition", "$mdiTransition"],
-        tooltip: ["Desactivar partículas", "Activar partículas"],
-      },
-    ],
+    installed: true,
+    installing: false,
+    deferredPrompt: null,
+    menu: false,
   }),
   computed: {
     ...mapState(["settings"]),
+    subtitles: {
+      get() {
+        return this.$store.state.settings.subtitles;
+      },
+      set(value) {
+        this.$store.commit("toggleSubtitles", value);
+      },
+    },
+    particles: {
+      get() {
+        return this.$store.state.settings.particles;
+      },
+      set(value) {
+        this.$store.commit("toggleParticles", value);
+      },
+    },
+    follow: {
+      get() {
+        return this.$store.state.settings.follow;
+      },
+      set(value) {
+        this.$store.commit("toggleFollow", value);
+      },
+    },
+    audio: {
+      get() {
+        return this.$store.state.settings.muted;
+      },
+      set(value) {
+        this.$store.commit("toggleAudio", value);
+      },
+    },
+    theme: {
+      get() {
+        return this.$store.state.settings.theme;
+      },
+      set(value) {
+        this.$store.commit("toggleTheme", value);
+        const theme = this.$store.state.settings.theme;
+        if (theme) {
+          if (theme === "system" && process.client) {
+            // eslint-disable-next-line nuxt/no-globals-in-created
+            const dark = window.matchMedia("(prefers-color-scheme: dark)")
+              .matches;
+            this.$vuetify.theme.dark = dark;
+          } else if (theme === "dark") {
+            this.$vuetify.theme.dark = true;
+          } else {
+            this.$vuetify.theme.dark = false;
+          }
+        }
+      },
+    },
+  },
+  created() {
+    const theme = this.$store.state.settings.theme;
+    if (process.client) {
+      if (theme) {
+        if (theme === "system") {
+          // eslint-disable-next-line nuxt/no-globals-in-created
+          const dark = window.matchMedia("(prefers-color-scheme: dark)")
+            .matches;
+          this.$vuetify.theme.dark = dark;
+        } else if (theme === "dark") {
+          this.$vuetify.theme.dark = true;
+        } else {
+          this.$vuetify.theme.dark = false;
+        }
+      }
+      // eslint-disable-next-line nuxt/no-globals-in-created
+      window.addEventListener("appinstalled", (e) => {
+        this.installed = true;
+      });
+      // eslint-disable-next-line nuxt/no-globals-in-created
+      window.addEventListener("beforeinstallprompt", (e) => {
+        e.preventDefault();
+        this.installed = false;
+        this.installing = false;
+        this.deferredPrompt = e;
+      });
+    }
   },
   methods: {
     logout() {
@@ -225,10 +427,31 @@ export default {
         this.fab = false;
       }
     },
+    install() {
+      if (this.deferredPrompt !== null) {
+        this.installing = true;
+        this.deferredPrompt.prompt();
+      }
+    },
   },
 };
 </script>
 <style lang="scss" scoped>
+.theme--light .v-bar--underline,
+.theme--dark .v-bar--underline {
+  border-width: 0 0 thin 0;
+  border-style: solid;
+}
+
+.theme--light .v-bar--underline.theme--light,
+.theme--dark .v-bar--underline.theme--light {
+  border-bottom-color: #0000001f !important;
+}
+
+.theme--light .v-bar--underline.theme--dark,
+.theme--dark .v-bar--underline.theme--dark {
+  border-bottom-color: #ffffff1f !important;
+}
 .user-info {
   position: absolute;
   bottom: 0;

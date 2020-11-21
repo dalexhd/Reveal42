@@ -1,5 +1,6 @@
 import io from "socket.io-client";
 import marked from "marked";
+import * as Cookies from "js-cookie";
 
 (function () {
   let notes;
@@ -23,7 +24,7 @@ import marked from "marked";
       polling: {
         extraHeaders: {
           // eslint-disable-next-line no-undef
-          Authorization: localStorage.getItem("auth._token.intra"),
+          Authorization: Cookies.get("auth._token.intra"),
         },
       },
     },

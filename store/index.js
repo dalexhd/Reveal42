@@ -4,10 +4,7 @@ export const state = () => ({
     subtitles: true,
     particles: true,
     follow: true,
-  },
-  pwa: {
-    prompt: false,
-    event: null,
+    theme: "system",
   },
 });
 
@@ -41,9 +38,7 @@ export const mutations = {
   toggleFollow(state, enabled) {
     state.settings.follow = enabled;
   },
-  showPwaInstallationMessage(state, data) {
-    console.log(state, data);
-    state.pwa.prompt = true;
-    state.pwa.event = data;
+  toggleTheme(state, value) {
+    state.settings.theme = value;
   },
 };

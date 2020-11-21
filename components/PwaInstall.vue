@@ -1,11 +1,5 @@
 <template>
-  <v-snackbar
-    v-model="$store.state.pwa.prompt"
-    multi-line
-    :timeout="8000"
-    light
-    top
-  >
+  <v-snackbar v-model="snackbar" multi-line :timeout="8000" light top>
     <v-icon>$mdiArrowDownBoldHexagonOutline</v-icon>
     Instalar presentación (recomendado)
     <template #action>
@@ -22,14 +16,32 @@
 </template>
 <script>
 export default {
-  name: "App",
+  name: "PwaInstall",
+  data() {
+    return {
+      snackbar: false,
+      deferredPrompt: null,
+    };
+  },
+  beforeMount() {
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      this.deferredPrompt = e;
+      setTimeout(() => {
+        this.snackbar = true;
+      }, 1500);
+    });
+    window.addEventListener("appinstalled", () => {
+      this.deferredPrompt = null;
+    });
+  },
   methods: {
     dismiss() {
-      this.$store.state.pwa.prompt = false;
+      this.snackbar = false;
     },
     install() {
-      this.$store.state.pwa.prompt = false;
-      this.$store.state.pwa.event.prompt();
+      this.snackbar = false;
+      this.deferredPrompt.prompt();
     },
   },
 };
