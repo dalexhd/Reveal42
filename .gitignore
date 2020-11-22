@@ -82,9 +82,14 @@ dist
 
 # Service worker
 sw.*
+firebase-messaging-sw.js
 
 # macOS
 .DS_Store
 
 # Vim swap files
 *.swp
+
+
+# firebase config
+serviceAccount.json

@@ -80,9 +80,34 @@ export default {
     "@nuxtjs/vuetify",
     // https://github.com/nuxt-community/sentry-module
     "@nuxtjs/sentry",
+    // https://firebase.nuxtjs.org/guide/getting-started
+    "@nuxtjs/firebase",
     // Guide from https://github.com/nuxt/nuxt.js/tree/dev/examples/with-sockets
     "~/io",
   ],
+  firebase: {
+    config: {
+      apiKey: "AIzaSyBjiO_Aw1PBCp-YOJVz1pYqzAd0_U5c9_U",
+      authDomain: "presentacion42-3fe1d.firebaseapp.com",
+      databaseURL: "https://presentacion42-3fe1d.firebaseio.com",
+      projectId: "presentacion42-3fe1d",
+      storageBucket: "presentacion42-3fe1d.appspot.com",
+      messagingSenderId: "524942001673",
+      appId: "1:524942001673:web:e0bd6b407aff525d8f9ad8",
+      measurementId: "G-QQLCFNQDEK",
+    },
+    services: {
+      auth: true,
+      analytics: {
+        collectionEnabled: true,
+      },
+      performance: true,
+      database: true,
+      messaging: {
+        createServiceWorker: true,
+      },
+    },
+  },
   vuetify: {
     theme: {
       options: {
@@ -209,6 +234,7 @@ export default {
           },
         },
       ],
+      importScripts: ["firebase-messaging-sw.js"],
     },
   },
 
