@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="reveal">
+  <div class="reveal">
     <Slides />
     <client-only>
       <RevealScript />
@@ -30,6 +30,12 @@ export default {
           rel: "stylesheet",
           href: "/themes/black.css",
           id: "theme",
+          pbody: true,
+        },
+        {
+          rel: "stylesheet",
+          href: "/themes/highlight/dracula.css",
+          id: "highlight-theme",
           pbody: true,
         },
       ],

@@ -11,10 +11,15 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
+    "analyze": "nuxt build -a",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint:style": "stylelint **/*.{vue,css} --ignore-path .gitignore",
     "lint": "npm run lint:js && npm run lint:style",
-    "build:themes": "node-sass -o static/themes assets/css/theme/source --output-style compressed"
+    "themes": "npm run build:themes && npm run build:highlight:monokai && npm run build:highlight:zenburn && npm run build:highlight:dracula",
+    "build:themes": "node-sass -o static/themes assets/css/theme/source --output-style compressed",
+    "build:highlight:monokai": "node-sass -o static/themes/highlight node_modules/highlight.js/scss/monokai.scss --output-style compressed",
+    "build:highlight:zenburn": "node-sass -o static/themes/highlight node_modules/highlight.js/scss/zenburn.scss --output-style compressed",
+    "build:highlight:dracula": "node-sass -o static/themes/highlight node_modules/highlight.js/scss/dracula.scss --output-style compressed"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.1",

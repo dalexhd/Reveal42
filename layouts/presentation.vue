@@ -1,12 +1,11 @@
 <template>
   <div>
+    <Nuxt />
     <v-app class="bg-transparent">
       <Settings />
-      <SettingsV2 />
-      <Nuxt />
-      <Particles v-if="$store.state.settings.particles" />
       <Snackbar />
     </v-app>
+    <Particles v-if="$store.state.settings.particles" />
   </div>
 </template>
 <script>
