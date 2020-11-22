@@ -33,7 +33,7 @@
     "chart.js": "^2.9.4",
     "connect-redis": "^5.0.0",
     "cookie-parser": "^1.4.5",
-    "copy-webpack-plugin": "^6.3.1",
+    "copy-webpack-plugin": "^6.3.2",
     "core-js": "^3.7.0",
     "express-session": "^1.17.1",
     "firebase": "^8.1.1",
