@@ -89,6 +89,29 @@ export default {
       ],
     };
   },
+  mounted() {
+    // 2. Use the service
+    if (this.$store.state.auth.loggedIn) {
+      if (!this.$fire.auth.currentUser) {
+        this.$fire.auth.signInWithCustomToken(this.$auth.user.firebaseToken);
+      }
+      this.$fire.messaging
+        .requestPermission()
+        .then(() => {
+          console.log("Have permission");
+          return this.$fire.messaging.getToken();
+        })
+        .then((token) => {
+          console.log(token);
+        })
+        .catch((err) => {
+          console.log("Error: " + err);
+        });
+      this.$fire.messaging.onMessage((payload) => {
+        console.log("onMessage: " + payload);
+      });
+    }
+  },
 };
 </script>
 <style lang="scss">

@@ -94,7 +94,7 @@
                       rounded
                       @click.stop="
                         $store.state.auth.loggedIn
-                          ? $auth.logout()
+                          ? logout()
                           : $auth.loginWith('intra')
                       "
                     >
@@ -419,6 +419,8 @@ export default {
   },
   methods: {
     logout() {
+      console.log("asdsa");
+      this.$fire.auth.signOut();
       this.$auth.logout();
     },
     checkSpeedDial(event) {

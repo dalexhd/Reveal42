@@ -5,11 +5,21 @@ import session from "express-session";
 import redis from "redis";
 import connectRedis from "connect-redis";
 import axios from "axios";
+import firebaseAdmin from "firebase-admin";
 
 const app = express();
 const RedisStore = connectRedis(session);
 const RedisClient = redis.createClient({
   url: process.env.REDIS_URL || null,
+});
+
+firebaseAdmin.initializeApp({
+  credential: firebaseAdmin.credential.cert({
+    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+    privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+    projectId: process.env.FIREBASE_PROJECT_ID,
+  }),
+  databaseURL: `https://${process.env.FIREBASE_PROJECT_ID}.firebaseio.com`,
 });
 
 app.use(cookieParser());
@@ -41,7 +51,7 @@ const getUserData = (token) => {
           Authorization: token,
         },
       })
-      .then(({ data }) => {
+      .then(async ({ data }) => {
         if (data.id === parseInt(process.env.PRESENTER_INTRA_ID, 10)) {
           data.role = "presenter";
         } else if (data.id === parseInt(process.env.BROADCASTER_INTRA_ID, 10)) {
@@ -49,7 +59,7 @@ const getUserData = (token) => {
         } else {
           data.role = "viewer";
         }
-        resolve({
+        const result = {
           id: data.id,
           email: data.email,
           role: data.role,
@@ -64,7 +74,41 @@ const getUserData = (token) => {
             `small_${data.login}`
           ),
           staff: data.staff,
-        });
+        };
+        try {
+          // eslint-disable-next-line camelcase
+          const { id, login, image_url_small, email } = result;
+          // Create or update the user account.
+          const userCreationTask = firebaseAdmin
+            .auth()
+            .updateUser(id.toString(), {
+              displayName: login,
+              photoURL: image_url_small,
+            })
+            .catch((error) => {
+              // If user does not exists we create it.
+              if (error.code === "auth/user-not-found") {
+                return firebaseAdmin.auth().createUser({
+                  uid: id.toString(),
+                  displayName: login,
+                  photoURL: image_url_small,
+                  email,
+                  emailVerified: true,
+                });
+              }
+              throw error;
+            });
+          await userCreationTask;
+          const firebaseToken = await firebaseAdmin
+            .auth()
+            .createCustomToken(result.id.toString(), {
+              role: result.role,
+            });
+          result.firebaseToken = firebaseToken;
+        } catch (error) {
+          console.log(error);
+        }
+        resolve(result);
       })
       .catch((error) => {
         reject(error);
@@ -90,6 +134,7 @@ app.post("/intra", (req, res) => {
         `Bearer ${response.data.access_token}`
       );
       req.session.cookie.maxAge = 2 * 60 * 60 * 1000;
+      response.data.firebaseToken = req.session.user.firebaseToken;
       req.session.save(() => {
         return res.status(200).send(response.data);
       });
