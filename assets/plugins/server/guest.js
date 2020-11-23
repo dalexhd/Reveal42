@@ -1,10 +1,8 @@
 /* global spotifyUrl */
 /* global Reveal */
-import io from "socket.io-client";
 
 const initClient = function (Reveal) {
-  const socket = io.connect("/public");
-
+  const socket = require("./socket").default;
   socket.on("statechanged", function (data) {
     Reveal.setState(data.state);
   });

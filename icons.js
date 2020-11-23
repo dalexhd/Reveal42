@@ -17,6 +17,7 @@ import {
   mdiDesktopTowerMonitor,
   mdiDelete,
   mdiSpotify,
+  mdiPoll,
 } from "@mdi/js";
 
 const mdi42 =
@@ -41,5 +42,6 @@ export default {
   mdiDesktopTowerMonitor,
   mdiDelete,
   mdiSpotify,
+  mdiPoll,
   mdi42,
 };

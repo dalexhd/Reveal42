@@ -723,6 +723,12 @@ return {
         <h3>Texto 3</h3>
       </section>
     </section>
+    <section
+      data-background-iframe="https://www.polleverywhere.com/free_text_polls/Jup4V5cILH2DaTSK2VJSw?preview=true&controls=none"
+    ></section>
+    <section
+      data-background-iframe="https://www.polleverywhere.com/multiple_choice_polls/rwmL6NZMebaW8JtIXqe9G?preview=true&controls=none"
+    ></section>
   </div>
 </template>
 <script>

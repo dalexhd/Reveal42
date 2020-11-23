@@ -6,12 +6,14 @@ export const state = () => ({
     follow: true,
     theme: "system",
   },
+  voting: false,
 });
 
 export const getters = {
   settings: (state) => {
     return state.settings;
   },
+  voting: (state) => state.voting,
 };
 
 export const mutations = {
@@ -40,5 +42,9 @@ export const mutations = {
   },
   toggleTheme(state, value) {
     state.settings.theme = value;
+  },
+  toggleVoting(state, value) {
+    console.log(value);
+    state.voting = value;
   },
 };

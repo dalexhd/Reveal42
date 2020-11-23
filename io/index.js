@@ -44,6 +44,7 @@ export default function () {
           return next(new Error("Not authorized broadcaster or presenter"));
         }
       } catch (error) {
+        console.log(error);
         if (error.response.data) {
           return next(
             new Error(
