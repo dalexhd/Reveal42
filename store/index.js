@@ -44,7 +44,6 @@ export const mutations = {
     state.settings.theme = value;
   },
   toggleVoting(state, value) {
-    console.log(value);
     state.voting = value;
   },
 };
