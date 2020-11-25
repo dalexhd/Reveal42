@@ -115,9 +115,18 @@
                       class="py-5"
                       small
                       rounded
+                      @click.stop="
+                        $store.state.spotify.loggedIn
+                          ? spotifyLogout()
+                          : spotifyLogin()
+                      "
                     >
                       Spotify
-                      <v-icon v-if="hover">$mdiLogin</v-icon>
+                      <v-icon v-if="hover">{{
+                        $store.state.spotify.loggedIn
+                          ? "$mdiLogout"
+                          : "$mdiLogin"
+                      }}</v-icon>
                       <v-icon v-else>$mdiSpotify</v-icon>
                     </v-btn>
                   </v-hover>
@@ -432,6 +441,20 @@ export default {
         this.installing = true;
         this.deferredPrompt.prompt();
       }
+    },
+    spotifyLogin() {
+      window.location.href = "/auth/spotify";
+    },
+    spotifyLogout() {
+      // eslint-disable-next-line no-undef
+      window.SpotifyPlayer.disconnect();
+      this.$store.commit("setSpotifyLoggedIn", false);
+      this.$store.commit("setSpotifyUser", null);
+      this.$store.commit("setSpotifyAccessToken", null);
+      document.cookie =
+        "spotify.access_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+      document.cookie =
+        "spotify.refresh_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
     },
   },
 };

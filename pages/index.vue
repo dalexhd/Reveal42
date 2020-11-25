@@ -7,6 +7,8 @@
   </div>
 </template>
 <script>
+import cookie from "cookie";
+import axios from "axios";
 import Slides from "../components/Slides";
 
 export default {
@@ -22,6 +24,7 @@ export default {
   head({
     $config: { googleAnalyticsId, hotjarSiteId, amplitudeKey, metomicId },
     $route: { query },
+    $store,
   }) {
     const isReceiver = query.receiver === null;
     return {
@@ -86,6 +89,21 @@ export default {
               charset: "utf-8",
             }
           : {},
+        $store.state.spotify.loggedIn
+          ? {
+              src: "https://sdk.scdn.co/spotify-player.js",
+              crossorigin: true,
+              charset: "utf-8",
+            }
+          : {},
+        {
+          src:
+            "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js",
+          crossorigin: "anonymous",
+          integrity:
+            "sha512-v8ng/uGxkge3d1IJuEo6dJP8JViyvms0cly9pnbfRxT6/31c3dRWxIiwGnMSWwZjHKOuY3EVmijs7k1jz/9bLA==",
+          charset: "utf-8",
+        },
       ],
     };
   },

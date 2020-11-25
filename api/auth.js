@@ -99,6 +99,53 @@ app.post("/intra", (req, res) => {
     });
 });
 
+app.get("/spotify/callback", (req, res) => {
+  axios
+    .request({
+      method: "POST",
+      url: "https://accounts.spotify.com/api/token",
+      params: {
+        code: req.query.code,
+        redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
+        grant_type: "authorization_code",
+      },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Basic ${Buffer.from(
+          process.env.SPOTIFY_CLIENT_ID +
+            ":" +
+            process.env.SPOTIFY_CLIENT_SECRET
+        ).toString("base64")}`,
+      },
+    })
+    .then((response) => {
+      res
+        .cookie("spotify.access_token", response.data.access_token, {
+          expires: new Date(Date.now() + response.data.expires_in * 1000),
+        })
+        .cookie("spotify.refresh_token", response.data.refresh_token, {
+          expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
+        })
+        .redirect("/");
+    })
+    .catch((error) => {
+      res.status(403).send(error);
+    });
+});
+
+app.get("/spotify", (req, res) => {
+  const scopes = ["streaming", "user-read-email"];
+  // redirect to Spotify login page
+  res.redirect(
+    `https://accounts.spotify.com/authorize` +
+      `?client_id=${process.env.SPOTIFY_CLIENT_ID}` +
+      `&response_type=code` +
+      `&redirect_uri=${process.env.SPOTIFY_REDIRECT_URI}` +
+      (scopes.length > 0 ? "&scope=" + scopes.join(" ") : "") +
+      `&show_dialog=true`
+  );
+});
+
 app.get("/me", (req, res) => {
   if (typeof req.session.user === "undefined") {
     return res.status(401).send("Session not valid!");

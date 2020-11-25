@@ -7,6 +7,7 @@
       <Snackbar />
     </v-app>
     <Particles v-if="$store.state.settings.particles" :style="widthStyle" />
+    <SpotifyPlayer v-if="$store.state.spotify.loggedIn" />
   </div>
 </template>
 <script>
@@ -14,12 +15,14 @@ import Particles from "../components/Particles";
 import Snackbar from "../components/Snackbar";
 import Settings from "../components/Settings";
 import Poll from "../components/Poll";
+import SpotifyPlayer from "../components/SpotifyPlayer";
 export default {
   components: {
     Particles,
     Settings,
     Snackbar,
     Poll,
+    SpotifyPlayer,
   },
   computed: {
     widthStyle() {
