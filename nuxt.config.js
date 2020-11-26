@@ -3,6 +3,11 @@ import minifyTheme from "minify-css-string";
 import redirectSSL from "redirect-ssl";
 import icons from "./icons";
 
+// Here we define the public url of our presentation.
+const url = process.env.DYNO
+  ? "https://intra.dalexhd.dev"
+  : (process.env.HOST || "localhost") + (process.env.PORT || 3000);
+
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
@@ -120,8 +125,8 @@ export default {
         clientId: process.env.CLIENT_ID,
         endpoints: {
           authorization: "https://api.intra.42.fr/oauth/authorize",
-          token: "/auth/intra",
-          userInfo: "/auth/me",
+          token: `${url}/auth/intra`,
+          userInfo: `${url}/auth/me`,
           logout: undefined,
         },
         token: {
@@ -138,10 +143,6 @@ export default {
         scope: ["public"],
         state: process.env.APP_SECRET,
       },
-      // github: {
-      //   clientId: process.env.GITHUB_CLIENT_ID,
-      //   clientSecret: process.env.GITHUB_SECRET,
-      // },
     },
   },
 
@@ -164,9 +165,7 @@ export default {
       related_applications: [
         {
           platform: "webapp",
-          url: process.env.DYNO
-            ? "https://intra.dalexhd.dev/dist/manifest.json"
-            : "localhost" + process.env.PORT || 3000 + "/dist/manifest.json",
+          url: `${url}/dist/manifest.json`,
         },
       ],
     },

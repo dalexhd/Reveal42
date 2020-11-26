@@ -30,7 +30,7 @@ export default {
         this.$vuetify.breakpoint.mobile || this.$vuetify.breakpoint.tablet
       ) && this.$store.state.voting
         ? {
-            width: (this.$vuetify.breakpoint.width - 520).toString() + "px",
+            width: `${(this.$vuetify.breakpoint.width - 520).toString()}px`,
             marginLeft: "520px",
           }
         : {};

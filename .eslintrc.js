@@ -23,5 +23,6 @@ module.exports = {
     "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
     "vue-a11y/accessible-emoji": 0,
     "vue-a11y/click-events-have-key-events": 0,
+    "prefer-template": "error",
   },
 };

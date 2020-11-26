@@ -48,12 +48,11 @@ export default function () {
         if (error.response.data) {
           return next(
             new Error(
-              "Intra authentication error: " +
-                error.response.data.error_description
+              `Intra authentication error: ${error.response.data.error_description}`
             )
           );
         }
-        return next(new Error("Authentication error: " + error));
+        return next(new Error(`Authentication error: ${error}`));
       }
     });
 

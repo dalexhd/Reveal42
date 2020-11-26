@@ -112,9 +112,7 @@ app.get("/spotify/callback", (req, res) => {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         Authorization: `Basic ${Buffer.from(
-          process.env.SPOTIFY_CLIENT_ID +
-            ":" +
-            process.env.SPOTIFY_CLIENT_SECRET
+          `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`
         ).toString("base64")}`,
       },
     })
@@ -137,12 +135,12 @@ app.get("/spotify", (req, res) => {
   const scopes = ["streaming", "user-read-email"];
   // redirect to Spotify login page
   res.redirect(
-    `https://accounts.spotify.com/authorize` +
+    `${
+      `https://accounts.spotify.com/authorize` +
       `?client_id=${process.env.SPOTIFY_CLIENT_ID}` +
       `&response_type=code` +
-      `&redirect_uri=${process.env.SPOTIFY_REDIRECT_URI}` +
-      (scopes.length > 0 ? "&scope=" + scopes.join(" ") : "") +
-      `&show_dialog=true`
+      `&redirect_uri=${process.env.SPOTIFY_REDIRECT_URI}`
+    }${scopes.length > 0 ? `&scope=${scopes.join(" ")}` : ""}&show_dialog=true`
   );
 });
 
