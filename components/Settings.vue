@@ -399,20 +399,7 @@ export default {
     },
   },
   created() {
-    const theme = this.$store.state.settings.theme;
     if (process.client) {
-      if (theme) {
-        if (theme === "system") {
-          // eslint-disable-next-line nuxt/no-globals-in-created
-          const dark = window.matchMedia("(prefers-color-scheme: dark)")
-            .matches;
-          this.$vuetify.theme.dark = dark;
-        } else if (theme === "dark") {
-          this.$vuetify.theme.dark = true;
-        } else {
-          this.$vuetify.theme.dark = false;
-        }
-      }
       // eslint-disable-next-line nuxt/no-globals-in-created
       window.addEventListener("appinstalled", (e) => {
         this.installed = true;
@@ -448,13 +435,7 @@ export default {
     spotifyLogout() {
       // eslint-disable-next-line no-undef
       window.SpotifyPlayer.disconnect();
-      this.$store.commit("setSpotifyLoggedIn", false);
-      this.$store.commit("setSpotifyUser", null);
-      this.$store.commit("setSpotifyAccessToken", null);
-      document.cookie =
-        "spotify.access_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-      document.cookie =
-        "spotify.refresh_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+      this.$store.commit("logoutFromSpotify");
     },
   },
 };

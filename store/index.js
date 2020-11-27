@@ -8,7 +8,7 @@ export const state = () => ({
     subtitles: true,
     particles: true,
     follow: true,
-    theme: "system",
+    theme: "dark",
   },
   voting: false,
   spotify: {
@@ -55,6 +55,17 @@ export const mutations = {
   },
   toggleVoting(state, value) {
     state.voting = value;
+  },
+  logoutFromSpotify(state) {
+    state.spotify.loggedIn = false;
+    state.spotify.user = null;
+    state.spotify.access_token = null;
+    if (process.client) {
+      document.cookie =
+        "spotify.access_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+      document.cookie =
+        "spotify.refresh_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+    }
   },
   setSpotifyLoggedIn(state, value) {
     state.spotify.loggedIn = value;

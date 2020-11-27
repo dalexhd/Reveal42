@@ -6,7 +6,7 @@ import icons from "./icons";
 // Here we define the public url of our presentation.
 const url = process.env.DYNO
   ? "https://intra.dalexhd.dev"
-  : (process.env.HOST || "localhost") + (process.env.PORT || 3000);
+  : `${process.env.HOST || "http://localhost"}:${process.env.PORT || 3000}`;
 
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
@@ -59,6 +59,7 @@ export default {
   plugins: [
     { src: "~/plugins/vuex-persist" },
     { src: "~/plugins/environment", mode: "client" },
+    { src: "~/plugins/theme" },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
