@@ -8,6 +8,7 @@
         right
         fab
         fixed
+        aria-label="ajustes"
         @click.stop="menu = !menu"
       >
         <v-icon v-if="fab">$mdiClose</v-icon>
