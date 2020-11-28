@@ -59,6 +59,7 @@ export default {
   plugins: [
     { src: "~/plugins/vuex-persist" },
     { src: "~/plugins/environment", mode: "client" },
+    { src: "~/plugins/spotify", mode: "client" },
     { src: "~/plugins/theme" },
   ],
 
@@ -109,6 +110,7 @@ export default {
     config: {}, // Additional config
   },
   auth: {
+    plugins: [{ src: "~/plugins/auth" }],
     redirect: {
       callback: "/callback",
     },

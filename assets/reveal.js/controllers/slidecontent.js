@@ -334,7 +334,7 @@ export default class SlideContent {
           iframe.style.height = "100%";
           iframe.style.maxHeight = "100%";
           iframe.style.maxWidth = "100%";
-          if (metomicPlaceholder) {
+          if (metomicPlaceholder && typeof window.Metomic !== "undefined") {
             const script = document.createElement("script");
             script.setAttribute("type", "text/x-metomic");
             script.setAttribute("data-micropolicy", metomicMicropolicy);
