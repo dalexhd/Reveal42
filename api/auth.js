@@ -12,6 +12,10 @@ const RedisClient = redis.createClient({
   url: process.env.REDIS_URL || null,
 });
 
+RedisClient.on("error", (error) => {
+  console.error(error.message);
+});
+
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 // eslint-disable-next-line prefer-const
@@ -30,7 +34,7 @@ if (process.env.NODE_ENV === "production") {
 }
 app.use(session(sessionObject));
 
-const getUserData = (token) => {
+const getIntraUserData = (token) => {
   return new Promise((resolve, reject) => {
     axios
       .request({
@@ -86,7 +90,7 @@ app.post("/intra", (req, res) => {
       },
     })
     .then(async (response) => {
-      req.session.user = await getUserData(
+      req.session.user = await getIntraUserData(
         `Bearer ${response.data.access_token}`
       );
       req.session.cookie.maxAge = 2 * 60 * 60 * 1000;
@@ -97,6 +101,14 @@ app.post("/intra", (req, res) => {
     .catch((error) => {
       res.status(403).send(error);
     });
+});
+
+app.get("/me", (req, res) => {
+  if (typeof req.session.user === "undefined") {
+    return res.status(401).send("Session not valid!");
+  } else {
+    return res.status(200).send(req.session.user);
+  }
 });
 
 app.get("/spotify/callback", (req, res) => {
@@ -131,6 +143,51 @@ app.get("/spotify/callback", (req, res) => {
     });
 });
 
+app.get("/spotify/me", (req, res) => {
+  axios
+    .get("https://api.spotify.com/v1/me", {
+      headers: {
+        Accept: "application/json",
+        Authorization: req.headers.authorization,
+      },
+    })
+    .then((response) => {
+      return res.status(200).json(response.data);
+    })
+    .catch((err) => {
+      return res
+        .status(err.response.status || 400)
+        .send(err.response.data.error);
+    });
+});
+
+app.get("/spotify/refresh", (req, res) => {
+  axios
+    .request({
+      method: "POST",
+      url: "https://accounts.spotify.com/api/token",
+      params: {
+        grant_type: "refresh_token",
+        refresh_token: req.query.refresh_token,
+      },
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Basic ${Buffer.from(
+          `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`
+        ).toString("base64")}`,
+      },
+    })
+    .then((response) => {
+      return res.status(200).json(response.data);
+    })
+    .catch((err) => {
+      return res
+        .status(err.response.status || 400)
+        .send(err.response.data.error);
+    });
+});
+
 app.get("/spotify", (req, res) => {
   const scopes = ["streaming", "user-read-email"];
   // redirect to Spotify login page
@@ -142,14 +199,6 @@ app.get("/spotify", (req, res) => {
       `&redirect_uri=${process.env.SPOTIFY_REDIRECT_URI}`
     }${scopes.length > 0 ? `&scope=${scopes.join(" ")}` : ""}&show_dialog=true`
   );
-});
-
-app.get("/me", (req, res) => {
-  if (typeof req.session.user === "undefined") {
-    return res.status(401).send("Session not valid!");
-  } else {
-    return res.status(200).send(req.session.user);
-  }
 });
 
 module.exports = app;

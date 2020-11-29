@@ -9,10 +9,8 @@ export default {
       // eslint-disable-next-line no-undef
       const player = new Spotify.Player({
         name: "42 Web Player",
-        // volume: 0.01,
-        volume: 0.2,
+        volume: 0.01,
         getOAuthToken: (cb) => {
-          // eslint-disable-next-line standard/no-callback-literal
           cb(this.$store.state.spotify.access_token);
         },
       });

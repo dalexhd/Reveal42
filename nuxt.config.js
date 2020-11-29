@@ -4,7 +4,7 @@ import redirectSSL from "redirect-ssl";
 import icons from "./icons";
 
 // Here we define the public url of our presentation.
-const url = process.env.DYNO
+process.env.URL = process.env.DYNO
   ? "https://intra.dalexhd.dev"
   : `${process.env.HOST || "http://localhost"}:${process.env.PORT || 3000}`;
 
@@ -128,8 +128,8 @@ export default {
         clientId: process.env.CLIENT_ID,
         endpoints: {
           authorization: "https://api.intra.42.fr/oauth/authorize",
-          token: `${url}/auth/intra`,
-          userInfo: `${url}/auth/me`,
+          token: `${process.env.URL}/auth/intra`,
+          userInfo: `${process.env.URL}/auth/me`,
           logout: undefined,
         },
         token: {
@@ -168,7 +168,7 @@ export default {
       related_applications: [
         {
           platform: "webapp",
-          url: `${url}/dist/manifest.json`,
+          url: `${process.env.URL}/dist/manifest.json`,
         },
       ],
     },

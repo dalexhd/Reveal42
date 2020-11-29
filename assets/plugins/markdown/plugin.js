@@ -303,6 +303,7 @@ const Plugin = () => {
    */
   function addAttributeInElement(node, elementTarget, separator) {
     const mardownClassesInElementsRegex = new RegExp(separator, "mg");
+    // eslint-disable-next-line prefer-regex-literals
     const mardownClassRegex = new RegExp(
       '([^"= ]+?)="([^"]+?)"|(data-[^"= ]+?)(?=[" ])',
       "mg"

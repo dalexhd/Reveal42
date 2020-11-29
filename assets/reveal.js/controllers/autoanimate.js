@@ -457,6 +457,7 @@ export default class AutoAnimate {
         reserved.push(pair.to);
         return true;
       }
+      return false;
     });
   }
 

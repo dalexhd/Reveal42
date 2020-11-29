@@ -82,42 +82,49 @@ export const actions = {
   async nuxtServerInit({ commit }, { req: { headers }, res }) {
     if (typeof headers.cookie === "undefined") return;
     const cookies = cookie.parse(headers.cookie);
+
+    const getSpotifyUser = function (token = null) {
+      return new Promise(function (resolve, reject) {
+        axios
+          .get(`${process.env.URL}/auth/spotify/me`, {
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${
+                token || cookies["spotify.access_token"]
+              }`,
+            },
+          })
+          .then((response) => {
+            commit("setSpotifyLoggedIn", true);
+            commit("setSpotifyUser", response.data);
+            resolve(true);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      });
+    };
+
     if (typeof cookies["spotify.access_token"] !== "undefined") {
       try {
-        const response = await axios.get("https://api.spotify.com/v1/me", {
-          headers: {
-            Accept: "application/json",
-            Authorization: `Bearer ${cookies["spotify.access_token"]}`,
-          },
-        });
-        commit("setSpotifyLoggedIn", true);
-        commit("setSpotifyLoggedIn", true);
-        commit("setSpotifyAccessToken", cookies["spotify.access_token"]);
-      } catch (response) {
-        if (
-          response.status === 401 &&
-          typeof cookies["spotify.refresh_token"] !== "undefined"
-        ) {
+        await getSpotifyUser();
+      } catch (err) {
+        if (err.response.status === 401) {
           try {
-            const response = await axios.request({
-              method: "POST",
-              url: "https://accounts.spotify.com/api/token",
-              params: {
-                grant_type: "refresh_token",
-                refresh_token: cookies["spotify.refresh_token"],
-              },
-              headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                Authorization: `Basic ${Buffer.from(
-                  `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`
-                ).toString("base64")}`,
-              },
-            });
+            const response = await axios.get(
+              `${process.env.URL}/auth/spotify/refresh`,
+              {
+                params: {
+                  refresh_token: cookies["spotify.refresh_token"],
+                },
+              }
+            );
             res.setHeader("Set-Cookie", [
               `spotify.access_token=${response.data.access_token};Max-Age=${
                 response.data.expires_in * 1000
               };HttpOnly`,
             ]);
+            await getSpotifyUser(response.data.access_token);
           } catch (error) {
             res.setHeader("Set-Cookie", [
               `spotify.access_token=;Max-Age=-1`,
