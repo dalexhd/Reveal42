@@ -189,7 +189,7 @@ app.get("/spotify/refresh", (req, res) => {
 });
 
 app.get("/spotify", (req, res) => {
-  const scopes = ["streaming", "user-read-email"];
+  const scopes = ["streaming", "user-read-email", "user-read-private"];
   // redirect to Spotify login page
   res.redirect(
     `${

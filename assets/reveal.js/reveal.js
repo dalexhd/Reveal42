@@ -1,4 +1,5 @@
 /* eslint-disable no-labels */
+import fitty from "fitty";
 import SlideContent from "./controllers/slidecontent.js";
 import SlideNumber from "./controllers/slidenumber.js";
 import Backgrounds from "./controllers/backgrounds.js";
@@ -252,6 +253,15 @@ export default function (revealElement, options) {
     dom.statusElement = createStatusElement();
 
     dom.wrapper.setAttribute("role", "application");
+
+    // The r-fit-text helper resizes text to be as large as
+    // possible within its given container
+    fitty(".r-fit-text", {
+      minSize: 24,
+      maxSize: config.height * 0.8,
+      observeMutations: false,
+      observeWindow: false,
+    });
   }
 
   /**
@@ -408,6 +418,10 @@ export default function (revealElement, options) {
       "data-background-transition",
       config.backgroundTransition
     );
+
+    // Expose our configured slide dimensions as custom props
+    dom.viewport.style.setProperty("--size-width", `${config.width}px`);
+    dom.viewport.style.setProperty("--size-height", `${config.height}px`);
 
     if (config.shuffle) {
       shuffle();
@@ -1409,14 +1423,21 @@ export default function (revealElement, options) {
   /**
    * Randomly shuffles all slides in the deck.
    */
-  function shuffle() {
-    getHorizontalSlides().forEach((slide, i, slides) => {
-      // Insert this slide next to another random slide. This may
-      // cause the slide to insert before itself but that's fine.
-      dom.slides.insertBefore(
-        slide,
-        slides[Math.floor(Math.random() * slides.length)]
-      );
+  function shuffle(slides = getHorizontalSlides()) {
+    slides.forEach((slide, i) => {
+      // Insert the slide next to a randomly picked sibling slide
+      // slide. This may cause the slide to insert before itself,
+      // but that's not an issue.
+      const beforeSlide = slides[Math.floor(Math.random() * slides.length)];
+      if (beforeSlide.parentNode === slide.parentNode) {
+        slide.parentNode.insertBefore(slide, beforeSlide);
+      }
+
+      // Randomize the order of vertical slides (if there are any)
+      const verticalSlides = slide.querySelectorAll("section");
+      if (verticalSlides.length) {
+        shuffle(verticalSlides);
+      }
     });
   }
 

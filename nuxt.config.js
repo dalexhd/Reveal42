@@ -210,6 +210,26 @@ export default {
             cacheName: "intra-cache",
           },
         },
+        {
+          urlPattern: "https://cdn.jsdelivr.net/.*",
+          strategyOptions: {
+            cacheName: "intra-cdn-jsdelivr",
+          },
+        },
+        {
+          urlPattern: "https://config.metomic.io/.*",
+          strategyOptions: {
+            cacheName: "metomic",
+          },
+        },
+        {
+          urlPattern: "/socket.io/",
+          handler: "NetworkOnly",
+        },
+        {
+          urlPattern: "/themes/",
+          handler: "CacheFirst",
+        },
       ],
     },
   },

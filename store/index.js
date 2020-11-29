@@ -1,6 +1,5 @@
 import cookie from "cookie";
 import axios from "axios";
-import * as Cookies from "js-cookie";
 
 export const state = () => ({
   settings: {
@@ -97,6 +96,7 @@ export const actions = {
           .then((response) => {
             commit("setSpotifyLoggedIn", true);
             commit("setSpotifyUser", response.data);
+            commit("setSpotifyAccessToken", cookies["spotify.access_token"]);
             resolve(true);
           })
           .catch((err) => {

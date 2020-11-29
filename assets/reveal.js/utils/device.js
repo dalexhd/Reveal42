@@ -16,6 +16,3 @@ export const supportsZoom =
   "zoom" in testElement.style &&
   !isMobile &&
   (isChrome || /Version\/[\d.]+.*Safari/.test(UA));
-
-export const supportsHistoryAPI =
-  typeof window.history.replaceState === "function" && !/PhantomJS/.test(UA);
