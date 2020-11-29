@@ -13,6 +13,7 @@
     <Github />
     <Heroku />
     <Aws />
+    <PollEverywhere />
   </div>
 </template>
 <script>
@@ -30,6 +31,7 @@ import Gitpod from "@/components/slides/Gitpod";
 import Github from "@/components/slides/Github";
 import Heroku from "@/components/slides/Heroku";
 import Aws from "@/components/slides/AWS";
+import PollEverywhere from "@/components/slides/PollEverywhere";
 export default {
   comments: true,
   components: {
@@ -46,6 +48,7 @@ export default {
     Github,
     Heroku,
     Aws,
+    PollEverywhere,
   },
 };
 </script>
