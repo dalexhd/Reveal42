@@ -37,26 +37,10 @@
     <section
       data-background-iframe="https://insights.hotjar.com/h?site=1807485&heatmap=5914349&token=c3971ad9abbcc5774213e71b69553ce7"
       data-background-interactive="true"
-      :data-metomic-placeholder="
-        !$nuxt.context.isDev ? '@metomic/generic' : null
-      "
-      :data-metomic-micropolicy="!$nuxt.context.isDev ? 'embed-content' : null"
-      data-metomic-placeholder-params="
-        title = Este contenido está bloqueado
-        text = Las cookies son necesarias para mostrarle este contenido
-        buttonText = Activar
-		  "
     />
     <section
       data-background-iframe="https://insights.hotjar.com/r?site=1807485&recording=3536145500&token=dab1ce0b2b320c0518a82b78bb6b9563"
       data-background-interactive="true"
-      data-metomic-placeholder="@metomic/generic"
-      data-metomic-micropolicy="embed-content"
-      data-metomic-placeholder-params="
-        title = Este contenido está bloqueado
-        text = Las cookies son necesarias para mostrarle este contenido
-        buttonText = Activar
-		  "
     />
   </section>
 </template>

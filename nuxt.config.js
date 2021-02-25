@@ -43,7 +43,6 @@ export default {
     googleAnalyticsId: process.env.GOOGLE_ANALYTICS_ID,
     hotjarSiteId: process.env.HOTJAR_SITE_ID,
     amplitudeKey: process.env.AMPLITUDE_KEY,
-    metomicId: process.env.METOMIC_ID,
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
@@ -51,6 +50,7 @@ export default {
     "~/assets/css/fonts.scss",
     "~/assets/css/reveal.scss",
     "~/assets/css/layout.scss",
+    "~/assets/css/cookies.scss",
     "plyr/src/sass/plyr.scss",
     "@fortawesome/fontawesome-free/css/all.css",
   ],
@@ -61,6 +61,7 @@ export default {
     { src: "~/plugins/environment", mode: "client" },
     { src: "~/plugins/spotify", mode: "client" },
     { src: "~/plugins/theme" },
+    { src: "~/plugins/cookies", mode: "client" },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -214,12 +215,6 @@ export default {
           urlPattern: "https://cdn.jsdelivr.net/.*",
           strategyOptions: {
             cacheName: "intra-cdn-jsdelivr",
-          },
-        },
-        {
-          urlPattern: "https://config.metomic.io/.*",
-          strategyOptions: {
-            cacheName: "metomic",
           },
         },
         {
