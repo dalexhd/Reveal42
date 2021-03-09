@@ -110,6 +110,8 @@ const initClient = function (Reveal) {
       data,
       data: { id, currentTime, paused, playing, ended, volume },
     }) {
+      // Ignore events if we are not following the pressenter. By default we follow the pressenter.
+      if (!window.$nuxt.$store.app.store.state.settings.follow) return;
       const player = document.getElementById(id);
       switch (event) {
         case "play":
@@ -122,6 +124,7 @@ const initClient = function (Reveal) {
           player.currentTime = currentTime;
           break;
         case "currentState":
+          // TODO: Here we need to fix the loop.
           if (Math.abs(currentTime - player.currentTime) > 0.3)
             player.currentTime = currentTime;
           if (player.paused !== paused && paused === true) player.pause();
