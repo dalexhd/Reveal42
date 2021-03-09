@@ -4,12 +4,16 @@
 const initClient = function (Reveal) {
   const socket = require("./socket").default;
   socket.on("statechanged", function (data) {
+    // Ignore events if we are not following the pressenter. By default we follow the pressenter.
+    if (!window.$nuxt.$store.app.store.state.settings.follow) return;
     Reveal.setState(data.state);
   });
 
   socket.on(
     "plyrchanged",
     function ({ event, data: { id, currentTime, paused, playing, ended } }) {
+      // Ignore events if we are not following the pressenter. By default we follow the pressenter.
+      if (!window.$nuxt.$store.app.store.state.settings.follow) return;
       const player = document.getElementById(id);
       switch (event) {
         case "play":
