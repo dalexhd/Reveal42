@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node: [14]
+        node: [14, 15]
 
     steps:
       - name: Checkout 🛎
@@ -30,7 +30,7 @@ jobs:
 
       - name: Cache node_modules 📦
         uses: actions/cache@v2.1.4
-        with:
+        with::fire:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
@@ -41,4 +41,7 @@ jobs:
 
       - name: Run linter 👀
         run: npm run lint
+
+      - name: Run Build ‎️‍🔥
+        run: npm run build
 
