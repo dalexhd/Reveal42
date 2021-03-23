@@ -33,7 +33,7 @@
     "connect-redis": "^5.0.0",
     "cookie-parser": "^1.4.5",
     "copy-webpack-plugin": "^6.3.2",
-    "core-js": "^3.8.0",
+    "core-js": "^3.9.1",
     "express-session": "^1.17.1",
     "fontsource-lato": "^3.0.9",
     "fontsource-league-gothic": "^3.0.5",
