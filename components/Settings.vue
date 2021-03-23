@@ -90,7 +90,7 @@
                       depressed
                       color="#292D39"
                       :dark="!$vuetify.theme.dark"
-                      class="py-5"
+                      class="py-5 w-full"
                       small
                       rounded
                       @click.stop="
@@ -99,7 +99,13 @@
                           : $auth.loginWith('intra')
                       "
                     >
-                      Intranet
+                      {{
+                        hover
+                          ? $store.state.auth.loggedIn
+                            ? "Salir"
+                            : "Entrar"
+                          : "Intranet"
+                      }}
                       <v-icon v-if="hover">{{
                         $store.state.auth.loggedIn ? "$mdiLogout" : "$mdiLogin"
                       }}</v-icon>
@@ -113,7 +119,7 @@
                       depressed
                       color="#1ED760"
                       :dark="!$vuetify.theme.dark"
-                      class="py-5"
+                      class="py-5 w-full"
                       small
                       rounded
                       @click.stop="
@@ -122,7 +128,13 @@
                           : spotifyLogin()
                       "
                     >
-                      Spotify
+                      {{
+                        hover
+                          ? $store.state.auth.loggedIn
+                            ? "Salir"
+                            : "Entrar"
+                          : "Spotify"
+                      }}
                       <v-icon v-if="hover">{{
                         $store.state.spotify.loggedIn
                           ? "$mdiLogout"

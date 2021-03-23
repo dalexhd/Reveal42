@@ -51,7 +51,7 @@ export default {
     "~/assets/css/reveal.scss",
     "~/assets/css/layout.scss",
     "~/assets/css/cookies.scss",
-    "plyr/src/sass/plyr.scss",
+    // "plyr/src/sass/plyr.scss", // Now gives error.
     "@fortawesome/fontawesome-free/css/all.css",
   ],
 
@@ -253,8 +253,8 @@ export default {
       const rule = config.module.rules.find(
         (r) => r.test.toString() === "/\\.(png|jpe?g|gif|svg|webp|avif)$/i"
       );
-      const loaderIndex = rule.use.findIndex(
-        (option) => option.loader === "url-loader"
+      const loaderIndex = rule.use.findIndex((option) =>
+        option.loader.includes("url-loader")
       );
       rule.use[loaderIndex].options.limit = false;
       config.module.rules.push({
