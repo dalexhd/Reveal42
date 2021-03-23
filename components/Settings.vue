@@ -225,7 +225,6 @@
               </template>
             </v-list-item>
             <v-divider inset></v-divider>
-
             <v-list-item>
               <template #default>
                 <v-list-item-content>
@@ -237,6 +236,22 @@
                 </v-list-item-content>
                 <v-list-item-action>
                   <v-switch v-model="follow" inset></v-switch>
+                </v-list-item-action>
+              </template>
+            </v-list-item>
+            <v-divider inset></v-divider>
+            <v-list-item>
+              <template #default>
+                <v-list-item-content>
+                  <v-list-item-title>Cookies</v-list-item-title>
+                  <v-list-item-subtitle
+                    >Configurar cookies del navegador.</v-list-item-subtitle
+                  >
+                </v-list-item-content>
+                <v-list-item-action>
+                  <v-btn icon ripple @click="showCookieModal()">
+                    <v-icon color="grey lighten-1">$mdiCookieCog</v-icon>
+                  </v-btn>
                 </v-list-item-action>
               </template>
             </v-list-item>
@@ -429,6 +444,9 @@ export default {
         this.installing = true;
         this.deferredPrompt.prompt();
       }
+    },
+    showCookieModal() {
+      window.klaro.show();
     },
     spotifyLogin() {
       window.location.href = "/auth/spotify";

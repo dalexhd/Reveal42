@@ -42,13 +42,6 @@
     <section
       data-background-iframe="https://p.datadoghq.com/sb/7svjk4jalcnlifw5-45b3a2a8bc3616303909036435520f53?from_ts=1597338189730&live=true&theme=dark&to_ts=1597424589730"
       data-background-interactive="true"
-      data-metomic-placeholder="@metomic/generic"
-      data-metomic-micropolicy="embed-content"
-      data-metomic-placeholder-params="
-        title = Este contenido está bloqueado
-        text = Las cookies son necesarias para mostrarle este contenido
-        buttonText = Activar
-		  "
     />
   </section>
 </template>

@@ -75,6 +75,12 @@ export const mutations = {
   setSpotifyAccessToken(state, value) {
     state.spotify.access_token = value;
   },
+  manageCookies(state, enabled) {
+    if (process.client) {
+      // eslint-disable-next-line no-undef
+      klaro.show();
+    }
+  },
 };
 
 export const actions = {

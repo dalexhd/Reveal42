@@ -1,0 +1,19 @@
+#klaro {
+  height: 100%;
+  color: #333;
+  background: #fff;
+  font-family: "Nunito", sans-serif, Arial, Helvetica;
+  font-weight: 400;
+  font-size: 16px;
+  overflow: auto;
+  position: fixed;
+  line-height: normal;
+  margin: auto;
+  z-index: 30;
+}
+@media (min-width: 1024px) {
+  .klaro .cookie-notice:not(.cookie-modal-notice) {
+    left: 20px;
+    right: 0 !important;
+  }
+}
