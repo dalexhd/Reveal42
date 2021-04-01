@@ -1,0 +1,45 @@
+@import '~/node_modules/plyr/src/sass/lib/css-vars';
+$css-vars-use-native: false;
+
+@import '~/node_modules/plyr/src/sass/settings/breakpoints';
+@import '~/node_modules/plyr/src/sass/settings/colors';
+@import '~/node_modules/plyr/src/sass/settings/cosmetics';
+@import '~/node_modules/plyr/src/sass/settings/type';
+
+@import '~/node_modules/plyr/src/sass/settings/badges';
+@import '~/node_modules/plyr/src/sass/settings/captions';
+@import '~/node_modules/plyr/src/sass/settings/controls';
+@import '~/node_modules/plyr/src/sass/settings/helpers';
+@import '~/node_modules/plyr/src/sass/settings/menus';
+@import '~/node_modules/plyr/src/sass/settings/progress';
+@import '~/node_modules/plyr/src/sass/settings/sliders';
+@import '~/node_modules/plyr/src/sass/settings/tooltips';
+
+@import '~/node_modules/plyr/src/sass/lib/animation';
+@import '~/node_modules/plyr/src/sass/lib/functions';
+@import '~/node_modules/plyr/src/sass/lib/mixins';
+
+@import '~/node_modules/plyr/src/sass/base';
+
+@import '~/node_modules/plyr/src/sass/components/badges';
+@import '~/node_modules/plyr/src/sass/components/captions';
+@import '~/node_modules/plyr/src/sass/components/control';
+@import '~/node_modules/plyr/src/sass/components/controls';
+@import '~/node_modules/plyr/src/sass/components/menus';
+@import '~/node_modules/plyr/src/sass/components/sliders';
+@import '~/node_modules/plyr/src/sass/components/poster';
+@import '~/node_modules/plyr/src/sass/components/times';
+@import '~/node_modules/plyr/src/sass/components/tooltips';
+@import '~/node_modules/plyr/src/sass/components/progress';
+@import '~/node_modules/plyr/src/sass/components/volume';
+
+@import '~/node_modules/plyr/src/sass/types/audio';
+@import '~/node_modules/plyr/src/sass/types/video';
+
+@import '~/node_modules/plyr/src/sass/states/fullscreen';
+
+@import '~/node_modules/plyr/src/sass/plugins/ads';
+@import '~/node_modules/plyr/src/sass/plugins/preview-thumbnails/index';
+
+@import '~/node_modules/plyr/src/sass/utils/animation';
+@import '~/node_modules/plyr/src/sass/utils/hidden';

@@ -174,7 +174,7 @@ export default class SlideContent {
               video.innerHTML += `<track label="${
                 subtitle.label
               }" kind="subtitles" srclang="${subtitle.srclang}" src="${
-                subtitle.src
+                subtitle.src.default
               }" ${subtitle.default ? "default" : ""} />`;
             });
             if (typeof backgroundVideoSubtitlesEnabled === "undefined") {

@@ -51,7 +51,7 @@ export default {
     "~/assets/css/reveal.scss",
     "~/assets/css/layout.scss",
     "~/assets/css/cookies.scss",
-    // "plyr/src/sass/plyr.scss", // Now gives error.
+    "~/assets/css/plyr.scss",
     "@fortawesome/fontawesome-free/css/all.css",
   ],
 
