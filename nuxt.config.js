@@ -144,7 +144,7 @@ export default {
         },
         responseType: "code",
         grantType: "authorization_code",
-        scope: ["public"],
+        scope: ["public", "projects"],
         state: process.env.APP_SECRET,
       },
     },
