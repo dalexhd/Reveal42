@@ -23,7 +23,7 @@ const initClient = function (Reveal) {
           player.pause();
           break;
         case "currentState":
-          if (Math.abs(currentTime - player.currentTime) > 0.3)
+          if (Math.abs(currentTime - player.currentTime) > 1)
             player.currentTime = currentTime;
           if (player.paused !== paused && paused === true) player.pause();
           if (player.play !== playing && playing === true) player.play();
