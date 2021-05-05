@@ -19,6 +19,7 @@ import {
   mdiSpotify,
   mdiPoll,
   mdiCookieCog,
+  mdiHarddisk,
 } from "@mdi/js";
 
 const mdi42 =
@@ -45,5 +46,6 @@ export default {
   mdiSpotify,
   mdiPoll,
   mdiCookieCog,
+  mdiHarddisk,
   mdi42,
 };

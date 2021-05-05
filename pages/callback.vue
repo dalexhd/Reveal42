@@ -1,17 +1,14 @@
 <template>
-  <div
-    class="min-h-screen flex items-center justify-center bg-dark sm:px-6 lg:px-8"
-  >
-    <div class="max-w-md w-full shadow-md py-12 px-4 bg-white">
-      <div
-        class="border-t-4 border-teal-500 rounded-b text-teal-900 px-4 text-center animate-pulse"
-        role="alert"
-      >
-        <i class="fas fa-lock pr-3 pb-4 fa-3x"></i>
-        <h1 class="auth-message">Wait... Authentication is processing!</h1>
-      </div>
-    </div>
-  </div>
+  <v-app id="inspire">
+    <v-main>
+      <v-container fill-height justify-center>
+        <div class="max-w-md w-full py-12 px-4 text-center animate-pulse">
+          <i class="fas fa-lock pr-3 pb-4 fa-3x"></i>
+          <h1 class="text-subtitle-1">Wait... Authentication is processing!</h1>
+        </div>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 <script>
 export default {

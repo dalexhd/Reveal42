@@ -1,11 +1,19 @@
 <template>
-  <div>
-    <h1>Login Page</h1>
-    <button @click="$auth.loginWith('intra')">Login 42</button>
-    <!-- <button @click="$auth.loginWith('github')">Login Github</button> -->
-  </div>
+  <v-app id="inspire">
+    <v-main>
+      <v-container class="text-center">
+        <div>
+          <v-icon size="250">$mdi42</v-icon>
+        </div>
+        <div class="w-full my-12 px-4">
+          <v-btn color="primary" @click="$auth.loginWith('intra')">
+            Login 42
+          </v-btn>
+        </div>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
-
 <script>
 export default {
   layout: "admin",

@@ -1,5 +1,5 @@
 import io from "socket.io-client";
-// import marked from "marked";
+import marked from "marked";
 import * as Cookies from "js-cookie";
 
 (function () {
@@ -12,6 +12,7 @@ import * as Cookies from "js-cookie";
   let layoutLabel;
   let layoutDropdown;
   let connected = false;
+  let lastEvent = new Date();
 
   // alert volume notice
   const lastNoticeValue = sessionStorage.getItem("volume-noticed");
@@ -39,16 +40,16 @@ import * as Cookies from "js-cookie";
     currentState = JSON.stringify(data.state);
 
     // No need for updating the notes in case of fragment changes
-    // if (data.notes) {
-    //   notes.classList.remove("hidden");
-    //   if (data.markdown) {
-    //     notesValue.innerHTML = marked(data.notes);
-    //   } else {
-    //     notesValue.innerHTML = data.notes;
-    //   }
-    // } else {
-    //   notes.classList.add("hidden");
-    // }
+    if (data.notes) {
+      notes.classList.remove("d-none");
+      if (data.markdown) {
+        notes.innerHTML = marked(data.notes);
+      } else {
+        notes.innerHTML = data.notes;
+      }
+    } else {
+      notes.classList.add("d-none");
+    }
 
     // Update the note slides
     currentSlide.contentWindow.postMessage(
@@ -69,7 +70,7 @@ import * as Cookies from "js-cookie";
     if (connected === false) {
       connected = true;
       setupKeyboard();
-      // setupNotes();
+      setupNotes();
       // setupTimer();
     }
     handleStateMessage(data);
@@ -93,9 +94,11 @@ import * as Cookies from "js-cookie";
             /slidechanged|fragmentshown|fragmenthidden|overviewshown|overviewhidden|paused|resumed/.test(
               data.eventName
             ) &&
-            currentState !== JSON.stringify(data.state)
+            currentState !== JSON.stringify(data.state) &&
+            new Date() - lastEvent > 400
           ) {
             socket.emit("statechanged-speaker", { state: data.state });
+            lastEvent = new Date();
           }
           break;
         case "plyr":
@@ -130,10 +133,9 @@ import * as Cookies from "js-cookie";
   /**
    * Setup the notes UI.
    */
-  // function setupNotes() {
-  //   notes = document.querySelector(".speaker-controls-notes");
-  //   notesValue = document.querySelector(".speaker-controls-notes .value");
-  // }
+  function setupNotes() {
+    notes = document.querySelector("#speaker-notes");
+  }
 
   /**
    * Setup the notes UI.

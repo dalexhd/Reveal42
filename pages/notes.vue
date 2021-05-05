@@ -4,13 +4,13 @@
       <v-toolbar-title>Panel de control</v-toolbar-title>
 
       <v-spacer></v-spacer>
-      <div v-if="this.$store.state.auth.loggedIn">
-        <span class="mr-2">{{ this.$store.state.auth.user.login }}</span>
+      <div v-if="$store.state.auth.loggedIn">
+        <span class="mr-2">{{ $store.state.auth.user.login }}</span>
         <v-avatar size="40">
           <img
             class="object-cover"
-            :src="this.$store.state.auth.user.image_url_small"
-            :alt="this.$store.state.auth.user.display_name"
+            :src="$store.state.auth.user.image_url_small"
+            :alt="$store.state.auth.user.display_name"
           />
         </v-avatar>
         <v-btn class="ml-4" icon @click="$auth.logout()">
@@ -38,7 +38,9 @@
                 title="Upcoming slide"
               ></iframe>
             </v-col>
-            <v-col cols="12"><v-card outlined tile>Hola3</v-card></v-col>
+            <v-col cols="12"
+              ><v-card id="speaker-notes" outlined tile></v-card
+            ></v-col>
           </v-row>
         </v-row>
       </v-container>

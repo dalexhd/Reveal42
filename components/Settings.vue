@@ -327,6 +327,11 @@
         <div class="mb-2 mx-n3">
           <v-divider />
         </div>
+        <div v-if="installed">
+          <div class="text-subtitle-2 text--disabled">
+            <v-icon>$mdiHarddisk</v-icon> Almacenamiento usado: {{ size }}
+          </div>
+        </div>
       </v-container>
     </v-navigation-drawer>
   </div>
@@ -349,6 +354,7 @@ export default {
     installing: false,
     deferredPrompt: null,
     menu: false,
+    size: 0,
   }),
   computed: {
     ...mapState(["settings"]),
@@ -426,6 +432,40 @@ export default {
           });
         }
       });
+      async function getCacheStoragesAssetTotalSize() {
+        // Note: opaque (i.e. cross-domain, without CORS) responses in the cache will return a size of 0.
+        const cacheNames = await caches.keys();
+
+        let total = 0;
+
+        const sizePromises = cacheNames.map(async (cacheName) => {
+          const cache = await caches.open(cacheName);
+          const keys = await cache.keys();
+          let cacheSize = 0;
+
+          await Promise.all(
+            keys.map(async (key) => {
+              const response = await cache.match(key);
+              const blob = await response.blob();
+              total += blob.size;
+              cacheSize += blob.size;
+            })
+          );
+        });
+        await Promise.all(sizePromises);
+        return total;
+      }
+
+      function bytesToSize(bytes) {
+        const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+        if (bytes == 0) return "0 Byte";
+        const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+        return `${Math.round(bytes / Math.pow(1024, i), 2)} ${sizes[i]}`;
+      }
+      setInterval(async () => {
+        const total = parseInt(await getCacheStoragesAssetTotalSize());
+        this.size = bytesToSize(total);
+      }, 2000);
     }
   },
   methods: {
