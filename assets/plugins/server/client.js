@@ -82,7 +82,7 @@ const initClient = function (Reveal) {
     Reveal.on(event, (data) => {
       if (data.indexh === 0 || data.indexh === 2) {
         removeSpotifyÌframe();
-      } else if (data.indexh === 1 && spotifyIframe === null) {
+      } else if (data.indexh === 1 && spotifyIframe === null && typeof spotifyUrl !== "undefined") {
         const iframe = document.createElement("iframe");
         iframe.style.display = "none";
         iframe.setAttribute("allow", "encrypted-media, autoplay");
