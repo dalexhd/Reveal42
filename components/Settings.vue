@@ -410,7 +410,7 @@ export default {
     if (process.client) {
       // eslint-disable-next-line nuxt/no-globals-in-created
       window.addEventListener("appinstalled", (e) => {
-        console.log("installed");
+        console.log("PWA installed");
         this.installed = true;
       });
       // eslint-disable-next-line nuxt/no-globals-in-created
@@ -418,7 +418,6 @@ export default {
         if (navigator.getInstalledRelatedApps) {
           e.preventDefault(); // Stop automated install prompt.
           navigator.getInstalledRelatedApps().then((relatedApps) => {
-            console.log(e, relatedApps);
             if (relatedApps.length === 0) {
               this.installed = false;
               this.installing = false;

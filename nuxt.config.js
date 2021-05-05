@@ -31,9 +31,21 @@ export default {
   // Disable/Enable Server Side rendering
   ssr: true,
 
-  // HTTP2 (https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-render#http2)
-  http2: {
-    push: true,
+  render: {
+    // HTTP2 (https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-render#http2)
+    http2: {
+      push: true,
+      pushAssets: (req, res, publicPath, preloadFiles) => {
+        return preloadFiles
+          .filter((f) => ["vtt", "mp4"].includes(f.extension))
+          .map(
+            (f) =>
+              `<${publicPath}${f.file}>; rel=prefetch; as=${
+                f.extension === "vtt" ? "track" : "fetch"
+              }`
+          );
+      },
+    },
   },
 
   // Modern (https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-modern)
