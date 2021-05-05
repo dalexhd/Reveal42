@@ -35,8 +35,8 @@ const config = {
   },
   services: [
     {
-      name: "googleAdManager",
-      title: "Google Ad Manager",
+      name: "googleTagManager",
+      title: "Google Tag Manager",
       description:
         "Utilizamos el servicio 'Google Tag Manager', un producto de Google Inc., 1600 Amphitheatre Parkway, Mountain View, CA 94043, EE. UU. ('Google') para proporcionar servicios de socios en nuestro sitio web. Utilizamos este servicio para asegurarnos de que se cumple el consentimiento para usted como consumidor y, por lo tanto, no se puede desactivar. El servicio en sí no recopila ningún dato por sí solo que no sea técnicamente necesario para la entrega (incluida su dirección IP), que se transmite a un servidor de Google en los EE. UU. Y se almacena allí.",
       cookies: [/^_gat/i],

@@ -40,7 +40,7 @@
         </v-btn>
       </v-toolbar>
       <v-container>
-        <div>
+        <div v-if="!installed">
           <div class="text-subtitle-2">Aplicación (PWA)</div>
           <v-item-group class="mx-auto row row--dense" mandatory>
             <v-btn
@@ -51,6 +51,7 @@
               depressed
               :loading="installing"
               :disabled="installing"
+              class="my-2"
               @click.stop="install"
             >
               <span>
@@ -73,7 +74,7 @@
             </v-btn>
           </v-item-group>
         </div>
-        <div class="mt-2 mb-3 mx-n3">
+        <div v-if="!installed" class="mt-2 mb-3 mx-n3">
           <v-divider />
         </div>
         <div>
@@ -357,7 +358,7 @@ export default {
         with: "intra",
       },
     ],
-    installed: true,
+    installed: false,
     installing: false,
     deferredPrompt: null,
     menu: false,
@@ -422,6 +423,7 @@ export default {
     if (process.client) {
       // eslint-disable-next-line nuxt/no-globals-in-created
       window.addEventListener("appinstalled", (e) => {
+        console.log("installed");
         this.installed = true;
       });
       // eslint-disable-next-line nuxt/no-globals-in-created
@@ -431,6 +433,15 @@ export default {
         this.installing = false;
         this.deferredPrompt = e;
       });
+      async function getInstalledApps() {
+        const installedApps = await navigator.getInstalledRelatedApps();
+        console.log(installedApps);
+      }
+      if ("getInstalledRelatedApps" in navigator) {
+        getInstalledApps();
+      } else {
+        console.log("not supported");
+      }
     }
   },
   methods: {
