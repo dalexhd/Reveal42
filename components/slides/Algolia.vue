@@ -19,20 +19,22 @@
     <section
       data-background-video="@/assets/video/algolia/algolia.mp4"
       data-background-video-preload="auto"
-      data-background-video-thumbnails="@/assets/video/algolia/thumbnails.vtt"
+      :data-background-video-thumbnails="
+        require(`@/assets/video/algolia/thumbnails.vtt`).default
+      "
       :data-background-video-subtitles-enabled="$store.state.settings.subtitles"
       :data-background-video-subtitles="
         JSON.stringify([
           {
             label: 'Español',
             srclang: 'es',
-            src: require(`@/assets/video/algolia/es.vtt`),
+            src: require(`@/assets/video/algolia/es.vtt`).default,
             default: true,
           },
           {
             label: 'English',
             srclang: 'en',
-            src: require(`@/assets/video/algolia/en.vtt`),
+            src: require(`@/assets/video/algolia/en.vtt`).default,
           },
         ])
       "

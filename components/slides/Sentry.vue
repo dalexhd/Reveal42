@@ -13,20 +13,22 @@
     <section
       data-background-video="@/assets/video/sentry/sentry.mp4"
       data-background-video-preload="auto"
-      data-background-video-thumbnails="@/assets/video/sentry/thumbnails.vtt"
+      :data-background-video-thumbnails="
+        require(`@/assets/video/sentry/thumbnails.vtt`).default
+      "
       :data-background-video-subtitles-enabled="$store.state.settings.subtitles"
       :data-background-video-subtitles="
         JSON.stringify([
           {
             label: 'Español',
             srclang: 'es',
-            src: require(`@/assets/video/sentry/es.vtt`),
+            src: require(`@/assets/video/sentry/es.vtt`).default,
             default: true,
           },
           {
             label: 'English',
             srclang: 'en',
-            src: require(`@/assets/video/sentry/en.vtt`),
+            src: require(`@/assets/video/sentry/en.vtt`).default,
           },
         ])
       "

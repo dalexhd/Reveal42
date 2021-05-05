@@ -3,8 +3,14 @@
     <Nuxt :style="widthStyle" />
     <v-app class="bg-transparent">
       <Settings />
-      <Poll v-if="$store.state.auth.loggedIn" />
+      <Poll v-if="$store.state.auth.loggedIn && $auth.hasRole('viewer')" />
       <Snackbar />
+      <v-overlay :value="loading" :opacity="1" z-index="4" class="text-center">
+        <div class="animate-pulse">
+          <v-icon size="150">$mdi42</v-icon>
+          <div class="text-2xl">Cargando vista del {{ role }}</div>
+        </div>
+      </v-overlay>
     </v-app>
     <Particles v-if="$store.state.settings.particles" :style="widthStyle" />
     <SpotifyPlayer v-if="$store.state.spotify.loggedIn" />
@@ -24,6 +30,12 @@ export default {
     Poll,
     SpotifyPlayer,
   },
+  data() {
+    return {
+      loading: true,
+      role: this.$store.state.auth?.user?.role || "guest",
+    };
+  },
   computed: {
     widthStyle() {
       return !(
@@ -35,6 +47,11 @@ export default {
           }
         : {};
     },
+  },
+  mounted() {
+    window.addEventListener("load", () => {
+      this.loading = false;
+    });
   },
 };
 </script>

@@ -19,13 +19,13 @@
           {
             label: 'Español',
             srclang: 'es',
-            src: require('@/assets/video/hotjar/es.vtt'),
+            src: require('@/assets/video/hotjar/es.vtt').default,
             default: true,
           },
           {
             label: 'English',
             srclang: 'en',
-            src: require('@/assets/video/hotjar/en.vtt'),
+            src: require('@/assets/video/hotjar/en.vtt').default,
           },
         ])
       "

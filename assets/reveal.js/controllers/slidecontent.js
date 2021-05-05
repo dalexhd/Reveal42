@@ -171,11 +171,7 @@ export default class SlideContent {
           if (backgroundVideoSubtitles) {
             backgroundVideoSubtitles = JSON.parse(backgroundVideoSubtitles);
             backgroundVideoSubtitles.forEach((subtitle) => {
-              video.innerHTML += `<track label="${
-                subtitle.label
-              }" kind="subtitles" srclang="${subtitle.srclang}" src="${
-                subtitle.src.default
-              }" ${subtitle.default ? "default" : ""} />`;
+              video.innerHTML += `<track label="${subtitle.label}" kind="subtitles" srclang="${subtitle.srclang}" src="${subtitle.src}"} />`;
             });
             if (typeof backgroundVideoSubtitlesEnabled === "undefined") {
               backgroundVideoSubtitlesEnabled = true;

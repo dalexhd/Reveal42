@@ -18,20 +18,22 @@
     <section
       data-background-video="@/assets/video/datadog/datadog.mp4"
       data-background-video-preload="auto"
-      data-background-video-thumbnails="@/assets/video/datadog/thumbnails.vtt"
+      :data-background-video-thumbnails="
+        require(`@/assets/video/datadog/thumbnails.vtt`).default
+      "
       :data-background-video-subtitles-enabled="$store.state.settings.subtitles"
       :data-background-video-subtitles="
         JSON.stringify([
           {
             label: 'Español',
             srclang: 'es',
-            src: require(`@/assets/video/datadog/es.vtt`),
+            src: require(`@/assets/video/datadog/es.vtt`).default,
             default: true,
           },
           {
             label: 'English',
             srclang: 'en',
-            src: require(`@/assets/video/datadog/en.vtt`),
+            src: require(`@/assets/video/datadog/en.vtt`).default,
           },
         ])
       "

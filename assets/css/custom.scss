@@ -7,6 +7,10 @@
   --plyr-font-size-xlarge: 45px;
 }
 
+.plyr__captions {
+  font-size: 35px;
+}
+
 div.slide-background.present {
   &[data-background-hash*="youtube"] > .slide-background-content {
     pointer-events: none;

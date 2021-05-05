@@ -32,7 +32,8 @@
       </v-toolbar>
       <v-container>
         <iframe
-          src="https://www.polleverywhere.com/alexborbolla056"
+          v-if="toggled"
+          src="https://pollev-embeds.com/alexborbolla056"
           frameborder="0"
           title="Poll"
           :height="height"
@@ -49,6 +50,7 @@ export default {
   name: "Settings",
   data: () => ({
     fab: false,
+    toggled: false,
   }),
   computed: {
     voting: {
@@ -57,6 +59,7 @@ export default {
       },
       set(value) {
         this.$store.commit("toggleVoting", value);
+        this.toggled = true;
       },
     },
     height() {

@@ -41,7 +41,7 @@
       </v-toolbar>
       <v-container>
         <div>
-          <div class="mb-0 pl-1 text-subtitle-2">Aplicación (PWA)</div>
+          <div class="text-subtitle-2">Aplicación (PWA)</div>
           <v-item-group class="mx-auto row row--dense" mandatory>
             <v-btn
               v-if="!installed"
@@ -63,7 +63,7 @@
               :text="false"
               block
               color="error"
-              class="mt-1"
+              class="my-2"
               depressed
             >
               <span>
@@ -77,10 +77,10 @@
           <v-divider />
         </div>
         <div>
-          <div class="mb-0 pl-1 pt-1 text-subtitle-2">Integraciones</div>
+          <div class="text-subtitle-2">Integraciones</div>
           <v-sheet
             :color="`grey ${$vuetify.theme.dark ? 'darken' : 'lighten'}-3`"
-            class="mt-1"
+            class="my-3"
           >
             <v-item-group class="mx-auto row row--dense" mandatory>
               <div class="flex justify-around">
@@ -117,7 +117,7 @@
                   <v-hover v-slot="{ hover }">
                     <v-btn
                       depressed
-                      color="#1ED760"
+                      color="#191414"
                       :dark="!$vuetify.theme.dark"
                       class="py-5 w-full"
                       small
@@ -131,8 +131,8 @@
                       {{
                         hover
                           ? $store.state.auth.loggedIn
-                            ? "Salir"
-                            : "Entrar"
+                            ? "Entrar"
+                            : "Salir"
                           : "Spotify"
                       }}
                       <v-icon v-if="hover">{{
@@ -152,12 +152,8 @@
           <v-divider />
         </div>
         <div>
-          <div class="mb-0 pl-1 text-subtitle-2">Sonido</div>
-          <v-item-group
-            v-model="audio"
-            class="mx-auto row row--dense"
-            mandatory
-          >
+          <div class="text-subtitle-2">Sonido</div>
+          <v-item-group v-model="audio" class="my-2 row row--dense" mandatory>
             <v-col :cols="audio ? 9 : 3">
               <v-item :value="true">
                 <template #default="{ active, toggle }">
@@ -206,7 +202,7 @@
           <v-divider />
         </div>
         <div>
-          <div class="mb-0 pl-1 text-subtitle-2">Ajustes generales</div>
+          <div class="text-subtitle-2">Ajustes generales</div>
           <v-list subheader three-line flat>
             <v-list-item>
               <template #default>
@@ -269,16 +265,12 @@
             </v-list-item>
           </v-list>
         </div>
-        <div class="mt-2 mb-3 mx-n3">
+        <div class="mb-3 mx-n3">
           <v-divider />
         </div>
         <div>
-          <div class="mb-0 pl-1 text-subtitle-2">Tema</div>
-          <v-item-group
-            v-model="theme"
-            class="mx-auto row row--dense"
-            mandatory
-          >
+          <div class="text-subtitle-2">Tema</div>
+          <v-item-group v-model="theme" class="my-2 row row--dense" mandatory>
             <v-col cols="6">
               <v-item value="light">
                 <template #default="{ active, toggle }">
@@ -344,7 +336,7 @@
             </v-col>
           </v-item-group>
         </div>
-        <div class="mt-2 mb-3 mx-n3">
+        <div class="mb-2 mx-n3">
           <v-divider />
         </div>
       </v-container>

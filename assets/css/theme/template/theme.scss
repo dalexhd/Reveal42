@@ -90,7 +90,7 @@
   }
 
   /* Ensure certain elements are never larger than the slide itself */
-  img,
+  img:not([src*="thumbnails"]),
   video,
   iframe {
     max-width: 95%;
