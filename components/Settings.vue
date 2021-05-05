@@ -59,19 +59,6 @@
                 <v-icon right size="20">$mdiPlusCircle</v-icon>
               </span>
             </v-btn>
-            <v-btn
-              v-else
-              :text="false"
-              block
-              color="error"
-              class="my-2"
-              depressed
-            >
-              <span>
-                Desinstalar
-                <v-icon right size="20">$mdiDelete</v-icon>
-              </span>
-            </v-btn>
           </v-item-group>
         </div>
         <div v-if="!installed" class="mt-2 mb-3 mx-n3">
@@ -358,7 +345,7 @@ export default {
         with: "intra",
       },
     ],
-    installed: false,
+    installed: true,
     installing: false,
     deferredPrompt: null,
     menu: false,
@@ -428,20 +415,18 @@ export default {
       });
       // eslint-disable-next-line nuxt/no-globals-in-created
       window.addEventListener("beforeinstallprompt", (e) => {
-        e.preventDefault();
-        this.installed = false;
-        this.installing = false;
-        this.deferredPrompt = e;
+        if (navigator.getInstalledRelatedApps) {
+          e.preventDefault(); // Stop automated install prompt.
+          navigator.getInstalledRelatedApps().then((relatedApps) => {
+            console.log(e, relatedApps);
+            if (relatedApps.length === 0) {
+              this.installed = false;
+              this.installing = false;
+              this.deferredPrompt = e;
+            }
+          });
+        }
       });
-      async function getInstalledApps() {
-        const installedApps = await navigator.getInstalledRelatedApps();
-        console.log(installedApps);
-      }
-      if ("getInstalledRelatedApps" in navigator) {
-        getInstalledApps();
-      } else {
-        console.log("not supported");
-      }
     }
   },
   methods: {
