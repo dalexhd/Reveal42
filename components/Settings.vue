@@ -367,6 +367,7 @@ export default {
         return this.$store.state.settings.subtitles;
       },
       set(value) {
+        if (navigator.vibrate) navigator.vibrate(7);
         this.$store.commit("toggleSubtitles", value);
       },
     },
@@ -375,6 +376,7 @@ export default {
         return this.$store.state.settings.particles;
       },
       set(value) {
+        if (navigator.vibrate) navigator.vibrate(7);
         this.$store.commit("toggleParticles", value);
       },
     },
@@ -383,6 +385,7 @@ export default {
         return this.$store.state.settings.follow;
       },
       set(value) {
+        if (navigator.vibrate) navigator.vibrate(7);
         this.$store.commit("toggleFollow", value);
       },
     },
@@ -391,6 +394,7 @@ export default {
         return this.$store.state.settings.muted;
       },
       set(value) {
+        if (navigator.vibrate) navigator.vibrate(7);
         this.$store.commit("toggleAudio", value);
       },
     },
@@ -399,6 +403,7 @@ export default {
         return this.$store.state.settings.theme;
       },
       set(value) {
+        if (navigator.vibrate) navigator.vibrate(7);
         this.$store.commit("toggleTheme", value);
         const theme = this.$store.state.settings.theme;
         if (theme) {
@@ -418,9 +423,7 @@ export default {
   },
   watch: {
     menu(status) {
-      if (navigator.vibrate) {
-        navigator.vibrate(7);
-      }
+      if (navigator.vibrate) navigator.vibrate(7);
     },
   },
   created() {
