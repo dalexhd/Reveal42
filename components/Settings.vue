@@ -329,7 +329,7 @@
         </div>
         <div v-if="installed" class="d-flex">
           <div class="text-subtitle-2 text--disabled">
-            <v-icon>$mdiHarddisk</v-icon> Almacenamiento: {{ size }}
+            <v-icon>$mdiHarddisk</v-icon> {{ size }}
           </div>
           <div class="ml-2 text-subtitle-2 text--disabled">
             <v-icon>$mdiBattery</v-icon> {{ battery }}%
@@ -419,7 +419,7 @@ export default {
   watch: {
     menu(status) {
       if (navigator.vibrate) {
-        navigator.vibrate(5);
+        navigator.vibrate(7);
       }
     },
   },
