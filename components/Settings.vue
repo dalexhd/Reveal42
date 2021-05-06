@@ -419,7 +419,7 @@ export default {
   watch: {
     menu(status) {
       if (navigator.vibrate) {
-        navigator.vibrate(15);
+        navigator.vibrate(5);
       }
     },
   },
