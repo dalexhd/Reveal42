@@ -327,9 +327,12 @@
         <div class="mb-2 mx-n3">
           <v-divider />
         </div>
-        <div v-if="installed">
+        <div v-if="installed" class="f-flex">
           <div class="text-subtitle-2 text--disabled">
-            <v-icon>$mdiHarddisk</v-icon> Almacenamiento usado: {{ size }}
+            <v-icon>$mdiHarddisk</v-icon> Almacenamiento: {{ size }}
+          </div>
+          <div class="ml-2 text-subtitle-2 text--disabled">
+            <v-icon>$mdiBattery</v-icon> {{ battery }}%
           </div>
         </div>
       </v-container>
@@ -355,6 +358,7 @@ export default {
     deferredPrompt: null,
     menu: false,
     size: 0,
+    battery: 0,
   }),
   computed: {
     ...mapState(["settings"]),
@@ -412,8 +416,16 @@ export default {
       },
     },
   },
+  watch: {
+    menu(status) {
+      if (navigator.vibrate && status) {
+        navigator.vibrate(50);
+      }
+    },
+  },
   created() {
     if (process.client) {
+      const self = this;
       // eslint-disable-next-line nuxt/no-globals-in-created
       window.addEventListener("appinstalled", (e) => {
         console.log("PWA installed");
@@ -432,40 +444,52 @@ export default {
           });
         }
       });
-      async function getCacheStoragesAssetTotalSize() {
-        // Note: opaque (i.e. cross-domain, without CORS) responses in the cache will return a size of 0.
-        const cacheNames = await caches.keys();
-
-        let total = 0;
-
-        const sizePromises = cacheNames.map(async (cacheName) => {
-          const cache = await caches.open(cacheName);
-          const keys = await cache.keys();
-          let cacheSize = 0;
-
-          await Promise.all(
-            keys.map(async (key) => {
-              const response = await cache.match(key);
-              const blob = await response.blob();
-              total += blob.size;
-              cacheSize += blob.size;
-            })
-          );
-        });
-        await Promise.all(sizePromises);
-        return total;
-      }
-
       function bytesToSize(bytes) {
         const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
-        if (bytes == 0) return "0 Byte";
+        if (bytes === 0) return "0 Byte";
         const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
         return `${Math.round(bytes / Math.pow(1024, i), 2)} ${sizes[i]}`;
       }
-      setInterval(async () => {
-        const total = parseInt(await getCacheStoragesAssetTotalSize());
-        this.size = bytesToSize(total);
-      }, 2000);
+      if ("storage" in navigator && "estimate" in navigator.storage) {
+        setInterval(() => {
+          navigator.storage.estimate().then((estimate) => {
+            self.size = bytesToSize(estimate.usage);
+          });
+        }, 2000);
+      }
+
+      if (
+        "getBattery" in navigator ||
+        ("battery" in navigator && "Promise" in window)
+      ) {
+        function handleChange(change) {
+          console.log(change);
+        }
+
+        function onChargingChange() {
+          handleChange(
+            `Battery charging changed to ${
+              this.charging ? "charging" : "discharging"
+            }`
+          );
+        }
+
+        function onLevelChange() {
+          self.battery = this.level * 100;
+        }
+
+        let batteryPromise;
+
+        if ("getBattery" in navigator) {
+          batteryPromise = navigator.getBattery();
+        } else {
+          batteryPromise = Promise.resolve(navigator.battery);
+        }
+        batteryPromise.then(function (battery) {
+          battery.addEventListener("chargingchange", onChargingChange);
+          battery.addEventListener("levelchange", onLevelChange);
+        });
+      }
     }
   },
   methods: {

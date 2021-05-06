@@ -20,6 +20,7 @@ import {
   mdiPoll,
   mdiCookieCog,
   mdiHarddisk,
+  mdiBattery,
 } from "@mdi/js";
 
 const mdi42 =
@@ -47,5 +48,6 @@ export default {
   mdiPoll,
   mdiCookieCog,
   mdiHarddisk,
+  mdiBattery,
   mdi42,
 };
