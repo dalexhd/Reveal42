@@ -327,7 +327,7 @@
         <div class="mb-2 mx-n3">
           <v-divider />
         </div>
-        <div v-if="installed" class="f-flex">
+        <div v-if="installed" class="d-flex">
           <div class="text-subtitle-2 text--disabled">
             <v-icon>$mdiHarddisk</v-icon> Almacenamiento: {{ size }}
           </div>
@@ -488,6 +488,7 @@ export default {
         batteryPromise.then(function (battery) {
           battery.addEventListener("chargingchange", onChargingChange);
           battery.addEventListener("levelchange", onLevelChange);
+          self.battery = battery.level * 100;
         });
       }
     }
