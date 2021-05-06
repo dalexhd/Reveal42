@@ -57,7 +57,7 @@ export default {
       },
     },
     height() {
-      return this.$vuetify.breakpoint.height;
+      return this.$vuetify.breakpoint.height - 90;
     },
     width() {
       return this.$vuetify.breakpoint.smAndDown
