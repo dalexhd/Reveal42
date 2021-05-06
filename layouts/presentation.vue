@@ -3,7 +3,8 @@
     <Nuxt :style="widthStyle" />
     <v-app class="bg-transparent">
       <Settings />
-      <Poll v-if="$store.state.auth.loggedIn && $auth.hasRole('viewer')" />
+      <!-- <Poll v-if="$store.state.auth.loggedIn && $auth.hasRole('viewer')" /> -->
+      <Poll />
       <Snackbar />
       <v-overlay :value="loading" :opacity="1" z-index="4" class="text-center">
         <div class="animate-pulse">
@@ -38,14 +39,20 @@ export default {
   },
   computed: {
     widthStyle() {
-      return !(
-        this.$vuetify.breakpoint.mobile || this.$vuetify.breakpoint.tablet
-      ) && this.$store.state.voting
-        ? {
-            width: `${(this.$vuetify.breakpoint.width - 520).toString()}px`,
-            marginLeft: "520px",
-          }
-        : {};
+      return (
+        !this.$vuetify.breakpoint.smAndDown &&
+        (this.$store.state.voting
+          ? {
+              width: `${(this.$vuetify.breakpoint.width - 520).toString()}px`,
+              marginLeft: "520px",
+            }
+          : this.$store.state.menu
+          ? {
+              width: `${(this.$vuetify.breakpoint.width - 350).toString()}px`,
+              marginRight: "350px",
+            }
+          : {})
+      );
     },
   },
   mounted() {

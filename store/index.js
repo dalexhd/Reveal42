@@ -9,6 +9,7 @@ export const state = () => ({
     follow: true,
     theme: "dark",
   },
+  menu: false,
   voting: false,
   spotify: {
     loggedIn: false,
@@ -54,6 +55,9 @@ export const mutations = {
   },
   toggleVoting(state, value) {
     state.voting = value;
+  },
+  toggleMenu(state, value) {
+    state.menu = value;
   },
   logoutFromSpotify(state) {
     state.spotify.loggedIn = false;

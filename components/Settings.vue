@@ -31,7 +31,15 @@
         </template>
       </v-btn>
     </v-hover>
-    <v-navigation-drawer v-model="menu" fixed temporary right width="300">
+    <v-navigation-drawer
+      v-model="menu"
+      fixed
+      temporary
+      right
+      :width="
+        $vuetify.breakpoint.smAndDown ? $vuetify.breakpoint.width - 70 : 300
+      "
+    >
       <v-toolbar class="v-bar--underline" flat>
         <div class="text-h6 font-weight-medium text--primary">Ajustes</div>
         <v-spacer />
@@ -356,12 +364,19 @@ export default {
     installed: true,
     installing: false,
     deferredPrompt: null,
-    menu: false,
     size: 0,
     battery: 0,
   }),
   computed: {
     ...mapState(["settings"]),
+    menu: {
+      get() {
+        return this.$store.state.menu;
+      },
+      set(value) {
+        this.$store.commit("toggleMenu", value);
+      },
+    },
     subtitles: {
       get() {
         return this.$store.state.settings.subtitles;
@@ -554,6 +569,9 @@ export default {
   text-transform: capitalize;
   background: white;
   z-index: 4;
+}
+.v-navigation-drawer {
+  z-index: 30 !important;
 }
 .login-btn {
   z-index: 1;

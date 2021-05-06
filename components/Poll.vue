@@ -17,11 +17,7 @@
       fixed
       temporary
       left
-      :width="
-        $vuetify.breakpoint.mobile || $vuetify.breakpoint.tablet
-          ? $vuetify.breakpoint.width
-          : 520
-      "
+      :width="$vuetify.breakpoint.smAndDown ? $vuetify.breakpoint.width : 520"
     >
       <v-toolbar class="v-bar--underline" flat>
         <div class="text-h6 font-weight-medium text--primary">Votaciones</div>
@@ -30,16 +26,14 @@
           <v-icon>$mdiClose</v-icon>
         </v-btn>
       </v-toolbar>
-      <v-container>
-        <iframe
-          v-if="toggled"
-          src="https://pollev-embeds.com/alexborbolla056"
-          frameborder="0"
-          title="Poll"
-          :height="height"
-          :width="width"
-        ></iframe>
-      </v-container>
+      <iframe
+        v-if="toggled"
+        src="https://pollev-embeds.com/alexborbolla056"
+        frameborder="0"
+        title="Poll"
+        :height="height"
+        :width="width"
+      ></iframe>
     </v-navigation-drawer>
   </div>
 </template>
@@ -63,13 +57,11 @@ export default {
       },
     },
     height() {
-      return this.$vuetify.breakpoint.mobile || this.$vuetify.breakpoint.tablet
-        ? this.$vuetify.breakpoint.height - 90
-        : 875;
+      return this.$vuetify.breakpoint.height;
     },
     width() {
-      return this.$vuetify.breakpoint.mobile || this.$vuetify.breakpoint.tablet
-        ? this.$vuetify.breakpoint.width - 20
+      return this.$vuetify.breakpoint.smAndDown
+        ? this.$vuetify.breakpoint.width
         : 500;
     },
   },
