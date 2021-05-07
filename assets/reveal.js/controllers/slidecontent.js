@@ -450,6 +450,16 @@ export default class SlideContent {
    * @param {HTMLElement} element
    */
   startEmbeddedContent(element) {
+    if (
+      typeof element !== "undefined" &&
+      element !== null &&
+      element.hasAttribute("data-open-voting")
+    ) {
+      // eslint-disable-next-line no-undef
+      $nuxt.$store.commit("toggleVoting", true);
+      // eslint-disable-next-line no-undef
+      $nuxt.$store.commit("toggleMenu", false);
+    }
     if (element) {
       // Restart GIFs
       queryAll(element, 'img[src$=".gif"]').forEach((el) => {
@@ -618,6 +628,14 @@ export default class SlideContent {
    * @param {HTMLElement} element
    */
   stopEmbeddedContent(element, options = {}) {
+    if (
+      typeof element !== "undefined" &&
+      element !== null &&
+      element.hasAttribute("data-open-voting")
+    ) {
+      // eslint-disable-next-line no-undef
+      $nuxt.$store.commit("toggleVoting", false);
+    }
     options = extend(
       {
         // Defaults

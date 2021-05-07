@@ -3,10 +3,12 @@
     <section
       data-background-iframe="https://viz.polleverywhere.com/free_text_polls/Jup4V5cILH2DaTSK2VJSw?preview=true&controls=none"
       data-background-interactive="true"
+      :data-open-voting="$store.state.auth.loggedIn"
     ></section>
     <section
       data-background-iframe="https://viz.polleverywhere.com/multiple_choice_polls/rwmL6NZMebaW8JtIXqe9G?preview=true&controls=none"
       data-background-interactive="true"
+      :data-open-voting="$store.state.auth.loggedIn"
     ></section>
   </section>
 </template>

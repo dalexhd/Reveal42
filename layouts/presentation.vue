@@ -4,7 +4,7 @@
     <v-app class="bg-transparent">
       <Settings />
       <!-- <Poll v-if="$store.state.auth.loggedIn && $auth.hasRole('viewer')" /> -->
-      <Poll />
+      <Poll v-if="$store.state.auth.loggedIn" />
       <Snackbar />
       <v-overlay
         :value="loading"
