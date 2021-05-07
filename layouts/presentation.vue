@@ -6,7 +6,12 @@
       <!-- <Poll v-if="$store.state.auth.loggedIn && $auth.hasRole('viewer')" /> -->
       <Poll />
       <Snackbar />
-      <v-overlay :value="loading" :opacity="1" z-index="4" class="text-center">
+      <v-overlay
+        :value="loading"
+        :opacity="1"
+        z-index="10"
+        class="text-center loading-overlay"
+      >
         <div class="animate-pulse">
           <v-icon size="150">$mdi42</v-icon>
           <div class="text-2xl">Cargando vista del {{ role }}</div>
@@ -48,8 +53,8 @@ export default {
             }
           : this.$store.state.menu
           ? {
-              width: `${(this.$vuetify.breakpoint.width - 350).toString()}px`,
-              marginRight: "350px",
+              width: `${(this.$vuetify.breakpoint.width - 300).toString()}px`,
+              marginRight: "300px",
             }
           : {})
       );
@@ -62,3 +67,9 @@ export default {
   },
 };
 </script>
+<style>
+.v-overlay--active:not(.loading-overlay) {
+  z-index: 0 !important;
+  display: none !important;
+}
+</style>

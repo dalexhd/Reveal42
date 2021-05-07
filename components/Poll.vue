@@ -19,7 +19,7 @@
       left
       :width="$vuetify.breakpoint.smAndDown ? $vuetify.breakpoint.width : 520"
     >
-      <v-toolbar class="v-bar--underline" flat>
+      <v-toolbar ref="header" class="v-bar--underline" flat>
         <div class="text-h6 font-weight-medium text--primary">Votaciones</div>
         <v-spacer />
         <v-btn icon @click="voting = !voting">
@@ -31,8 +31,8 @@
         src="https://pollev-embeds.com/alexborbolla056"
         frameborder="0"
         title="Poll"
-        :height="height"
-        :width="width"
+        class="w-full"
+        :height="$vuetify.breakpoint.height - ($refs.header.computedHeight + 7)"
       ></iframe>
     </v-navigation-drawer>
   </div>
@@ -56,14 +56,6 @@ export default {
         this.toggled = true;
       },
     },
-    height() {
-      return this.$vuetify.breakpoint.height - 90;
-    },
-    width() {
-      return this.$vuetify.breakpoint.smAndDown
-        ? this.$vuetify.breakpoint.width
-        : 500;
-    },
   },
   created() {},
   methods: {},
@@ -71,6 +63,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .v-navigation-drawer {
-  z-index: 30;
+  // z-index: 30;
 }
 </style>
