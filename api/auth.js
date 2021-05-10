@@ -25,7 +25,7 @@ let sessionObject = {
   resave: true,
   saveUninitialized: true,
   cookie: {
-    maxAge: 2 * 60 * 60 * 1000,
+    maxAge: 30 * 60 * 60 * 1000,
   },
 };
 if (process.env.NODE_ENV === "production") {
@@ -93,7 +93,7 @@ app.post("/intra", (req, res) => {
       req.session.user = await getIntraUserData(
         `Bearer ${response.data.access_token}`
       );
-      req.session.cookie.maxAge = 2 * 60 * 60 * 1000;
+      req.session.cookie.maxAge = 30 * 60 * 60 * 1000;
       req.session.save(() => {
         return res.status(200).send(response.data);
       });
@@ -102,6 +102,54 @@ app.post("/intra", (req, res) => {
       res.status(403).send(error);
     });
 });
+
+// const getRefreshToken = (refreshToken) => {
+//   return new Promise((resolve, reject) => {
+//     axios
+//       .request({
+//         method: "POST",
+//         url: "https://api.intra.42.fr/oauth/token",
+//         data: {
+//           refresh_token: refreshToken,
+//           client_secret: process.env.CLIENT_SECRET,
+//           client_id: process.env.CLIENT_ID,
+//           redirect_uri: "http://localhost:3000/callback",
+//           grant_type: "refresh_token",
+//         },
+//         headers: {
+//           Accept: "application/json",
+//         },
+//       })
+//       .then((response) => {
+//         resolve(response);
+//       })
+//       .catch((error) => {
+//         reject(error);
+//       });
+//   });
+// };
+
+// app.get("/me", async (req, res) => {
+//   try {
+//     const data = await getIntraUserData(req.cookies["auth._token.intra"]);
+//     return res.status(200).send(data);
+//   } catch (error) {
+//     try {
+//       const response = await getRefreshToken(
+//         req.cookies["auth._refresh_token.intra"]
+//       );
+//       req.session.user = await getIntraUserData(
+//         `Bearer ${response.data.access_token}`
+//       );
+//       req.session.cookie.maxAge = 2 * 60 * 60 * 1000;
+//       req.session.save(() => {
+//         return res.status(200).send(response.data);
+//       });
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   }
+// });
 
 app.get("/me", (req, res) => {
   if (typeof req.session.user === "undefined") {

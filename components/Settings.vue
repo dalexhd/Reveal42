@@ -91,7 +91,7 @@
                       rounded
                       @click.stop="
                         $store.state.auth.loggedIn
-                          ? $auth.logout()
+                          ? logout()
                           : $auth.loginWith('intra')
                       "
                     >
@@ -513,7 +513,9 @@ export default {
   },
   methods: {
     logout() {
-      this.$auth.logout();
+      this.$auth.logout().then((value) => {
+        this.$store.commit("toggleMenu", false);
+      });
     },
     checkSpeedDial(event) {
       if (this.fab) {
