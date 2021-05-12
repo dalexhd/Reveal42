@@ -1,20 +1,20 @@
 <template>
-  <div class="slides">
-    <Cover />
-    <Presentation />
-    <DeveloperPack />
-    <Algolia />
-    <Hotjar />
-    <Sentry />
-    <Datadog />
-    <JetBrains />
-    <GitKraken />
-    <Gitpod />
-    <Github />
-    <Heroku />
-    <Aws />
-    <PollEverywhere />
-  </div>
+	<div class="slides">
+		<Cover />
+		<Presentation />
+		<DeveloperPack />
+		<Algolia />
+		<Hotjar />
+		<Sentry />
+		<Datadog />
+		<JetBrains />
+		<GitKraken />
+		<Gitpod />
+		<Github />
+		<Heroku />
+		<Aws />
+		<PollEverywhere />
+	</div>
 </template>
 <script>
 import { mapActions } from "vuex";
@@ -33,22 +33,22 @@ import Heroku from "@/components/slides/Heroku";
 import Aws from "@/components/slides/AWS";
 import PollEverywhere from "@/components/slides/PollEverywhere";
 export default {
-  comments: true,
-  components: {
-    Cover,
-    Presentation,
-    DeveloperPack,
-    Algolia,
-    Hotjar,
-    Sentry,
-    Datadog,
-    JetBrains,
-    GitKraken,
-    Gitpod,
-    Github,
-    Heroku,
-    Aws,
-    PollEverywhere,
-  },
+	comments: true,
+	components: {
+		Cover,
+		Presentation,
+		DeveloperPack,
+		Algolia,
+		Hotjar,
+		Sentry,
+		Datadog,
+		JetBrains,
+		GitKraken,
+		Gitpod,
+		Github,
+		Heroku,
+		Aws,
+		PollEverywhere
+	}
 };
 </script>

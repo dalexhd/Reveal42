@@ -11,86 +11,86 @@ const STATE_FOCUS = "focus";
 const STATE_BLUR = "blur";
 
 export default class Focus {
-  constructor(Reveal) {
-    this.Reveal = Reveal;
+	constructor(Reveal) {
+		this.Reveal = Reveal;
 
-    this.onRevealPointerDown = this.onRevealPointerDown.bind(this);
-    this.onDocumentPointerDown = this.onDocumentPointerDown.bind(this);
-  }
+		this.onRevealPointerDown = this.onRevealPointerDown.bind(this);
+		this.onDocumentPointerDown = this.onDocumentPointerDown.bind(this);
+	}
 
-  /**
-   * Called when the reveal.js config is updated.
-   */
-  configure(config, oldConfig) {
-    if (config.embedded) {
-      this.blur();
-    } else {
-      this.focus();
-      this.unbind();
-    }
-  }
+	/**
+	 * Called when the reveal.js config is updated.
+	 */
+	configure(config, oldConfig) {
+		if (config.embedded) {
+			this.blur();
+		} else {
+			this.focus();
+			this.unbind();
+		}
+	}
 
-  bind() {
-    if (this.Reveal.getConfig().embedded) {
-      this.Reveal.getRevealElement().addEventListener(
-        "pointerdown",
-        this.onRevealPointerDown,
-        false
-      );
-    }
-  }
+	bind() {
+		if (this.Reveal.getConfig().embedded) {
+			this.Reveal.getRevealElement().addEventListener(
+				"pointerdown",
+				this.onRevealPointerDown,
+				false
+			);
+		}
+	}
 
-  unbind() {
-    this.Reveal.getRevealElement().removeEventListener(
-      "pointerdown",
-      this.onRevealPointerDown,
-      false
-    );
-    document.removeEventListener(
-      "pointerdown",
-      this.onDocumentPointerDown,
-      false
-    );
-  }
+	unbind() {
+		this.Reveal.getRevealElement().removeEventListener(
+			"pointerdown",
+			this.onRevealPointerDown,
+			false
+		);
+		document.removeEventListener(
+			"pointerdown",
+			this.onDocumentPointerDown,
+			false
+		);
+	}
 
-  focus() {
-    if (this.state !== STATE_FOCUS) {
-      this.Reveal.getRevealElement().classList.add("focused");
-      document.addEventListener(
-        "pointerdown",
-        this.onDocumentPointerDown,
-        false
-      );
-    }
+	focus() {
+		if (this.state !== STATE_FOCUS) {
+			this.Reveal.getRevealElement().classList.add("focused");
+			document.addEventListener(
+				"pointerdown",
+				this.onDocumentPointerDown,
+				false
+			);
+		}
 
-    this.state = STATE_FOCUS;
-  }
+		this.state = STATE_FOCUS;
+	}
 
-  blur() {
-    if (this.state !== STATE_BLUR) {
-      this.Reveal.getRevealElement().classList.remove("focused");
-      document.removeEventListener(
-        "pointerdown",
-        this.onDocumentPointerDown,
-        false
-      );
-    }
+	blur() {
+		if (this.state !== STATE_BLUR) {
+			this.Reveal.getRevealElement().classList.remove("focused");
+			document.removeEventListener(
+				"pointerdown",
+				this.onDocumentPointerDown,
+				false
+			);
+		}
 
-    this.state = STATE_BLUR;
-  }
+		this.state = STATE_BLUR;
+	}
 
-  isFocused() {
-    return this.state === STATE_FOCUS;
-  }
+	isFocused() {
+		return this.state === STATE_FOCUS;
+	}
 
-  onRevealPointerDown(event) {
-    this.focus();
-  }
+	onRevealPointerDown(event) {
+		this.focus();
+	}
 
-  onDocumentPointerDown(event) {
-    const revealElement = closest(event.target, ".reveal");
-    if (!revealElement || revealElement !== this.Reveal.getRevealElement()) {
-      this.blur();
-    }
-  }
+	onDocumentPointerDown(event) {
+		const revealElement = closest(event.target, ".reveal");
+		if (!revealElement || revealElement !== this.Reveal.getRevealElement()) {
+			this.blur();
+		}
+	}
 }

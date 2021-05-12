@@ -111,445 +111,445 @@ import hljs from "highlight.js";
  */
 
 const Plugin = {
-  id: "highlight",
+	id: "highlight",
 
-  HIGHLIGHT_STEP_DELIMITER: "|",
-  HIGHLIGHT_LINE_DELIMITER: ",",
-  HIGHLIGHT_LINE_RANGE_DELIMITER: "-",
+	HIGHLIGHT_STEP_DELIMITER: "|",
+	HIGHLIGHT_LINE_DELIMITER: ",",
+	HIGHLIGHT_LINE_RANGE_DELIMITER: "-",
 
-  hljs,
+	hljs,
 
-  /**
-   * Highlights code blocks withing the given deck.
-   *
-   * Note that this can be called multiple times if
-   * there are multiple presentations on one page.
-   *
-   * @param {Reveal} reveal the reveal.js instance
-   */
-  init(reveal) {
-    // Read the plugin config options and provide fallbacks
-    const config = reveal.getConfig().highlight || {};
-    config.highlightOnLoad =
-      typeof config.highlightOnLoad === "boolean"
-        ? config.highlightOnLoad
-        : true;
-    config.escapeHTML =
-      typeof config.escapeHTML === "boolean" ? config.escapeHTML : true;
-    [].slice
-      .call(reveal.getRevealElement().querySelectorAll("pre code"))
-      .forEach(function (block) {
-        // Trim whitespace if the "data-trim" attribute is present
-        if (
-          block.hasAttribute("data-trim") &&
-          typeof block.innerHTML.trim === "function"
-        ) {
-          block.innerHTML = betterTrim(block);
-        }
+	/**
+	 * Highlights code blocks withing the given deck.
+	 *
+	 * Note that this can be called multiple times if
+	 * there are multiple presentations on one page.
+	 *
+	 * @param {Reveal} reveal the reveal.js instance
+	 */
+	init(reveal) {
+		// Read the plugin config options and provide fallbacks
+		const config = reveal.getConfig().highlight || {};
+		config.highlightOnLoad =
+			typeof config.highlightOnLoad === "boolean"
+				? config.highlightOnLoad
+				: true;
+		config.escapeHTML =
+			typeof config.escapeHTML === "boolean" ? config.escapeHTML : true;
+		[].slice
+			.call(reveal.getRevealElement().querySelectorAll("pre code"))
+			.forEach(function (block) {
+				// Trim whitespace if the "data-trim" attribute is present
+				if (
+					block.hasAttribute("data-trim") &&
+					typeof block.innerHTML.trim === "function"
+				) {
+					block.innerHTML = betterTrim(block);
+				}
 
-        // Escape HTML tags unless the "data-noescape" attrbute is present
-        if (config.escapeHTML && !block.hasAttribute("data-noescape")) {
-          block.innerHTML = block.innerHTML
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;");
-        }
+				// Escape HTML tags unless the "data-noescape" attrbute is present
+				if (config.escapeHTML && !block.hasAttribute("data-noescape")) {
+					block.innerHTML = block.innerHTML
+						.replace(/</g, "&lt;")
+						.replace(/>/g, "&gt;");
+				}
 
-        // Re-highlight when focus is lost (for contenteditable code)
-        block.addEventListener(
-          "focusout",
-          function (event) {
-            hljs.highlightBlock(event.currentTarget);
-          },
-          false
-        );
+				// Re-highlight when focus is lost (for contenteditable code)
+				block.addEventListener(
+					"focusout",
+					function (event) {
+						hljs.highlightBlock(event.currentTarget);
+					},
+					false
+				);
 
-        if (config.highlightOnLoad) {
-          Plugin.highlightBlock(block);
-        }
-      });
+				if (config.highlightOnLoad) {
+					Plugin.highlightBlock(block);
+				}
+			});
 
-    // If we're printing to PDF, scroll the code highlights of
-    // all blocks in the deck into view at once
-    reveal.on("pdf-ready", function () {
-      [].slice
-        .call(
-          reveal
-            .getRevealElement()
-            .querySelectorAll("pre code[data-line-numbers].current-fragment")
-        )
-        .forEach(function (block) {
-          Plugin.scrollHighlightedLineIntoView(block, {}, true);
-        });
-    });
-  },
+		// If we're printing to PDF, scroll the code highlights of
+		// all blocks in the deck into view at once
+		reveal.on("pdf-ready", function () {
+			[].slice
+				.call(
+					reveal
+						.getRevealElement()
+						.querySelectorAll("pre code[data-line-numbers].current-fragment")
+				)
+				.forEach(function (block) {
+					Plugin.scrollHighlightedLineIntoView(block, {}, true);
+				});
+		});
+	},
 
-  /**
-   * Highlights a code block. If the <code> node has the
-   * 'data-line-numbers' attribute we also generate slide
-   * numbers.
-   *
-   * If the block contains multiple line highlight steps,
-   * we clone the block and create a fragment for each step.
-   */
-  highlightBlock(block) {
-    hljs.highlightBlock(block);
+	/**
+	 * Highlights a code block. If the <code> node has the
+	 * 'data-line-numbers' attribute we also generate slide
+	 * numbers.
+	 *
+	 * If the block contains multiple line highlight steps,
+	 * we clone the block and create a fragment for each step.
+	 */
+	highlightBlock(block) {
+		hljs.highlightBlock(block);
 
-    // Don't generate line numbers for empty code blocks
-    if (block.innerHTML.trim().length === 0) return;
+		// Don't generate line numbers for empty code blocks
+		if (block.innerHTML.trim().length === 0) return;
 
-    if (block.hasAttribute("data-line-numbers")) {
-      hljs.lineNumbersBlock(block, { singleLine: true });
+		if (block.hasAttribute("data-line-numbers")) {
+			hljs.lineNumbersBlock(block, { singleLine: true });
 
-      const scrollState = { currentBlock: block };
+			const scrollState = { currentBlock: block };
 
-      // If there is at least one highlight step, generate
-      // fragments
-      const highlightSteps = Plugin.deserializeHighlightSteps(
-        block.getAttribute("data-line-numbers")
-      );
-      if (highlightSteps.length > 1) {
-        // If the original code block has a fragment-index,
-        // each clone should follow in an incremental sequence
-        let fragmentIndex = parseInt(
-          block.getAttribute("data-fragment-index"),
-          10
-        );
+			// If there is at least one highlight step, generate
+			// fragments
+			const highlightSteps = Plugin.deserializeHighlightSteps(
+				block.getAttribute("data-line-numbers")
+			);
+			if (highlightSteps.length > 1) {
+				// If the original code block has a fragment-index,
+				// each clone should follow in an incremental sequence
+				let fragmentIndex = parseInt(
+					block.getAttribute("data-fragment-index"),
+					10
+				);
 
-        if (typeof fragmentIndex !== "number" || isNaN(fragmentIndex)) {
-          fragmentIndex = null;
-        }
+				if (typeof fragmentIndex !== "number" || isNaN(fragmentIndex)) {
+					fragmentIndex = null;
+				}
 
-        // Generate fragments for all steps except the original block
-        highlightSteps.slice(1).forEach(function (highlight) {
-          const fragmentBlock = block.cloneNode(true);
-          fragmentBlock.setAttribute(
-            "data-line-numbers",
-            Plugin.serializeHighlightSteps([highlight])
-          );
-          fragmentBlock.classList.add("fragment");
-          block.parentNode.appendChild(fragmentBlock);
-          Plugin.highlightLines(fragmentBlock);
+				// Generate fragments for all steps except the original block
+				highlightSteps.slice(1).forEach(function (highlight) {
+					const fragmentBlock = block.cloneNode(true);
+					fragmentBlock.setAttribute(
+						"data-line-numbers",
+						Plugin.serializeHighlightSteps([highlight])
+					);
+					fragmentBlock.classList.add("fragment");
+					block.parentNode.appendChild(fragmentBlock);
+					Plugin.highlightLines(fragmentBlock);
 
-          if (typeof fragmentIndex === "number") {
-            fragmentBlock.setAttribute("data-fragment-index", fragmentIndex);
-            fragmentIndex += 1;
-          } else {
-            fragmentBlock.removeAttribute("data-fragment-index");
-          }
+					if (typeof fragmentIndex === "number") {
+						fragmentBlock.setAttribute("data-fragment-index", fragmentIndex);
+						fragmentIndex += 1;
+					} else {
+						fragmentBlock.removeAttribute("data-fragment-index");
+					}
 
-          // Scroll highlights into view as we step through them
-          fragmentBlock.addEventListener(
-            "visible",
-            Plugin.scrollHighlightedLineIntoView.bind(
-              Plugin,
-              fragmentBlock,
-              scrollState
-            )
-          );
-          fragmentBlock.addEventListener(
-            "hidden",
-            Plugin.scrollHighlightedLineIntoView.bind(
-              Plugin,
-              fragmentBlock.previousSibling,
-              scrollState
-            )
-          );
-        });
+					// Scroll highlights into view as we step through them
+					fragmentBlock.addEventListener(
+						"visible",
+						Plugin.scrollHighlightedLineIntoView.bind(
+							Plugin,
+							fragmentBlock,
+							scrollState
+						)
+					);
+					fragmentBlock.addEventListener(
+						"hidden",
+						Plugin.scrollHighlightedLineIntoView.bind(
+							Plugin,
+							fragmentBlock.previousSibling,
+							scrollState
+						)
+					);
+				});
 
-        block.removeAttribute("data-fragment-index");
-        block.setAttribute(
-          "data-line-numbers",
-          Plugin.serializeHighlightSteps([highlightSteps[0]])
-        );
-      }
+				block.removeAttribute("data-fragment-index");
+				block.setAttribute(
+					"data-line-numbers",
+					Plugin.serializeHighlightSteps([highlightSteps[0]])
+				);
+			}
 
-      // Scroll the first highlight into view when the slide
-      // becomes visible. Note supported in IE11 since it lacks
-      // support for Element.closest.
-      const slide =
-        typeof block.closest === "function"
-          ? block.closest("section:not(.stack)")
-          : null;
-      if (slide) {
-        const scrollFirstHighlightIntoView = function () {
-          Plugin.scrollHighlightedLineIntoView(block, scrollState, true);
-          slide.removeEventListener("visible", scrollFirstHighlightIntoView);
-        };
-        slide.addEventListener("visible", scrollFirstHighlightIntoView);
-      }
+			// Scroll the first highlight into view when the slide
+			// becomes visible. Note supported in IE11 since it lacks
+			// support for Element.closest.
+			const slide =
+				typeof block.closest === "function"
+					? block.closest("section:not(.stack)")
+					: null;
+			if (slide) {
+				const scrollFirstHighlightIntoView = function () {
+					Plugin.scrollHighlightedLineIntoView(block, scrollState, true);
+					slide.removeEventListener("visible", scrollFirstHighlightIntoView);
+				};
+				slide.addEventListener("visible", scrollFirstHighlightIntoView);
+			}
 
-      Plugin.highlightLines(block);
-    }
-  },
+			Plugin.highlightLines(block);
+		}
+	},
 
-  /**
-   * Animates scrolling to the first highlighted line
-   * in the given code block.
-   */
-  scrollHighlightedLineIntoView(block, scrollState, skipAnimation) {
-    cancelAnimationFrame(scrollState.animationFrameID);
+	/**
+	 * Animates scrolling to the first highlighted line
+	 * in the given code block.
+	 */
+	scrollHighlightedLineIntoView(block, scrollState, skipAnimation) {
+		cancelAnimationFrame(scrollState.animationFrameID);
 
-    // Match the scroll position of the currently visible
-    // code block
-    if (scrollState.currentBlock) {
-      block.scrollTop = scrollState.currentBlock.scrollTop;
-    }
+		// Match the scroll position of the currently visible
+		// code block
+		if (scrollState.currentBlock) {
+			block.scrollTop = scrollState.currentBlock.scrollTop;
+		}
 
-    // Remember the current code block so that we can match
-    // its scroll position when showing/hiding fragments
-    scrollState.currentBlock = block;
+		// Remember the current code block so that we can match
+		// its scroll position when showing/hiding fragments
+		scrollState.currentBlock = block;
 
-    const highlightBounds = this.getHighlightedLineBounds(block);
-    let viewportHeight = block.offsetHeight;
+		const highlightBounds = this.getHighlightedLineBounds(block);
+		let viewportHeight = block.offsetHeight;
 
-    // Subtract padding from the viewport height
-    const blockStyles = getComputedStyle(block);
-    viewportHeight -=
-      parseInt(blockStyles.paddingTop) + parseInt(blockStyles.paddingBottom);
+		// Subtract padding from the viewport height
+		const blockStyles = getComputedStyle(block);
+		viewportHeight -=
+			parseInt(blockStyles.paddingTop) + parseInt(blockStyles.paddingBottom);
 
-    // Scroll position which centers all highlights
-    const startTop = block.scrollTop;
-    let targetTop =
-      highlightBounds.top +
-      (Math.min(highlightBounds.bottom - highlightBounds.top, viewportHeight) -
-        viewportHeight) /
-        2;
+		// Scroll position which centers all highlights
+		const startTop = block.scrollTop;
+		let targetTop =
+			highlightBounds.top +
+			(Math.min(highlightBounds.bottom - highlightBounds.top, viewportHeight) -
+				viewportHeight) /
+				2;
 
-    // Account for offsets in position applied to the
-    // <table> that holds our lines of code
-    const lineTable = block.querySelector(".hljs-ln");
-    if (lineTable)
-      targetTop += lineTable.offsetTop - parseInt(blockStyles.paddingTop);
+		// Account for offsets in position applied to the
+		// <table> that holds our lines of code
+		const lineTable = block.querySelector(".hljs-ln");
+		if (lineTable)
+			targetTop += lineTable.offsetTop - parseInt(blockStyles.paddingTop);
 
-    // Make sure the scroll target is within bounds
-    targetTop = Math.max(
-      Math.min(targetTop, block.scrollHeight - viewportHeight),
-      0
-    );
+		// Make sure the scroll target is within bounds
+		targetTop = Math.max(
+			Math.min(targetTop, block.scrollHeight - viewportHeight),
+			0
+		);
 
-    if (skipAnimation === true || startTop === targetTop) {
-      block.scrollTop = targetTop;
-    } else {
-      // Don't attempt to scroll if there is no overflow
-      if (block.scrollHeight <= viewportHeight) return;
+		if (skipAnimation === true || startTop === targetTop) {
+			block.scrollTop = targetTop;
+		} else {
+			// Don't attempt to scroll if there is no overflow
+			if (block.scrollHeight <= viewportHeight) return;
 
-      let time = 0;
-      const animate = function () {
-        time = Math.min(time + 0.02, 1);
+			let time = 0;
+			const animate = function () {
+				time = Math.min(time + 0.02, 1);
 
-        // Update our eased scroll position
-        block.scrollTop =
-          startTop + (targetTop - startTop) * Plugin.easeInOutQuart(time);
+				// Update our eased scroll position
+				block.scrollTop =
+					startTop + (targetTop - startTop) * Plugin.easeInOutQuart(time);
 
-        // Keep animating unless we've reached the end
-        if (time < 1) {
-          scrollState.animationFrameID = requestAnimationFrame(animate);
-        }
-      };
+				// Keep animating unless we've reached the end
+				if (time < 1) {
+					scrollState.animationFrameID = requestAnimationFrame(animate);
+				}
+			};
 
-      animate();
-    }
-  },
+			animate();
+		}
+	},
 
-  /**
-   * The easing function used when scrolling.
-   */
-  easeInOutQuart(t) {
-    // easeInOutQuart
-    return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t;
-  },
+	/**
+	 * The easing function used when scrolling.
+	 */
+	easeInOutQuart(t) {
+		// easeInOutQuart
+		return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t;
+	},
 
-  getHighlightedLineBounds(block) {
-    const highlightedLines = block.querySelectorAll(".highlight-line");
-    if (highlightedLines.length === 0) {
-      return { top: 0, bottom: 0 };
-    } else {
-      const firstHighlight = highlightedLines[0];
-      const lastHighlight = highlightedLines[highlightedLines.length - 1];
+	getHighlightedLineBounds(block) {
+		const highlightedLines = block.querySelectorAll(".highlight-line");
+		if (highlightedLines.length === 0) {
+			return { top: 0, bottom: 0 };
+		} else {
+			const firstHighlight = highlightedLines[0];
+			const lastHighlight = highlightedLines[highlightedLines.length - 1];
 
-      return {
-        top: firstHighlight.offsetTop,
-        bottom: lastHighlight.offsetTop + lastHighlight.offsetHeight,
-      };
-    }
-  },
+			return {
+				top: firstHighlight.offsetTop,
+				bottom: lastHighlight.offsetTop + lastHighlight.offsetHeight
+			};
+		}
+	},
 
-  /**
-   * Visually emphasize specific lines within a code block.
-   * This only works on blocks with line numbering turned on.
-   *
-   * @param {HTMLElement} block a <code> block
-   * @param {String} [linesToHighlight] The lines that should be
-   * highlighted in this format:
-   * "1" 		= highlights line 1
-   * "2,5"	= highlights lines 2 & 5
-   * "2,5-7"	= highlights lines 2, 5, 6 & 7
-   */
-  highlightLines(block, linesToHighlight) {
-    const highlightSteps = Plugin.deserializeHighlightSteps(
-      linesToHighlight || block.getAttribute("data-line-numbers")
-    );
+	/**
+	 * Visually emphasize specific lines within a code block.
+	 * This only works on blocks with line numbering turned on.
+	 *
+	 * @param {HTMLElement} block a <code> block
+	 * @param {String} [linesToHighlight] The lines that should be
+	 * highlighted in this format:
+	 * "1" 		= highlights line 1
+	 * "2,5"	= highlights lines 2 & 5
+	 * "2,5-7"	= highlights lines 2, 5, 6 & 7
+	 */
+	highlightLines(block, linesToHighlight) {
+		const highlightSteps = Plugin.deserializeHighlightSteps(
+			linesToHighlight || block.getAttribute("data-line-numbers")
+		);
 
-    if (highlightSteps.length) {
-      highlightSteps[0].forEach(function (highlight) {
-        let elementsToHighlight = [];
+		if (highlightSteps.length) {
+			highlightSteps[0].forEach(function (highlight) {
+				let elementsToHighlight = [];
 
-        // Highlight a range
-        if (typeof highlight.end === "number") {
-          elementsToHighlight = [].slice.call(
-            block.querySelectorAll(
-              `table tr:nth-child(n+${highlight.start}):nth-child(-n+${highlight.end})`
-            )
-          );
-        }
-        // Highlight a single line
-        else if (typeof highlight.start === "number") {
-          elementsToHighlight = [].slice.call(
-            block.querySelectorAll(`table tr:nth-child(${highlight.start})`)
-          );
-        }
+				// Highlight a range
+				if (typeof highlight.end === "number") {
+					elementsToHighlight = [].slice.call(
+						block.querySelectorAll(
+							`table tr:nth-child(n+${highlight.start}):nth-child(-n+${highlight.end})`
+						)
+					);
+				}
+				// Highlight a single line
+				else if (typeof highlight.start === "number") {
+					elementsToHighlight = [].slice.call(
+						block.querySelectorAll(`table tr:nth-child(${highlight.start})`)
+					);
+				}
 
-        if (elementsToHighlight.length) {
-          elementsToHighlight.forEach(function (lineElement) {
-            lineElement.classList.add("highlight-line");
-          });
+				if (elementsToHighlight.length) {
+					elementsToHighlight.forEach(function (lineElement) {
+						lineElement.classList.add("highlight-line");
+					});
 
-          block.classList.add("has-highlights");
-        }
-      });
-    }
-  },
+					block.classList.add("has-highlights");
+				}
+			});
+		}
+	},
 
-  /**
-   * Parses and formats a user-defined string of line
-   * numbers to highlight.
-   *
-   * @example
-   * Plugin.deserializeHighlightSteps( '1,2|3,5-10' )
-   * // [
-   * //   [ { start: 1 }, { start: 2 } ],
-   * //   [ { start: 3 }, { start: 5, end: 10 } ]
-   * // ]
-   */
-  deserializeHighlightSteps(highlightSteps) {
-    // Remove whitespace
-    highlightSteps = highlightSteps.replace(/\s/g, "");
+	/**
+	 * Parses and formats a user-defined string of line
+	 * numbers to highlight.
+	 *
+	 * @example
+	 * Plugin.deserializeHighlightSteps( '1,2|3,5-10' )
+	 * // [
+	 * //   [ { start: 1 }, { start: 2 } ],
+	 * //   [ { start: 3 }, { start: 5, end: 10 } ]
+	 * // ]
+	 */
+	deserializeHighlightSteps(highlightSteps) {
+		// Remove whitespace
+		highlightSteps = highlightSteps.replace(/\s/g, "");
 
-    // Divide up our line number groups
-    highlightSteps = highlightSteps.split(Plugin.HIGHLIGHT_STEP_DELIMITER);
+		// Divide up our line number groups
+		highlightSteps = highlightSteps.split(Plugin.HIGHLIGHT_STEP_DELIMITER);
 
-    return highlightSteps.map(function (highlights) {
-      return highlights
-        .split(Plugin.HIGHLIGHT_LINE_DELIMITER)
-        .map(function (highlight) {
-          // Parse valid line numbers
-          if (/^[\d-]+$/.test(highlight)) {
-            highlight = highlight.split(Plugin.HIGHLIGHT_LINE_RANGE_DELIMITER);
+		return highlightSteps.map(function (highlights) {
+			return highlights
+				.split(Plugin.HIGHLIGHT_LINE_DELIMITER)
+				.map(function (highlight) {
+					// Parse valid line numbers
+					if (/^[\d-]+$/.test(highlight)) {
+						highlight = highlight.split(Plugin.HIGHLIGHT_LINE_RANGE_DELIMITER);
 
-            const lineStart = parseInt(highlight[0], 10);
-            const lineEnd = parseInt(highlight[1], 10);
+						const lineStart = parseInt(highlight[0], 10);
+						const lineEnd = parseInt(highlight[1], 10);
 
-            if (isNaN(lineEnd)) {
-              return {
-                start: lineStart,
-              };
-            } else {
-              return {
-                start: lineStart,
-                end: lineEnd,
-              };
-            }
-          }
-          // If no line numbers are provided, no code will be highlighted
-          else {
-            return {};
-          }
-        });
-    });
-  },
+						if (isNaN(lineEnd)) {
+							return {
+								start: lineStart
+							};
+						} else {
+							return {
+								start: lineStart,
+								end: lineEnd
+							};
+						}
+					}
+					// If no line numbers are provided, no code will be highlighted
+					else {
+						return {};
+					}
+				});
+		});
+	},
 
-  /**
-   * Serializes parsed line number data into a string so
-   * that we can store it in the DOM.
-   */
-  serializeHighlightSteps(highlightSteps) {
-    return highlightSteps
-      .map(function (highlights) {
-        return highlights
-          .map(function (highlight) {
-            // Line range
-            if (typeof highlight.end === "number") {
-              return (
-                highlight.start +
-                Plugin.HIGHLIGHT_LINE_RANGE_DELIMITER +
-                highlight.end
-              );
-            }
-            // Single line
-            else if (typeof highlight.start === "number") {
-              return highlight.start;
-            }
-            // All lines
-            else {
-              return "";
-            }
-          })
-          .join(Plugin.HIGHLIGHT_LINE_DELIMITER);
-      })
-      .join(Plugin.HIGHLIGHT_STEP_DELIMITER);
-  },
+	/**
+	 * Serializes parsed line number data into a string so
+	 * that we can store it in the DOM.
+	 */
+	serializeHighlightSteps(highlightSteps) {
+		return highlightSteps
+			.map(function (highlights) {
+				return highlights
+					.map(function (highlight) {
+						// Line range
+						if (typeof highlight.end === "number") {
+							return (
+								highlight.start +
+								Plugin.HIGHLIGHT_LINE_RANGE_DELIMITER +
+								highlight.end
+							);
+						}
+						// Single line
+						else if (typeof highlight.start === "number") {
+							return highlight.start;
+						}
+						// All lines
+						else {
+							return "";
+						}
+					})
+					.join(Plugin.HIGHLIGHT_LINE_DELIMITER);
+			})
+			.join(Plugin.HIGHLIGHT_STEP_DELIMITER);
+	}
 };
 
 // Function to perform a better "data-trim" on code snippets
 // Will slice an indentation amount on each line of the snippet (amount based on the line having the lowest indentation length)
 function betterTrim(snippetEl) {
-  // Helper functions
-  function trimLeft(val) {
-    // Adapted from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim#Polyfill
-    return val.replace(/^[\s\uFEFF\xA0]+/g, "");
-  }
-  function trimLineBreaks(input) {
-    const lines = input.split("\n");
+	// Helper functions
+	function trimLeft(val) {
+		// Adapted from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim#Polyfill
+		return val.replace(/^[\s\uFEFF\xA0]+/g, "");
+	}
+	function trimLineBreaks(input) {
+		const lines = input.split("\n");
 
-    // Trim line-breaks from the beginning
-    for (let i = 0; i < lines.length; i++) {
-      if (lines[i].trim() === "") {
-        lines.splice(i--, 1);
-      } else break;
-    }
+		// Trim line-breaks from the beginning
+		for (let i = 0; i < lines.length; i++) {
+			if (lines[i].trim() === "") {
+				lines.splice(i--, 1);
+			} else break;
+		}
 
-    // Trim line-breaks from the end
-    for (let i = lines.length - 1; i >= 0; i--) {
-      if (lines[i].trim() === "") {
-        lines.splice(i, 1);
-      } else break;
-    }
+		// Trim line-breaks from the end
+		for (let i = lines.length - 1; i >= 0; i--) {
+			if (lines[i].trim() === "") {
+				lines.splice(i, 1);
+			} else break;
+		}
 
-    return lines.join("\n");
-  }
+		return lines.join("\n");
+	}
 
-  // Main function for betterTrim()
-  return (function (snippetEl) {
-    const content = trimLineBreaks(snippetEl.innerHTML);
-    const lines = content.split("\n");
-    // Calculate the minimum amount to remove on each line start of the snippet (can be 0)
-    const pad = lines.reduce(function (acc, line) {
-      if (
-        line.length > 0 &&
-        trimLeft(line).length > 0 &&
-        acc > line.length - trimLeft(line).length
-      ) {
-        return line.length - trimLeft(line).length;
-      }
-      return acc;
-    }, Number.POSITIVE_INFINITY);
-    // Slice each line with this amount
-    return lines
-      .map(function (line, index) {
-        return line.slice(pad);
-      })
-      .join("\n");
-  })(snippetEl);
+	// Main function for betterTrim()
+	return (function (snippetEl) {
+		const content = trimLineBreaks(snippetEl.innerHTML);
+		const lines = content.split("\n");
+		// Calculate the minimum amount to remove on each line start of the snippet (can be 0)
+		const pad = lines.reduce(function (acc, line) {
+			if (
+				line.length > 0 &&
+				trimLeft(line).length > 0 &&
+				acc > line.length - trimLeft(line).length
+			) {
+				return line.length - trimLeft(line).length;
+			}
+			return acc;
+		}, Number.POSITIVE_INFINITY);
+		// Slice each line with this amount
+		return lines
+			.map(function (line, index) {
+				return line.slice(pad);
+			})
+			.join("\n");
+	})(snippetEl);
 }
 
 export default () => Plugin;

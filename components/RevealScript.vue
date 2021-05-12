@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+	<div></div>
 </template>
 <script>
 import Reveal from "~/assets/reveal.js";
@@ -18,53 +18,69 @@ let adminConfig = {};
 let guestConfig = {};
 
 export default {
-  mounted() {
-    Reveal.role = this.$store.state.auth?.user?.role || "guest";
-    if (
-      ["presenter", "broadcaster"].includes(this.$store.state.auth?.user?.role)
-    ) {
-      adminConfig = {
-        server: {
-          secret: this.$auth.$storage.getLocalStorage("_token.intra"),
-        },
-      };
-      adminPlugins = [RevealClient, RevealZoom];
-    } else {
-      guestPlugins = [RevealAnalytics, RevealGuest];
-      guestConfig = {
-        analytics: {
-          enabled: true,
-        },
-      };
-    }
-    Reveal.initialize({
-      controls: true,
-      progress: true,
-      center: true,
-      hash: true,
-      controlsTutorial: false,
-      navigationMode: "linear",
-      touch: false,
-      // viewDistance: Number.MAX_VALUE,
-      // mobileViewDistance: Number.MAX_VALUE,
-      menu: {
-        themes: Reveal.role === "presenter",
-        themesPath: "/themes",
-        markers: false,
-      },
-      chart: {},
-      ...guestConfig,
-      ...adminConfig,
-      plugins: [
-        RevealSearch,
-        RevealMarkdown,
-        RevealHighlight,
-        RevealChart,
-        RevealMenu,
-        ...adminPlugins,
-        ...guestPlugins,
-      ],
-    });
-  },
+	mounted() {
+		function getCookie(cname) {
+			const name = `${cname}=`;
+			const decodedCookie = decodeURIComponent(document.cookie);
+			const ca = decodedCookie.split(";");
+			for (let i = 0; i < ca.length; i++) {
+				let c = ca[i];
+				while (c.charAt(0) === " ") {
+					c = c.substring(1);
+				}
+				if (c.indexOf(name) === 0) {
+					return c.substring(name.length, c.length);
+				}
+			}
+			return "";
+		}
+
+		Reveal.role = this.$store.state.intra?.user?.role || "guest";
+		if (
+			["presenter", "broadcaster"].includes(this.$store.state.intra?.user?.role)
+		) {
+			adminConfig = {
+				server: {
+					secret: `Bearer ${getCookie("intra.access_token")}`
+				}
+			};
+			adminPlugins = [RevealClient, RevealZoom];
+		} else {
+			guestPlugins = [RevealAnalytics, RevealGuest];
+			guestConfig = {
+				analytics: {
+					enabled: true
+				}
+			};
+		}
+		Reveal.initialize({
+			controls: true,
+			progress: true,
+			center: true,
+			hash: true,
+			controlsTutorial: false,
+			navigationMode: "linear",
+			touch: false,
+			// viewDistance: Number.MAX_VALUE,
+			// mobileViewDistance: Number.MAX_VALUE,
+			menu: {
+				themes: Reveal.role === "presenter",
+				themesPath: "/themes",
+				markers: false
+			},
+			chart: {},
+			...guestConfig,
+			...adminConfig,
+			plugins: [
+				RevealSearch,
+				RevealMarkdown,
+				RevealHighlight,
+				RevealChart,
+				RevealMenu,
+				...adminPlugins,
+				...guestPlugins
+			]
+		});
+	}
 };
 </script>
