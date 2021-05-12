@@ -30,7 +30,7 @@ export default {
 	},
 	// Disable/Enable Server Side rendering
 	ssr: true,
-
+	telemetry: false,
 	render: {
 		// HTTP2 (https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-render#http2)
 		http2: {
