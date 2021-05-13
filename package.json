@@ -74,7 +74,7 @@
     "eslint-plugin-vue": "^7.8.0",
     "eslint-plugin-vue-a11y": "0.0.31",
     "fitty": "^2.3.3",
-    "node-sass": "^5.0.0",
+    "node-sass": "^6.0.0",
     "postcss": "^8.2.9",
     "prettier": "^2.2.1",
     "sass": "^1.32.8",
